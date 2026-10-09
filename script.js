@@ -127,25 +127,12 @@ submitIssueBtn.addEventListener("click", () => {
   }, 1200);
 });
 
-// Full Schedule Modal
-const fullScheduleModal = document.getElementById("fullScheduleModal");
-const homeViewScheduleBtn = document.getElementById("homeViewScheduleBtn");
-const closeScheduleModalX = document.getElementById("closeScheduleModalX");
-
-homeViewScheduleBtn.addEventListener("click", () => {
-  fullScheduleModal.style.display = "flex";
-});
-
-closeScheduleModalX.addEventListener("click", () => {
-  fullScheduleModal.style.display = "none";
-});
-
 // Close modals when clicking outside
-[reportProblemModal, fullScheduleModal].forEach(modal => {
-  modal.addEventListener("click", (e) => {
-    if (e.target === modal) modal.style.display = "none";
+if (reportProblemModal) {
+  reportProblemModal.addEventListener("click", (e) => {
+    if (e.target === reportProblemModal) reportProblemModal.style.display = "none";
   });
-});
+}
 
 // "What can I recycle?" Search
 const recycleData = [
