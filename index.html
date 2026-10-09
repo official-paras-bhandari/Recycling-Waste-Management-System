@@ -3,647 +3,354 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>EcoTrack | Resident Waste & Recycling</title>
+  <title>EcoTrack</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <!-- Demo Mode / Prototype Banner -->
-  <div class="demo-banner">
-    <div class="container demo-banner-content">
-      <span><strong>DEMO PROTOTYPE:</strong> Illustrative local data only • Not connected to live council systems</span>
-    </div>
-  </div>
 
-  <!-- Header -->
+  <!-- Minimal Header -->
   <header class="header">
-    <div class="container header-content">
+    <div class="container header-inner">
       <a href="#" class="brand">
-        <span class="brand-logo">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-            <path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm1 14.5l-4-4 1.4-1.4 2.6 2.6 5.6-5.6 1.4 1.4z" />
+        <span class="brand-mark">
+          <svg viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
           </svg>
         </span>
-        <span class="brand-name">EcoTrack</span>
+        <span class="brand-text">EcoTrack</span>
       </a>
 
-      <!-- Desktop Top Navigation -->
-      <nav class="desktop-nav" aria-label="Main Navigation">
-        <a href="#home" class="nav-link active">Home</a>
-        <a href="#schedule" class="nav-link" id="navScheduleLink">Schedule</a>
-        <a href="#recycle" class="nav-link" id="navRecycleLink">Recycle</a>
-        <a href="#centres" class="nav-link" id="navCentresLink">Disposal centres</a>
-        <a href="#account" class="nav-link" id="navAccountLink">Account</a>
+      <nav class="nav-links" aria-label="Main Navigation">
+        <a href="#" class="nav-link active">Home</a>
+        <a href="#" class="nav-link" id="navSchedule">Schedule</a>
+        <a href="#" class="nav-link" id="navRecycle">Recycle</a>
+        <a href="#" class="nav-link" id="navCentres">Disposal centres</a>
+        <a href="#" class="nav-link" id="navAccount">Account</a>
       </nav>
 
-      <!-- Header Red Report Flag (Blueprint Spec: small red flag button at right edge) -->
-      <button class="report-flag-btn" id="headerReportBtn" aria-label="Report a waste problem" title="Report a problem">
-        <svg class="flag-icon" viewBox="0 0 24 24" fill="currentColor">
-          <path d="M4 2v20h2V14h11l-1.5-4.5L17 5H6V2H4z" />
+      <button class="flag-btn" id="reportFlagBtn" aria-label="Report an issue" title="Report a problem">
+        <svg viewBox="0 0 20 20" fill="currentColor">
+          <path fill-rule="evenodd" d="M3 3a1 1 0 011-1h12a1 1 0 01.8 1.6L14.25 7l2.55 3.4A1 1 0 0116 12H4v5a1 1 0 11-2 0V3z" clip-rule="evenodd" />
         </svg>
       </button>
     </div>
   </header>
 
-  <!-- Main Content -->
-  <main class="main-content" id="home">
+  <!-- Main View (Home Only) -->
+  <main class="main">
     <div class="container">
       
-      <!-- Greeting and Household Subheader -->
-      <section class="user-subhead">
-        <h1 class="greeting" id="greetingText">Good afternoon, John</h1>
-        <div class="household-bar">
-          <span class="household-dot">•</span>
-          <span class="household-address" id="currentAddress">12 Greenview Ave, Riverton</span>
-          <span class="household-divider">·</span>
-          <button class="link-btn" id="changeAddressBtn">Change</button>
+      <!-- Greeting & Location -->
+      <section class="user-meta">
+        <h1 class="greeting">Good afternoon, John</h1>
+        <div class="location-row">
+          <span class="location-bullet">•</span>
+          <span class="location-address" id="addressDisplay">12 Greenview Ave, Riverton</span>
+          <span class="location-sep">·</span>
+          <button class="text-link" id="changeAddressBtn">Change</button>
         </div>
       </section>
 
-      <!-- Public Holiday Disruption Alert Banner -->
-      <div class="alert-banner">
-        <div class="alert-content">
-          <span class="alert-dot"></span>
-          <span class="alert-main">Collection moved to Friday</span>
-          <span class="alert-separator">·</span>
-          <span class="alert-sub">Public holiday change (demo)</span>
-        </div>
+      <!-- Holiday Alert Notice -->
+      <div class="notice-bar">
+        <span class="notice-title">Collection moved to Friday</span>
+        <span class="notice-sep">·</span>
+        <span class="notice-sub">Public holiday change (demo)</span>
       </div>
 
-      <!-- Two-Column Desktop / Stacked Mobile Layout -->
+      <!-- Core Two-Column Grid -->
       <div class="home-grid">
         
-        <!-- LEFT COLUMN: Next Collection Card -->
-        <div class="grid-left">
-          <div class="card collection-card">
-            <div class="card-tag">NEXT COLLECTION</div>
+        <!-- LEFT: Next Collection Card -->
+        <div class="col-left">
+          <div class="card card-next">
+            <span class="eyebrow">NEXT COLLECTION</span>
             
-            <div class="collection-date-wrap">
-              <h2 class="collection-date" id="nextCollectionDate">Friday, 25 September</h2>
-              <div class="status-pills">
-                <span class="pill pill-green" id="relativeDatePill">In 3 days</span>
-                <span class="pill pill-amber" id="reasonPill">Date changed</span>
-                <span class="desktop-usually-text">· Usually Thursday</span>
+            <div class="date-group">
+              <h2 class="date-heading">Friday, 25 September</h2>
+              <div class="badges">
+                <span class="badge badge-green">In 3 days</span>
+                <span class="badge badge-amber">Date changed</span>
+                <span class="usually-note">· Usually Thursday</span>
               </div>
             </div>
 
-            <!-- Due Bins Grid with Custom Wheelie Bin Visuals -->
-            <div class="bins-container" id="binsContainer">
-              <!-- General Waste Bin -->
-              <div class="bin-item">
-                <div class="wheelie-bin bin-red">
+            <!-- Bins Due (Minimal Wheelie Bin SVGs) -->
+            <div class="bins-grid">
+              <!-- General Waste -->
+              <div class="bin-card">
+                <div class="bin-graphic bin-red">
                   <div class="bin-lid"></div>
                   <div class="bin-body"></div>
-                  <div class="bin-wheel-left"></div>
-                  <div class="bin-wheel-right"></div>
+                  <div class="bin-wheel w-left"></div>
+                  <div class="bin-wheel w-right"></div>
                 </div>
-                <div class="bin-info">
-                  <span class="bin-name">General waste</span>
-                  <span class="bin-desc">Red-lid bin</span>
+                <div class="bin-meta">
+                  <strong>General waste</strong>
+                  <span>Red-lid bin</span>
                 </div>
               </div>
 
-              <!-- Recycling Bin -->
-              <div class="bin-item">
-                <div class="wheelie-bin bin-yellow">
+              <!-- Recycling -->
+              <div class="bin-card">
+                <div class="bin-graphic bin-yellow">
                   <div class="bin-lid"></div>
                   <div class="bin-body"></div>
-                  <div class="bin-wheel-left"></div>
-                  <div class="bin-wheel-right"></div>
+                  <div class="bin-wheel w-left"></div>
+                  <div class="bin-wheel w-right"></div>
                 </div>
-                <div class="bin-info">
-                  <span class="bin-name">Recycling</span>
-                  <span class="bin-desc">Yellow-lid bin</span>
+                <div class="bin-meta">
+                  <strong>Recycling</strong>
+                  <span>Yellow-lid bin</span>
                 </div>
               </div>
             </div>
 
-            <!-- Put-out instruction -->
-            <p class="putout-text">Put your bins out by <strong>7:00 am Friday</strong></p>
+            <p class="putout-time">Put your bins out by 7:00 am Friday</p>
 
-            <!-- Blueprint Spec: ONLY prominent green button on Home -->
-            <button class="btn btn-primary btn-full" id="viewFullScheduleBtn">View full schedule</button>
+            <!-- Main CTA (Only solid green button on home) -->
+            <button class="btn-primary" id="viewScheduleBtn">View full schedule</button>
 
-            <!-- Reminder Row -->
+            <!-- Reminder Setting -->
             <div class="reminder-row">
-              <div class="reminder-left">
-                <svg class="reminder-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
-                  <path d="M13.73 21a2 2 0 0 1-3.46 0" />
-                </svg>
-                <div class="reminder-text">
-                  <span class="reminder-title">Remind me: night before</span>
-                  <span class="reminder-detail"><span id="reminderTimeText">7:00 pm</span> · <button class="link-btn small" id="editReminderTimeBtn">Change</button></span>
-                </div>
+              <div class="reminder-info">
+                <span class="reminder-label">Remind me: night before</span>
+                <span class="reminder-time">7:00 pm · <button class="text-link" id="editReminderBtn">Change</button></span>
               </div>
-              <label class="toggle-switch">
-                <input type="checkbox" id="reminderToggle" checked />
-                <span class="toggle-slider"></span>
+              <label class="switch">
+                <input type="checkbox" id="reminderSwitch" checked />
+                <span class="slider"></span>
               </label>
             </div>
           </div>
         </div>
 
-        <!-- RIGHT COLUMN: Search, Services, Upcoming -->
-        <div class="grid-right">
+        <!-- RIGHT: Lookup & Direct Links -->
+        <div class="col-right">
           
-          <!-- What can I recycle? Card -->
-          <div class="card recycle-search-card">
-            <h3 class="card-title">What can I recycle?</h3>
-            <div class="search-input-wrap">
-              <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <circle cx="11" cy="11" r="8"></circle>
-                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          <!-- What can I recycle? -->
+          <div class="card card-search">
+            <h3 class="card-heading">What can I recycle?</h3>
+            <div class="search-field">
+              <svg class="search-icon" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" />
               </svg>
-              <input 
-                type="text" 
-                id="itemSearchInput" 
-                placeholder="Search an item, e.g. plastic bottle" 
-                autocomplete="off"
-              />
-              <button class="clear-search" id="clearItemSearch" aria-label="Clear search" style="display: none;">&times;</button>
+              <input type="text" id="recycleSearch" placeholder="Search an item, e.g. plastic bottle" autocomplete="off" />
+              <button class="search-clear" id="searchClear" aria-label="Clear" style="display: none;">&times;</button>
             </div>
 
-            <!-- Instant Search Results Drawer -->
-            <div class="search-results-panel" id="searchResultsPanel" style="display: none;">
-              <div class="results-header">
-                <span id="resultsCount">Matching guidance</span>
-              </div>
-              <div class="results-list" id="resultsList"></div>
+            <!-- Instant Search Feedback -->
+            <div class="search-dropdown" id="searchDropdown" style="display: none;">
+              <div class="search-results" id="searchResults"></div>
             </div>
           </div>
 
-          <!-- Secondary Services (Bulky pickup & Disposal centre) -->
-          <div class="services-action-cards">
-            <!-- Book a bulky pickup -->
-            <button class="card card-action" id="bookBulkyPickupBtn">
-              <div class="card-action-text">
-                <span class="action-heading">Book a bulky pickup</span>
-                <span class="action-subtext">Subject to council availability</span>
+          <!-- Services List -->
+          <div class="action-list">
+            <!-- Bulky Pickup -->
+            <button class="action-card" id="bulkyBtn">
+              <div class="action-content">
+                <strong>Book a bulky pickup</strong>
+                <span>Subject to council availability</span>
               </div>
-              <svg class="chevron-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M9 18l6-6-6-6" />
+              <svg class="chevron" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
               </svg>
             </button>
 
-            <!-- Find a disposal centre -->
-            <button class="card card-action" id="findDisposalCentreBtn">
-              <div class="card-action-text">
-                <span class="action-heading">Find a disposal centre</span>
-                <span class="action-subtext">See facilities and accepted items</span>
+            <!-- Disposal Centre -->
+            <button class="action-card" id="centreBtn">
+              <div class="action-content">
+                <strong>Find a disposal centre</strong>
+                <span>See facilities and accepted items</span>
               </div>
-              <svg class="chevron-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M9 18l6-6-6-6" />
+              <svg class="chevron" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
               </svg>
             </button>
           </div>
 
-          <!-- Upcoming Collections List -->
-          <div class="card upcoming-card">
-            <h3 class="card-title">Upcoming</h3>
-            <div class="upcoming-list">
-              <div class="upcoming-item">
-                <span class="upcoming-date">01 Oct</span>
-                <span class="upcoming-divider">·</span>
-                <span class="upcoming-bins">General waste + Garden & food</span>
-              </div>
-              <div class="upcoming-item">
-                <span class="upcoming-date">08 Oct</span>
-                <span class="upcoming-divider">·</span>
-                <span class="upcoming-bins">General waste + Recycling</span>
-              </div>
-              <div class="upcoming-item">
-                <span class="upcoming-date">15 Oct</span>
-                <span class="upcoming-divider">·</span>
-                <span class="upcoming-bins">General waste + Garden & food</span>
-              </div>
-            </div>
+          <!-- Upcoming Calendar -->
+          <div class="card card-upcoming">
+            <h3 class="card-heading">Upcoming</h3>
+            <ul class="upcoming-list">
+              <li>
+                <span class="up-date">01 Oct</span>
+                <span class="up-sep">·</span>
+                <span class="up-desc">General waste + Garden & food</span>
+              </li>
+              <li>
+                <span class="up-date">08 Oct</span>
+                <span class="up-sep">·</span>
+                <span class="up-desc">General waste + Recycling</span>
+              </li>
+              <li>
+                <span class="up-date">15 Oct</span>
+                <span class="up-sep">·</span>
+                <span class="up-desc">General waste + Garden & food</span>
+              </li>
+            </ul>
           </div>
 
         </div>
+
       </div>
 
     </div>
   </main>
 
-  <!-- Mobile 4-Tab Bottom Navigation (Blueprint Spec: Home, Schedule, Recycle, Account) -->
-  <nav class="mobile-bottom-nav" aria-label="Mobile Navigation">
-    <button class="tab-item active" id="tabHome">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
-        <polyline points="9 22 9 12 15 12 15 22" />
+  <!-- Mobile Bottom Tab Bar -->
+  <nav class="bottom-tabs" aria-label="Mobile Bottom Navigation">
+    <button class="tab active" id="tabHome">
+      <svg viewBox="0 0 20 20" fill="currentColor">
+        <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
       </svg>
       <span>Home</span>
     </button>
-    <button class="tab-item" id="tabSchedule">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
-        <line x1="16" y1="2" x2="16" y2="6" />
-        <line x1="8" y1="2" x2="8" y2="6" />
-        <line x1="3" y1="10" x2="21" y2="10" />
+    <button class="tab" id="tabSchedule">
+      <svg viewBox="0 0 20 20" fill="currentColor">
+        <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd" />
       </svg>
       <span>Schedule</span>
     </button>
-    <button class="tab-item" id="tabRecycle">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="M7 19H4.815a1.83 1.83 0 0 1-1.57-.881 1.785 1.785 0 0 1-.004-1.784L7.196 9.5" />
-        <path d="M11 19h8.2a1.8 1.8 0 0 0 1.572-.89 1.8 1.8 0 0 0-.012-1.815L17.5 11" />
-        <path d="m14 4.5 4.5 7.5" />
-        <path d="m5 16 2.5 3L10 16" />
-        <path d="m17 7-3-4.5L11 7" />
-        <path d="M9 13.5 6.5 9H12" />
+    <button class="tab" id="tabRecycle">
+      <svg viewBox="0 0 20 20" fill="currentColor">
+        <path fill-rule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clip-rule="evenodd" />
       </svg>
       <span>Recycle</span>
     </button>
-    <button class="tab-item" id="tabAccount">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-        <circle cx="12" cy="7" r="4" />
+    <button class="tab" id="tabAccount">
+      <svg viewBox="0 0 20 20" fill="currentColor">
+        <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
       </svg>
       <span>Account</span>
     </button>
   </nav>
 
-  <!-- ============================================== -->
-  <!-- MODAL: REPORT A PROBLEM (SCREEN 02 BLUEPRINT) -->
-  <!-- ============================================== -->
-  <div class="modal-overlay" id="reportModal" aria-hidden="true">
-    <div class="modal-sheet" role="dialog" aria-modal="true" aria-labelledby="reportModalTitle">
-      <div class="sheet-header">
-        <button class="back-btn" id="closeReportModalBtn" aria-label="Close report wizard">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-            <path d="M15 18l-6-6 6-6" />
-          </svg>
-        </button>
-        <h2 id="reportModalTitle">Report a problem</h2>
-        <div class="sheet-header-flag">
-          <svg class="flag-icon" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M4 2v20h2V14h11l-1.5-4.5L17 5H6V2H4z" />
-          </svg>
+  <!-- Lightweight Modal: Report (Screen 02 in Blueprint) -->
+  <div class="overlay" id="reportOverlay" aria-hidden="true">
+    <div class="modal">
+      <div class="modal-top">
+        <button class="btn-icon" id="closeReportBtn">&times;</button>
+        <h3>Report a problem</h3>
+        <div class="flag-mini">
+          <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M3 3a1 1 0 011-1h12a1 1 0 01.8 1.6L14.25 7l2.55 3.4A1 1 0 0116 12H4v5a1 1 0 11-2 0V3z" clip-rule="evenodd" /></svg>
         </div>
       </div>
-
-      <!-- Step 1: Issue Selection (Exact blueprint options) -->
-      <div class="wizard-step" id="reportStep1">
-        <div class="step-intro">
-          <h3>Choose an issue</h3>
-          <p>What would you like to report?</p>
-        </div>
-
-        <div class="issue-options-list">
-          <label class="issue-option-card selected">
-            <input type="radio" name="reportCategory" value="Missed collection" checked />
-            <div class="radio-indicator"></div>
-            <div class="option-details">
+      <div class="modal-content">
+        <p class="modal-subhead">Choose an issue to report</p>
+        <div class="issue-list">
+          <label class="issue-item selected">
+            <input type="radio" name="issue" value="Missed collection" checked />
+            <div class="radio-dot"></div>
+            <div>
               <strong>Missed collection</strong>
-              <span>Bin was not emptied</span>
+              <small>Bin was not emptied</small>
             </div>
           </label>
-
-          <label class="issue-option-card">
-            <input type="radio" name="reportCategory" value="Damaged or missing bin" />
-            <div class="radio-indicator"></div>
-            <div class="option-details">
+          <label class="issue-item">
+            <input type="radio" name="issue" value="Damaged or missing bin" />
+            <div class="radio-dot"></div>
+            <div>
               <strong>Damaged or missing bin</strong>
-              <span>Broken lid, wheel or missing bin</span>
+              <small>Broken lid, wheel or missing bin</small>
             </div>
           </label>
-
-          <label class="issue-option-card">
-            <input type="radio" name="reportCategory" value="Overflowing public bin" />
-            <div class="radio-indicator"></div>
-            <div class="option-details">
+          <label class="issue-item">
+            <input type="radio" name="issue" value="Overflowing public bin" />
+            <div class="radio-dot"></div>
+            <div>
               <strong>Overflowing public bin</strong>
-              <span>Street, park or public place</span>
+              <small>Street, park or public place</small>
             </div>
           </label>
-
-          <label class="issue-option-card">
-            <input type="radio" name="reportCategory" value="Illegal dumping" />
-            <div class="radio-indicator"></div>
-            <div class="option-details">
+          <label class="issue-item">
+            <input type="radio" name="issue" value="Illegal dumping" />
+            <div class="radio-dot"></div>
+            <div>
               <strong>Illegal dumping</strong>
-              <span>Waste left in a public place</span>
+              <small>Waste left in a public place</small>
             </div>
           </label>
-
-          <label class="issue-option-card">
-            <input type="radio" name="reportCategory" value="Something else" />
-            <div class="radio-indicator"></div>
-            <div class="option-details">
+          <label class="issue-item">
+            <input type="radio" name="issue" value="Something else" />
+            <div class="radio-dot"></div>
+            <div>
               <strong>Something else</strong>
-              <span>Describe another issue</span>
+              <small>Describe another issue</small>
             </div>
           </label>
         </div>
-
-        <div class="wizard-bottom">
-          <p class="wizard-footnote">Next: location, bin and optional photo</p>
-          <button class="btn btn-primary btn-full" id="reportNextBtn">Next</button>
-          <div class="wizard-links">
-            <button class="link-btn" id="openMyReportsBtn">My reports · Track progress</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Step 2: Conditional Details Form -->
-      <div class="wizard-step" id="reportStep2" style="display: none;">
-        <div class="step-intro">
-          <h3 id="step2Title">Details for report</h3>
-          <p id="step2Subtitle">Please provide specific details for local resolution.</p>
-        </div>
-
-        <form id="reportDetailsForm">
-          <!-- Bin selector for bin issues -->
-          <div class="form-group" id="binSelectGroup">
-            <label for="reportBinType">Affected bin</label>
-            <select id="reportBinType">
-              <option value="Red-lid General waste">Red-lid General waste</option>
-              <option value="Yellow-lid Recycling">Yellow-lid Recycling</option>
-              <option value="Green-lid Garden & food">Green-lid Garden & food</option>
-            </select>
-          </div>
-
-          <!-- Location (Household or Public) -->
-          <div class="form-group">
-            <label for="reportLocation">Location</label>
-            <input type="text" id="reportLocation" value="12 Greenview Ave, Riverton" required />
-            <small class="field-hint" id="locationHint">Defaulting to registered household address.</small>
-          </div>
-
-          <!-- Description -->
-          <div class="form-group">
-            <label for="reportDescription">Description</label>
-            <textarea id="reportDescription" rows="3" placeholder="Provide any helpful notes (e.g., bin was out before 6:30am)..." required></textarea>
-          </div>
-
-          <!-- Photo Upload Preview (Specification Contract) -->
-          <div class="form-group">
-            <label>Attach photo (optional)</label>
-            <div class="photo-upload-box">
-              <input type="file" id="reportPhotoInput" accept="image/*" />
-              <div class="upload-placeholder" id="uploadPlaceholder">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <rect x="3" y="3" width="18" height="18" rx="2" />
-                  <circle cx="8.5" cy="8.5" r="1.5" />
-                  <polyline points="21 15 16 10 5 21" />
-                </svg>
-                <span>Tap to upload or take a photo</span>
-              </div>
-              <div class="photo-preview-wrap" id="photoPreviewWrap" style="display: none;">
-                <img id="photoPreviewImg" src="" alt="Report photo preview" />
-                <button type="button" class="remove-photo-btn" id="removePhotoBtn">&times;</button>
-              </div>
-            </div>
-          </div>
-
-          <div class="wizard-bottom">
-            <div class="btn-group-dual">
-              <button type="button" class="btn btn-outline" id="reportBackBtn">Back</button>
-              <button type="submit" class="btn btn-primary">Submit report</button>
-            </div>
-          </div>
-        </form>
-      </div>
-
-      <!-- Step 3: Success Confirmation (Local Demo Record) -->
-      <div class="wizard-step" id="reportStepSuccess" style="display: none;">
-        <div class="report-success-card">
-          <div class="success-badge">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
-              <polyline points="20 6 9 17 4 12" />
-            </svg>
-          </div>
-          <h3>Report submitted (Demo)</h3>
-          <p class="success-ref">Reference: <strong id="submittedRefNumber">ECO-83921</strong></p>
-          <div class="audit-timeline">
-            <div class="timeline-step active">
-              <span class="timeline-dot"></span>
-              <div class="timeline-info">
-                <strong>Received (Local record)</strong>
-                <span id="submittedTimestamp">Just now</span>
-              </div>
-            </div>
-            <div class="timeline-step">
-              <span class="timeline-dot"></span>
-              <div class="timeline-info">
-                <strong>Under review</strong>
-                <span>Council triage</span>
-              </div>
-            </div>
-            <div class="timeline-step">
-              <span class="timeline-dot"></span>
-              <div class="timeline-info">
-                <strong>Crew assigned</strong>
-                <span>Pending dispatch</span>
-              </div>
-            </div>
-          </div>
-          <p class="demo-disclaimer">Saved locally on your browser. Council API integration required for operational dispatch.</p>
-          <button class="btn btn-primary btn-full" id="finishReportBtn">Done</button>
-        </div>
-      </div>
-
-      <!-- Step 4: My Reports List -->
-      <div class="wizard-step" id="reportStepMyReports" style="display: none;">
-        <div class="step-intro">
-          <h3>My reports</h3>
-          <p>Locally stored issue reports</p>
-        </div>
-        <div class="my-reports-list" id="myReportsList"></div>
-        <div class="wizard-bottom">
-          <button class="btn btn-outline btn-full" id="backToChooseIssueBtn">New report</button>
-        </div>
-      </div>
-
-    </div>
-  </div>
-
-  <!-- ============================================== -->
-  <!-- MODAL: SCHEDULE FULL VIEW (BLUEPRINT SPEC)    -->
-  <!-- ============================================== -->
-  <div class="modal-overlay" id="scheduleModal" aria-hidden="true">
-    <div class="modal-sheet" role="dialog" aria-modal="true" aria-labelledby="scheduleModalTitle">
-      <div class="sheet-header">
-        <button class="back-btn" id="closeScheduleModalBtn">&times;</button>
-        <h2 id="scheduleModalTitle">Collection schedule</h2>
-        <div style="width: 24px;"></div>
-      </div>
-      <div class="sheet-body">
-        <p class="sheet-intro-text">Schedule for <strong>12 Greenview Ave, Riverton</strong></p>
-        
-        <div class="schedule-calendar-list">
-          <div class="schedule-card-row exception">
-            <div class="row-date-badge">
-              <strong>Fri</strong>
-              <span>25 Sep</span>
-            </div>
-            <div class="row-details">
-              <div class="row-tags">
-                <span class="badge-bin bin-red-tag">Red: General</span>
-                <span class="badge-bin bin-yellow-tag">Yellow: Recycling</span>
-              </div>
-              <span class="exception-note">⚠️ Moved from Thursday 24 Sep due to Public Holiday</span>
-            </div>
-          </div>
-
-          <div class="schedule-card-row">
-            <div class="row-date-badge">
-              <strong>Thu</strong>
-              <span>01 Oct</span>
-            </div>
-            <div class="row-details">
-              <div class="row-tags">
-                <span class="badge-bin bin-red-tag">Red: General</span>
-                <span class="badge-bin bin-green-tag">Green: Garden & food</span>
-              </div>
-              <span class="regular-note">Regular collection (7:00 am)</span>
-            </div>
-          </div>
-
-          <div class="schedule-card-row">
-            <div class="row-date-badge">
-              <strong>Thu</strong>
-              <span>08 Oct</span>
-            </div>
-            <div class="row-details">
-              <div class="row-tags">
-                <span class="badge-bin bin-red-tag">Red: General</span>
-                <span class="badge-bin bin-yellow-tag">Yellow: Recycling</span>
-              </div>
-              <span class="regular-note">Regular collection (7:00 am)</span>
-            </div>
-          </div>
-
-          <div class="schedule-card-row">
-            <div class="row-date-badge">
-              <strong>Thu</strong>
-              <span>15 Oct</span>
-            </div>
-            <div class="row-details">
-              <div class="row-tags">
-                <span class="badge-bin bin-red-tag">Red: General</span>
-                <span class="badge-bin bin-green-tag">Green: Garden & food</span>
-              </div>
-              <span class="regular-note">Regular collection (7:00 am)</span>
-            </div>
-          </div>
-        </div>
-
-        <button class="btn btn-outline btn-full" id="exportCalendarBtn" style="margin-top: 20px;">
-          Export to Calendar (.ics)
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <!-- ============================================== -->
-  <!-- MODAL: BULKY PICKUP (SPECIFICATION CONTRACT)  -->
-  <!-- ============================================== -->
-  <div class="modal-overlay" id="bulkyModal" aria-hidden="true">
-    <div class="modal-sheet" role="dialog" aria-modal="true" aria-labelledby="bulkyModalTitle">
-      <div class="sheet-header">
-        <button class="back-btn" id="closeBulkyModalBtn">&times;</button>
-        <h2 id="bulkyModalTitle">Book a bulky pickup</h2>
-        <div style="width: 24px;"></div>
-      </div>
-      <div class="sheet-body">
-        <div class="demo-callout">
-          <strong>Council prototype feature:</strong> Bulky collections are subject to local council quota and availability rules.
-        </div>
-        <form id="bulkyForm">
-          <div class="form-group">
-            <label>Household Address</label>
-            <input type="text" value="12 Greenview Ave, Riverton" readonly />
-          </div>
-          <div class="form-group">
-            <label>Items for pickup (max 3 items)</label>
-            <input type="text" placeholder="e.g., Mattress, broken armchair, timber desk" required />
-          </div>
-          <div class="form-group">
-            <label>Available collection window</label>
-            <select required>
-              <option value="">Select available council window...</option>
-              <option value="Tue 06 Oct (Morning)">Tuesday, 06 Oct (6:00 am – 12:00 pm)</option>
-              <option value="Tue 13 Oct (Morning)">Tuesday, 13 Oct (6:00 am – 12:00 pm)</option>
-            </select>
-          </div>
-          <button type="submit" class="btn btn-primary btn-full">Submit demo request</button>
-        </form>
-        <div id="bulkySuccess" style="display: none; text-align: center; padding: 20px 0;">
-          <h3 style="color: var(--primary);">Request recorded (Demo)</h3>
-          <p style="font-size: 0.9rem; margin-top: 8px;">Non-binding council booking simulation. No operational truck has been dispatched.</p>
+        <button class="btn-primary" id="submitDemoReportBtn" style="margin-top: 16px;">Record local demo report</button>
+        <div id="reportConfirmNotice" style="display: none; margin-top: 12px; font-size: 0.85rem; color: var(--primary-green); text-align: center;">
+          ✓ Saved locally as demo record (Ref: <span id="demoRefId"></span>)
         </div>
       </div>
     </div>
   </div>
 
-  <!-- ============================================== -->
-  <!-- MODAL: DISPOSAL CENTRES (SPECIFICATION)       -->
-  <!-- ============================================== -->
-  <div class="modal-overlay" id="centresModal" aria-hidden="true">
-    <div class="modal-sheet" role="dialog" aria-modal="true" aria-labelledby="centresModalTitle">
-      <div class="sheet-header">
-        <button class="back-btn" id="closeCentresModalBtn">&times;</button>
-        <h2 id="centresModalTitle">Find a disposal centre</h2>
-        <div style="width: 24px;"></div>
+  <!-- Lightweight Modal: Full Schedule -->
+  <div class="overlay" id="scheduleOverlay" aria-hidden="true">
+    <div class="modal">
+      <div class="modal-top">
+        <button class="btn-icon" id="closeScheduleBtn">&times;</button>
+        <h3>Collection schedule</h3>
+        <div style="width: 28px;"></div>
       </div>
-      <div class="sheet-body">
-        <div class="facility-card">
-          <h4>Riverton Resource Recovery Centre</h4>
-          <p class="facility-address">45 Quarry Road, Riverton</p>
-          <div class="facility-meta">
-            <span class="meta-tag">Open: Sat–Wed 8:00am–4:00pm</span>
-            <span class="meta-tag">Fees: Free for residents</span>
+      <div class="modal-content">
+        <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 12px;">12 Greenview Ave, Riverton</p>
+        <div class="sched-list">
+          <div class="sched-row changed">
+            <strong>Fri 25 Sep</strong>
+            <div>
+              <span class="tag-red">Red: General</span>
+              <span class="tag-yellow">Yellow: Recycling</span>
+              <p class="tag-alert">Moved from Thu 24 Sep (Public holiday)</p>
+            </div>
           </div>
-          <p class="facility-accepted"><strong>Accepted:</strong> E-Waste, Paint, Mattresses, Scrap Metal, Car Batteries</p>
-        </div>
-
-        <div class="facility-card">
-          <h4>East Valley Eco Hub</h4>
-          <p class="facility-address">12 Industrial Parkway, East Valley</p>
-          <div class="facility-meta">
-            <span class="meta-tag">Open: Mon–Fri 7:30am–3:30pm</span>
-            <span class="meta-tag">Fees: Council voucher or standard rates</span>
+          <div class="sched-row">
+            <strong>Thu 01 Oct</strong>
+            <div>
+              <span class="tag-red">Red: General</span>
+              <span class="tag-green">Green: Garden & food</span>
+            </div>
           </div>
-          <p class="facility-accepted"><strong>Accepted:</strong> Green waste, Clean timber, Cardboard, Household chemicals</p>
+          <div class="sched-row">
+            <strong>Thu 08 Oct</strong>
+            <div>
+              <span class="tag-red">Red: General</span>
+              <span class="tag-yellow">Yellow: Recycling</span>
+            </div>
+          </div>
         </div>
+        <button class="btn-outline" id="dlIcsBtn" style="margin-top: 16px; width: 100%;">Export to Calendar (.ics)</button>
       </div>
     </div>
   </div>
 
-  <!-- ============================================== -->
-  <!-- MODAL: CHANGE ADDRESS SWITCHER                -->
-  <!-- ============================================== -->
-  <div class="modal-overlay" id="addressModal" aria-hidden="true">
-    <div class="modal-sheet" role="dialog" aria-modal="true" aria-labelledby="addressModalTitle">
-      <div class="sheet-header">
-        <button class="back-btn" id="closeAddressModalBtn">&times;</button>
-        <h2 id="addressModalTitle">Select demo address</h2>
-        <div style="width: 24px;"></div>
+  <!-- Lightweight Modal: Address Switcher -->
+  <div class="overlay" id="addressOverlay" aria-hidden="true">
+    <div class="modal">
+      <div class="modal-top">
+        <button class="btn-icon" id="closeAddressBtn">&times;</button>
+        <h3>Change address</h3>
+        <div style="width: 28px;"></div>
       </div>
-      <div class="sheet-body">
-        <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 16px;">
-          Choose an address to test area-specific collection schedules:
-        </p>
-        <div class="address-options">
-          <button class="address-btn active" data-addr="12 Greenview Ave, Riverton" data-name="John">
+      <div class="modal-content">
+        <div class="addr-list">
+          <button class="addr-choice active" data-addr="12 Greenview Ave, Riverton" data-name="John">
             <strong>12 Greenview Ave, Riverton</strong>
-            <span>Zone A • Thursday collection (Moved to Friday this week)</span>
+            <small>Zone A • Regular collection Friday this week</small>
           </button>
-          <button class="address-btn" data-addr="84 High Street, Riverton" data-name="Sarah">
+          <button class="addr-choice" data-addr="84 High Street, Riverton" data-name="Sarah">
             <strong>84 High Street, Riverton</strong>
-            <span>Zone B • Monday collection</span>
-          </button>
-          <button class="address-btn" data-addr="5 Parklands Crescent, Riverton" data-name="Michael">
-            <strong>5 Parklands Crescent, Riverton</strong>
-            <span>Zone C • Wednesday collection</span>
+            <small>Zone B • Regular collection Monday</small>
           </button>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- JavaScript -->
   <script src="script.js"></script>
 </body>
 </html>
