@@ -92,13 +92,8 @@ submitDemoReportBtn.addEventListener("click", () => {
 const viewScheduleBtn = document.getElementById("viewScheduleBtn");
 const closeScheduleBtn = document.getElementById("closeScheduleBtn");
 const dlIcsBtn = document.getElementById("dlIcsBtn");
-const navSchedule = document.getElementById("navSchedule");
-const tabSchedule = document.getElementById("tabSchedule");
-
 function openSched() { showModal("scheduleOverlay"); }
 viewScheduleBtn.addEventListener("click", openSched);
-navSchedule.addEventListener("click", (e) => { e.preventDefault(); openSched(); });
-tabSchedule.addEventListener("click", openSched);
 closeScheduleBtn.addEventListener("click", () => hideModal("scheduleOverlay"));
 
 dlIcsBtn.addEventListener("click", () => {
@@ -114,13 +109,9 @@ dlIcsBtn.addEventListener("click", () => {
 const changeAddressBtn = document.getElementById("changeAddressBtn");
 const closeAddressBtn = document.getElementById("closeAddressBtn");
 const addressDisplay = document.getElementById("addressDisplay");
-const navAccount = document.getElementById("navAccount");
-const tabAccount = document.getElementById("tabAccount");
 
 function openAddr() { showModal("addressOverlay"); }
 changeAddressBtn.addEventListener("click", openAddr);
-navAccount.addEventListener("click", (e) => { e.preventDefault(); openAddr(); });
-tabAccount.addEventListener("click", openAddr);
 closeAddressBtn.addEventListener("click", () => hideModal("addressOverlay"));
 
 document.querySelectorAll(".addr-choice").forEach(b => {
@@ -138,13 +129,4 @@ document.getElementById("bulkyBtn").addEventListener("click", () => {
 });
 document.getElementById("centreBtn").addEventListener("click", () => {
   alert("Riverton Resource Recovery Centre: 45 Quarry Rd (Open Sat–Wed 8am–4pm).");
-});
-
-// Recycle Nav shortcut
-document.getElementById("navRecycle").addEventListener("click", (e) => {
-  e.preventDefault();
-  searchInput.focus();
-});
-document.getElementById("tabRecycle").addEventListener("click", () => {
-  searchInput.focus();
 });
