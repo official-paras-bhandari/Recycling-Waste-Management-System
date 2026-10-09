@@ -3,370 +3,647 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>EcoCycle | Recycling & Waste Management System</title>
+  <title>EcoTrack | Resident Waste & Recycling</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <!-- Header / Navigation -->
+  <!-- Demo Mode / Prototype Banner -->
+  <div class="demo-banner">
+    <div class="container demo-banner-content">
+      <span><strong>DEMO PROTOTYPE:</strong> Illustrative local data only • Not connected to live council systems</span>
+    </div>
+  </div>
+
+  <!-- Header -->
   <header class="header">
-    <div class="container nav-container">
-      <a href="#" class="brand-logo">
-        <svg class="logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M7 19H4.815a1.83 1.83 0 0 1-1.57-.881 1.785 1.785 0 0 1-.004-1.784L7.196 9.5" />
-          <path d="M11 19h8.2a1.8 1.8 0 0 0 1.572-.89 1.8 1.8 0 0 0-.012-1.815L17.5 11" />
-          <path d="m14 4.5 4.5 7.5" />
-          <path d="m5 16 2.5 3L10 16" />
-          <path d="m17 7-3-4.5L11 7" />
-          <path d="M9 13.5 6.5 9H12" />
-        </svg>
-        <span>EcoCycle</span>
+    <div class="container header-content">
+      <a href="#" class="brand">
+        <span class="brand-logo">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm1 14.5l-4-4 1.4-1.4 2.6 2.6 5.6-5.6 1.4 1.4z" />
+          </svg>
+        </span>
+        <span class="brand-name">EcoTrack</span>
       </a>
 
-      <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
-        <span class="bar"></span>
-        <span class="bar"></span>
-        <span class="bar"></span>
-      </button>
-
-      <nav class="nav-menu" id="navMenu">
-        <ul class="nav-links">
-          <li><a href="#hero">Home</a></li>
-          <li><a href="#services">Services</a></li>
-          <li><a href="#waste-guide">Sorting Guide</a></li>
-          <li><a href="#impact">Our Impact</a></li>
-          <li><a href="#contact">Contact</a></li>
-        </ul>
-        <button class="btn btn-primary" id="openPickupModalBtn">Schedule Pickup</button>
+      <!-- Desktop Top Navigation -->
+      <nav class="desktop-nav" aria-label="Main Navigation">
+        <a href="#home" class="nav-link active">Home</a>
+        <a href="#schedule" class="nav-link" id="navScheduleLink">Schedule</a>
+        <a href="#recycle" class="nav-link" id="navRecycleLink">Recycle</a>
+        <a href="#centres" class="nav-link" id="navCentresLink">Disposal centres</a>
+        <a href="#account" class="nav-link" id="navAccountLink">Account</a>
       </nav>
+
+      <!-- Header Red Report Flag (Blueprint Spec: small red flag button at right edge) -->
+      <button class="report-flag-btn" id="headerReportBtn" aria-label="Report a waste problem" title="Report a problem">
+        <svg class="flag-icon" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M4 2v20h2V14h11l-1.5-4.5L17 5H6V2H4z" />
+        </svg>
+      </button>
     </div>
   </header>
 
-  <!-- Hero Section -->
-  <section class="hero" id="hero">
-    <div class="container hero-grid">
-      <div class="hero-content">
-        <span class="badge">Smart Waste & Resource Recovery</span>
-        <h1 class="hero-title">Smarter Waste Management for a Sustainable Future</h1>
-        <p class="hero-subtitle">
-          Effortlessly sort your household and commercial waste, request scheduled pickups, 
-          and track real-time recycling progress in your neighborhood.
-        </p>
-        <div class="hero-actions">
-          <button class="btn btn-primary btn-large" id="heroScheduleBtn">Schedule a Pickup</button>
-          <a href="#waste-guide" class="btn btn-outline btn-large">Explore Sorting Guide</a>
-        </div>
-        <div class="hero-metrics">
-          <div class="metric-item">
-            <span class="metric-number">98%</span>
-            <span class="metric-label">Collection Rate</span>
-          </div>
-          <div class="metric-divider"></div>
-          <div class="metric-item">
-            <span class="metric-number">45K+</span>
-            <span class="metric-label">Tons Recycled</span>
-          </div>
-          <div class="metric-divider"></div>
-          <div class="metric-item">
-            <span class="metric-number">120+</span>
-            <span class="metric-label">Communities Served</span>
-          </div>
-        </div>
-      </div>
-      <div class="hero-visual">
-        <div class="card hero-card">
-          <div class="hero-card-header">
-            <h3>Quick Waste Sorter</h3>
-            <span class="pulse-dot"></span>
-          </div>
-          <p>Not sure which bin an item belongs to? Check below or use the interactive guide.</p>
-          <div class="bin-preview-grid">
-            <div class="bin-chip bin-blue">
-              <span class="bin-chip-dot"></span>
-              <strong>Blue Bin</strong>
-              <small>Paper & Cardboard</small>
-            </div>
-            <div class="bin-chip bin-yellow">
-              <span class="bin-chip-dot"></span>
-              <strong>Yellow Bin</strong>
-              <small>Plastics & Metals</small>
-            </div>
-            <div class="bin-chip bin-green">
-              <span class="bin-chip-dot"></span>
-              <strong>Green Bin</strong>
-              <small>Organic & Food</small>
-            </div>
-            <div class="bin-chip bin-red">
-              <span class="bin-chip-dot"></span>
-              <strong>Red / Special</strong>
-              <small>E-Waste & Hazards</small>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Services Section -->
-  <section class="services" id="services">
+  <!-- Main Content -->
+  <main class="main-content" id="home">
     <div class="container">
-      <div class="section-header">
-        <span class="section-tag">What We Do</span>
-        <h2>Comprehensive Waste Solutions</h2>
-        <p>From everyday household recycling to specialized commercial collections, we keep communities clean.</p>
-      </div>
-
-      <div class="services-grid">
-        <div class="service-card">
-          <div class="service-icon icon-emerald">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
-              <polyline points="9 22 9 12 15 12 15 22" />
-            </svg>
-          </div>
-          <h3>Residential Collection</h3>
-          <p>Regular bi-weekly pickup schedules for recyclables, general waste, and compostable organic matter.</p>
+      
+      <!-- Greeting and Household Subheader -->
+      <section class="user-subhead">
+        <h1 class="greeting" id="greetingText">Good afternoon, John</h1>
+        <div class="household-bar">
+          <span class="household-dot">•</span>
+          <span class="household-address" id="currentAddress">12 Greenview Ave, Riverton</span>
+          <span class="household-divider">·</span>
+          <button class="link-btn" id="changeAddressBtn">Change</button>
         </div>
+      </section>
 
-        <div class="service-card">
-          <div class="service-icon icon-blue">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <rect x="2" y="7" width="20" height="14" rx="2" ry="2" />
-              <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
-            </svg>
-          </div>
-          <h3>Commercial Waste</h3>
-          <p>Tailored bulk pickup contracts and zero-waste auditing for retail, offices, and industrial complexes.</p>
-        </div>
-
-        <div class="service-card">
-          <div class="service-icon icon-amber">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <rect x="4" y="4" width="16" height="16" rx="2" />
-              <rect x="9" y="9" width="6" height="6" />
-              <line x1="9" y1="1" x2="9" y2="4" />
-              <line x1="15" y1="1" x2="15" y2="4" />
-              <line x1="9" y1="20" x2="9" y2="23" />
-              <line x1="15" y1="20" x2="15" y2="23" />
-              <line x1="20" y1="9" x2="23" y2="9" />
-              <line x1="20" y1="14" x2="23" y2="14" />
-              <line x1="1" y1="9" x2="4" y2="9" />
-              <line x1="1" y1="14" x2="4" y2="14" />
-            </svg>
-          </div>
-          <h3>E-Waste Recycling</h3>
-          <p>Safe extraction and disposal of decommissioned computers, phones, batteries, and appliances.</p>
-        </div>
-
-        <div class="service-card">
-          <div class="service-icon icon-teal">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
-            </svg>
-          </div>
-          <h3>Rewards & Incentives</h3>
-          <p>Earn green points for every kilogram of verified recyclables delivered to our community hubs.</p>
+      <!-- Public Holiday Disruption Alert Banner -->
+      <div class="alert-banner">
+        <div class="alert-content">
+          <span class="alert-dot"></span>
+          <span class="alert-main">Collection moved to Friday</span>
+          <span class="alert-separator">·</span>
+          <span class="alert-sub">Public holiday change (demo)</span>
         </div>
       </div>
+
+      <!-- Two-Column Desktop / Stacked Mobile Layout -->
+      <div class="home-grid">
+        
+        <!-- LEFT COLUMN: Next Collection Card -->
+        <div class="grid-left">
+          <div class="card collection-card">
+            <div class="card-tag">NEXT COLLECTION</div>
+            
+            <div class="collection-date-wrap">
+              <h2 class="collection-date" id="nextCollectionDate">Friday, 25 September</h2>
+              <div class="status-pills">
+                <span class="pill pill-green" id="relativeDatePill">In 3 days</span>
+                <span class="pill pill-amber" id="reasonPill">Date changed</span>
+                <span class="desktop-usually-text">· Usually Thursday</span>
+              </div>
+            </div>
+
+            <!-- Due Bins Grid with Custom Wheelie Bin Visuals -->
+            <div class="bins-container" id="binsContainer">
+              <!-- General Waste Bin -->
+              <div class="bin-item">
+                <div class="wheelie-bin bin-red">
+                  <div class="bin-lid"></div>
+                  <div class="bin-body"></div>
+                  <div class="bin-wheel-left"></div>
+                  <div class="bin-wheel-right"></div>
+                </div>
+                <div class="bin-info">
+                  <span class="bin-name">General waste</span>
+                  <span class="bin-desc">Red-lid bin</span>
+                </div>
+              </div>
+
+              <!-- Recycling Bin -->
+              <div class="bin-item">
+                <div class="wheelie-bin bin-yellow">
+                  <div class="bin-lid"></div>
+                  <div class="bin-body"></div>
+                  <div class="bin-wheel-left"></div>
+                  <div class="bin-wheel-right"></div>
+                </div>
+                <div class="bin-info">
+                  <span class="bin-name">Recycling</span>
+                  <span class="bin-desc">Yellow-lid bin</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Put-out instruction -->
+            <p class="putout-text">Put your bins out by <strong>7:00 am Friday</strong></p>
+
+            <!-- Blueprint Spec: ONLY prominent green button on Home -->
+            <button class="btn btn-primary btn-full" id="viewFullScheduleBtn">View full schedule</button>
+
+            <!-- Reminder Row -->
+            <div class="reminder-row">
+              <div class="reminder-left">
+                <svg class="reminder-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
+                  <path d="M13.73 21a2 2 0 0 1-3.46 0" />
+                </svg>
+                <div class="reminder-text">
+                  <span class="reminder-title">Remind me: night before</span>
+                  <span class="reminder-detail"><span id="reminderTimeText">7:00 pm</span> · <button class="link-btn small" id="editReminderTimeBtn">Change</button></span>
+                </div>
+              </div>
+              <label class="toggle-switch">
+                <input type="checkbox" id="reminderToggle" checked />
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT COLUMN: Search, Services, Upcoming -->
+        <div class="grid-right">
+          
+          <!-- What can I recycle? Card -->
+          <div class="card recycle-search-card">
+            <h3 class="card-title">What can I recycle?</h3>
+            <div class="search-input-wrap">
+              <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+              <input 
+                type="text" 
+                id="itemSearchInput" 
+                placeholder="Search an item, e.g. plastic bottle" 
+                autocomplete="off"
+              />
+              <button class="clear-search" id="clearItemSearch" aria-label="Clear search" style="display: none;">&times;</button>
+            </div>
+
+            <!-- Instant Search Results Drawer -->
+            <div class="search-results-panel" id="searchResultsPanel" style="display: none;">
+              <div class="results-header">
+                <span id="resultsCount">Matching guidance</span>
+              </div>
+              <div class="results-list" id="resultsList"></div>
+            </div>
+          </div>
+
+          <!-- Secondary Services (Bulky pickup & Disposal centre) -->
+          <div class="services-action-cards">
+            <!-- Book a bulky pickup -->
+            <button class="card card-action" id="bookBulkyPickupBtn">
+              <div class="card-action-text">
+                <span class="action-heading">Book a bulky pickup</span>
+                <span class="action-subtext">Subject to council availability</span>
+              </div>
+              <svg class="chevron-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M9 18l6-6-6-6" />
+              </svg>
+            </button>
+
+            <!-- Find a disposal centre -->
+            <button class="card card-action" id="findDisposalCentreBtn">
+              <div class="card-action-text">
+                <span class="action-heading">Find a disposal centre</span>
+                <span class="action-subtext">See facilities and accepted items</span>
+              </div>
+              <svg class="chevron-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M9 18l6-6-6-6" />
+              </svg>
+            </button>
+          </div>
+
+          <!-- Upcoming Collections List -->
+          <div class="card upcoming-card">
+            <h3 class="card-title">Upcoming</h3>
+            <div class="upcoming-list">
+              <div class="upcoming-item">
+                <span class="upcoming-date">01 Oct</span>
+                <span class="upcoming-divider">·</span>
+                <span class="upcoming-bins">General waste + Garden & food</span>
+              </div>
+              <div class="upcoming-item">
+                <span class="upcoming-date">08 Oct</span>
+                <span class="upcoming-divider">·</span>
+                <span class="upcoming-bins">General waste + Recycling</span>
+              </div>
+              <div class="upcoming-item">
+                <span class="upcoming-date">15 Oct</span>
+                <span class="upcoming-divider">·</span>
+                <span class="upcoming-bins">General waste + Garden & food</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
     </div>
-  </section>
+  </main>
 
-  <!-- Interactive Waste Sorting Guide -->
-  <section class="waste-guide" id="waste-guide">
-    <div class="container">
-      <div class="section-header">
-        <span class="section-tag">Interactive Lookup</span>
-        <h2>How to Sort Your Waste</h2>
-        <p>Type any household item or filter by category to find the correct bin and disposal instructions.</p>
-      </div>
+  <!-- Mobile 4-Tab Bottom Navigation (Blueprint Spec: Home, Schedule, Recycle, Account) -->
+  <nav class="mobile-bottom-nav" aria-label="Mobile Navigation">
+    <button class="tab-item active" id="tabHome">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+        <polyline points="9 22 9 12 15 12 15 22" />
+      </svg>
+      <span>Home</span>
+    </button>
+    <button class="tab-item" id="tabSchedule">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+        <line x1="16" y1="2" x2="16" y2="6" />
+        <line x1="8" y1="2" x2="8" y2="6" />
+        <line x1="3" y1="10" x2="21" y2="10" />
+      </svg>
+      <span>Schedule</span>
+    </button>
+    <button class="tab-item" id="tabRecycle">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M7 19H4.815a1.83 1.83 0 0 1-1.57-.881 1.785 1.785 0 0 1-.004-1.784L7.196 9.5" />
+        <path d="M11 19h8.2a1.8 1.8 0 0 0 1.572-.89 1.8 1.8 0 0 0-.012-1.815L17.5 11" />
+        <path d="m14 4.5 4.5 7.5" />
+        <path d="m5 16 2.5 3L10 16" />
+        <path d="m17 7-3-4.5L11 7" />
+        <path d="M9 13.5 6.5 9H12" />
+      </svg>
+      <span>Recycle</span>
+    </button>
+    <button class="tab-item" id="tabAccount">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+        <circle cx="12" cy="7" r="4" />
+      </svg>
+      <span>Account</span>
+    </button>
+  </nav>
 
-      <div class="guide-controls">
-        <div class="search-box">
-          <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <circle cx="11" cy="11" r="8"></circle>
-            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+  <!-- ============================================== -->
+  <!-- MODAL: REPORT A PROBLEM (SCREEN 02 BLUEPRINT) -->
+  <!-- ============================================== -->
+  <div class="modal-overlay" id="reportModal" aria-hidden="true">
+    <div class="modal-sheet" role="dialog" aria-modal="true" aria-labelledby="reportModalTitle">
+      <div class="sheet-header">
+        <button class="back-btn" id="closeReportModalBtn" aria-label="Close report wizard">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M15 18l-6-6 6-6" />
           </svg>
-          <input 
-            type="text" 
-            id="wasteSearchInput" 
-            placeholder="Search items (e.g. plastic bottle, battery, cardboard, banana peel)..." 
-            autocomplete="off"
-          />
-          <button id="clearSearchBtn" class="clear-btn" aria-label="Clear search" style="display: none;">&times;</button>
-        </div>
-
-        <div class="category-filters" id="categoryFilters">
-          <button class="filter-btn active" data-category="all">All Items</button>
-          <button class="filter-btn" data-category="plastic">Plastics</button>
-          <button class="filter-btn" data-category="paper">Paper & Cardboard</button>
-          <button class="filter-btn" data-category="organic">Organic / Compost</button>
-          <button class="filter-btn" data-category="glass">Glass & Metals</button>
-          <button class="filter-btn" data-category="hazardous">E-Waste & Hazardous</button>
-        </div>
-      </div>
-
-      <!-- Item cards injected via JS -->
-      <div class="guide-grid" id="guideGrid"></div>
-      <div class="no-results" id="noResults" style="display: none;">
-        <p>No matching items found. Try searching another item name or view all categories.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- Impact & Stats Section -->
-  <section class="impact" id="impact">
-    <div class="container">
-      <div class="impact-wrapper">
-        <div class="impact-text">
-          <span class="section-tag light">Measurable Impact</span>
-          <h2>Turning Waste Into Renewed Resources</h2>
-          <p>
-            Proper sorting prevents landfill overcrowding, reduces greenhouse gas emissions, 
-            and conserves vital raw materials.
-          </p>
-          <ul class="impact-checklist">
-            <li>✔ Over 82% diversion from municipal landfills</li>
-            <li>✔ Closed-loop processing for post-consumer plastics</li>
-            <li>✔ Certified environmental safe-handling compliance</li>
-          </ul>
-        </div>
-        <div class="impact-stats-grid">
-          <div class="stat-box">
-            <h3>45,200</h3>
-            <p>Tons Recycled</p>
-          </div>
-          <div class="stat-box">
-            <h3>31,800</h3>
-            <p>MWh Energy Saved</p>
-          </div>
-          <div class="stat-box">
-            <h3>18,400</h3>
-            <p>CO₂ Reduced (Tons)</p>
-          </div>
-          <div class="stat-box">
-            <h3>9,250</h3>
-            <p>Trees Preserved</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Contact / CTA Banner -->
-  <section class="contact" id="contact">
-    <div class="container">
-      <div class="cta-banner">
-        <h2>Ready for Cleaner Surroundings?</h2>
-        <p>Schedule your next household or business recycling pickup with just a few clicks.</p>
-        <button class="btn btn-primary btn-large" id="ctaScheduleBtn">Book a Pickup Now</button>
-      </div>
-    </div>
-  </section>
-
-  <!-- Footer -->
-  <footer class="footer">
-    <div class="container footer-content">
-      <div class="footer-info">
-        <div class="brand-logo footer-logo">
-          <svg class="logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M7 19H4.815a1.83 1.83 0 0 1-1.57-.881 1.785 1.785 0 0 1-.004-1.784L7.196 9.5" />
-            <path d="M11 19h8.2a1.8 1.8 0 0 0 1.572-.89 1.8 1.8 0 0 0-.012-1.815L17.5 11" />
-            <path d="m14 4.5 4.5 7.5" />
-            <path d="m5 16 2.5 3L10 16" />
-            <path d="m17 7-3-4.5L11 7" />
-            <path d="M9 13.5 6.5 9H12" />
+        </button>
+        <h2 id="reportModalTitle">Report a problem</h2>
+        <div class="sheet-header-flag">
+          <svg class="flag-icon" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M4 2v20h2V14h11l-1.5-4.5L17 5H6V2H4z" />
           </svg>
-          <span>EcoCycle</span>
         </div>
-        <p>Sustainable waste management, smart recycling systems, and community environmental solutions.</p>
-      </div>
-      <div class="footer-links">
-        <h4>Navigation</h4>
-        <ul>
-          <li><a href="#hero">Home</a></li>
-          <li><a href="#services">Services</a></li>
-          <li><a href="#waste-guide">Sorting Guide</a></li>
-          <li><a href="#impact">Our Impact</a></li>
-        </ul>
-      </div>
-      <div class="footer-links">
-        <h4>Support</h4>
-        <ul>
-          <li><a href="#">Disposal FAQ</a></li>
-          <li><a href="#">Bin Collection Schedule</a></li>
-          <li><a href="#">Report Illegal Dumping</a></li>
-          <li><a href="#">Emergency Hotline</a></li>
-        </ul>
-      </div>
-    </div>
-    <div class="container footer-bottom">
-      <p>&copy; 2026 EcoCycle Waste Management System. All rights reserved.</p>
-    </div>
-  </footer>
-
-  <!-- Modal: Schedule Pickup Form -->
-  <div class="modal-overlay" id="pickupModal" aria-hidden="true">
-    <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-      <button class="modal-close" id="closeModalBtn" aria-label="Close modal">&times;</button>
-      <div class="modal-header">
-        <h3 id="modalTitle">Schedule a Waste Pickup</h3>
-        <p>Fill out the details below to request a doorstep collection.</p>
       </div>
 
-      <form id="pickupForm" class="pickup-form">
-        <div class="form-group">
-          <label for="fullName">Full Name</label>
-          <input type="text" id="fullName" required placeholder="Jane Doe" />
+      <!-- Step 1: Issue Selection (Exact blueprint options) -->
+      <div class="wizard-step" id="reportStep1">
+        <div class="step-intro">
+          <h3>Choose an issue</h3>
+          <p>What would you like to report?</p>
         </div>
 
-        <div class="form-row">
-          <div class="form-group">
-            <label for="phone">Phone Number</label>
-            <input type="tel" id="phone" required placeholder="e.g. 0412 345 678" />
+        <div class="issue-options-list">
+          <label class="issue-option-card selected">
+            <input type="radio" name="reportCategory" value="Missed collection" checked />
+            <div class="radio-indicator"></div>
+            <div class="option-details">
+              <strong>Missed collection</strong>
+              <span>Bin was not emptied</span>
+            </div>
+          </label>
+
+          <label class="issue-option-card">
+            <input type="radio" name="reportCategory" value="Damaged or missing bin" />
+            <div class="radio-indicator"></div>
+            <div class="option-details">
+              <strong>Damaged or missing bin</strong>
+              <span>Broken lid, wheel or missing bin</span>
+            </div>
+          </label>
+
+          <label class="issue-option-card">
+            <input type="radio" name="reportCategory" value="Overflowing public bin" />
+            <div class="radio-indicator"></div>
+            <div class="option-details">
+              <strong>Overflowing public bin</strong>
+              <span>Street, park or public place</span>
+            </div>
+          </label>
+
+          <label class="issue-option-card">
+            <input type="radio" name="reportCategory" value="Illegal dumping" />
+            <div class="radio-indicator"></div>
+            <div class="option-details">
+              <strong>Illegal dumping</strong>
+              <span>Waste left in a public place</span>
+            </div>
+          </label>
+
+          <label class="issue-option-card">
+            <input type="radio" name="reportCategory" value="Something else" />
+            <div class="radio-indicator"></div>
+            <div class="option-details">
+              <strong>Something else</strong>
+              <span>Describe another issue</span>
+            </div>
+          </label>
+        </div>
+
+        <div class="wizard-bottom">
+          <p class="wizard-footnote">Next: location, bin and optional photo</p>
+          <button class="btn btn-primary btn-full" id="reportNextBtn">Next</button>
+          <div class="wizard-links">
+            <button class="link-btn" id="openMyReportsBtn">My reports · Track progress</button>
           </div>
+        </div>
+      </div>
+
+      <!-- Step 2: Conditional Details Form -->
+      <div class="wizard-step" id="reportStep2" style="display: none;">
+        <div class="step-intro">
+          <h3 id="step2Title">Details for report</h3>
+          <p id="step2Subtitle">Please provide specific details for local resolution.</p>
+        </div>
+
+        <form id="reportDetailsForm">
+          <!-- Bin selector for bin issues -->
+          <div class="form-group" id="binSelectGroup">
+            <label for="reportBinType">Affected bin</label>
+            <select id="reportBinType">
+              <option value="Red-lid General waste">Red-lid General waste</option>
+              <option value="Yellow-lid Recycling">Yellow-lid Recycling</option>
+              <option value="Green-lid Garden & food">Green-lid Garden & food</option>
+            </select>
+          </div>
+
+          <!-- Location (Household or Public) -->
           <div class="form-group">
-            <label for="pickupDate">Preferred Date</label>
-            <input type="date" id="pickupDate" required />
+            <label for="reportLocation">Location</label>
+            <input type="text" id="reportLocation" value="12 Greenview Ave, Riverton" required />
+            <small class="field-hint" id="locationHint">Defaulting to registered household address.</small>
+          </div>
+
+          <!-- Description -->
+          <div class="form-group">
+            <label for="reportDescription">Description</label>
+            <textarea id="reportDescription" rows="3" placeholder="Provide any helpful notes (e.g., bin was out before 6:30am)..." required></textarea>
+          </div>
+
+          <!-- Photo Upload Preview (Specification Contract) -->
+          <div class="form-group">
+            <label>Attach photo (optional)</label>
+            <div class="photo-upload-box">
+              <input type="file" id="reportPhotoInput" accept="image/*" />
+              <div class="upload-placeholder" id="uploadPlaceholder">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="3" y="3" width="18" height="18" rx="2" />
+                  <circle cx="8.5" cy="8.5" r="1.5" />
+                  <polyline points="21 15 16 10 5 21" />
+                </svg>
+                <span>Tap to upload or take a photo</span>
+              </div>
+              <div class="photo-preview-wrap" id="photoPreviewWrap" style="display: none;">
+                <img id="photoPreviewImg" src="" alt="Report photo preview" />
+                <button type="button" class="remove-photo-btn" id="removePhotoBtn">&times;</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="wizard-bottom">
+            <div class="btn-group-dual">
+              <button type="button" class="btn btn-outline" id="reportBackBtn">Back</button>
+              <button type="submit" class="btn btn-primary">Submit report</button>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <!-- Step 3: Success Confirmation (Local Demo Record) -->
+      <div class="wizard-step" id="reportStepSuccess" style="display: none;">
+        <div class="report-success-card">
+          <div class="success-badge">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+              <polyline points="20 6 9 17 4 12" />
+            </svg>
+          </div>
+          <h3>Report submitted (Demo)</h3>
+          <p class="success-ref">Reference: <strong id="submittedRefNumber">ECO-83921</strong></p>
+          <div class="audit-timeline">
+            <div class="timeline-step active">
+              <span class="timeline-dot"></span>
+              <div class="timeline-info">
+                <strong>Received (Local record)</strong>
+                <span id="submittedTimestamp">Just now</span>
+              </div>
+            </div>
+            <div class="timeline-step">
+              <span class="timeline-dot"></span>
+              <div class="timeline-info">
+                <strong>Under review</strong>
+                <span>Council triage</span>
+              </div>
+            </div>
+            <div class="timeline-step">
+              <span class="timeline-dot"></span>
+              <div class="timeline-info">
+                <strong>Crew assigned</strong>
+                <span>Pending dispatch</span>
+              </div>
+            </div>
+          </div>
+          <p class="demo-disclaimer">Saved locally on your browser. Council API integration required for operational dispatch.</p>
+          <button class="btn btn-primary btn-full" id="finishReportBtn">Done</button>
+        </div>
+      </div>
+
+      <!-- Step 4: My Reports List -->
+      <div class="wizard-step" id="reportStepMyReports" style="display: none;">
+        <div class="step-intro">
+          <h3>My reports</h3>
+          <p>Locally stored issue reports</p>
+        </div>
+        <div class="my-reports-list" id="myReportsList"></div>
+        <div class="wizard-bottom">
+          <button class="btn btn-outline btn-full" id="backToChooseIssueBtn">New report</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ============================================== -->
+  <!-- MODAL: SCHEDULE FULL VIEW (BLUEPRINT SPEC)    -->
+  <!-- ============================================== -->
+  <div class="modal-overlay" id="scheduleModal" aria-hidden="true">
+    <div class="modal-sheet" role="dialog" aria-modal="true" aria-labelledby="scheduleModalTitle">
+      <div class="sheet-header">
+        <button class="back-btn" id="closeScheduleModalBtn">&times;</button>
+        <h2 id="scheduleModalTitle">Collection schedule</h2>
+        <div style="width: 24px;"></div>
+      </div>
+      <div class="sheet-body">
+        <p class="sheet-intro-text">Schedule for <strong>12 Greenview Ave, Riverton</strong></p>
+        
+        <div class="schedule-calendar-list">
+          <div class="schedule-card-row exception">
+            <div class="row-date-badge">
+              <strong>Fri</strong>
+              <span>25 Sep</span>
+            </div>
+            <div class="row-details">
+              <div class="row-tags">
+                <span class="badge-bin bin-red-tag">Red: General</span>
+                <span class="badge-bin bin-yellow-tag">Yellow: Recycling</span>
+              </div>
+              <span class="exception-note">⚠️ Moved from Thursday 24 Sep due to Public Holiday</span>
+            </div>
+          </div>
+
+          <div class="schedule-card-row">
+            <div class="row-date-badge">
+              <strong>Thu</strong>
+              <span>01 Oct</span>
+            </div>
+            <div class="row-details">
+              <div class="row-tags">
+                <span class="badge-bin bin-red-tag">Red: General</span>
+                <span class="badge-bin bin-green-tag">Green: Garden & food</span>
+              </div>
+              <span class="regular-note">Regular collection (7:00 am)</span>
+            </div>
+          </div>
+
+          <div class="schedule-card-row">
+            <div class="row-date-badge">
+              <strong>Thu</strong>
+              <span>08 Oct</span>
+            </div>
+            <div class="row-details">
+              <div class="row-tags">
+                <span class="badge-bin bin-red-tag">Red: General</span>
+                <span class="badge-bin bin-yellow-tag">Yellow: Recycling</span>
+              </div>
+              <span class="regular-note">Regular collection (7:00 am)</span>
+            </div>
+          </div>
+
+          <div class="schedule-card-row">
+            <div class="row-date-badge">
+              <strong>Thu</strong>
+              <span>15 Oct</span>
+            </div>
+            <div class="row-details">
+              <div class="row-tags">
+                <span class="badge-bin bin-red-tag">Red: General</span>
+                <span class="badge-bin bin-green-tag">Green: Garden & food</span>
+              </div>
+              <span class="regular-note">Regular collection (7:00 am)</span>
+            </div>
           </div>
         </div>
 
-        <div class="form-group">
-          <label for="address">Pickup Address</label>
-          <input type="text" id="address" required placeholder="Street address, suburb, post code" />
-        </div>
-
-        <div class="form-group">
-          <label for="wasteType">Primary Waste Category</label>
-          <select id="wasteType" required>
-            <option value="">Select waste type...</option>
-            <option value="General Recyclables (Plastics, Paper, Cans)">General Recyclables (Plastics, Paper, Cans)</option>
-            <option value="Organic & Garden Compost">Organic & Garden Compost</option>
-            <option value="Electronic Waste (E-Waste)">Electronic Waste (E-Waste)</option>
-            <option value="Bulky Household Goods & Furniture">Bulky Household Goods & Furniture</option>
-            <option value="Hazardous / Chemical Waste">Hazardous / Chemical Waste</option>
-          </select>
-        </div>
-
-        <div class="form-group">
-          <label for="notes">Additional Notes / Approximate Weight</label>
-          <textarea id="notes" rows="2" placeholder="e.g., 2 boxes of books, 1 old microwave..."></textarea>
-        </div>
-
-        <div class="modal-actions">
-          <button type="button" class="btn btn-outline" id="cancelModalBtn">Cancel</button>
-          <button type="submit" class="btn btn-primary">Confirm Pickup Request</button>
-        </div>
-      </form>
-
-      <!-- Success Confirmation (hidden by default) -->
-      <div class="booking-success" id="bookingSuccess" style="display: none;">
-        <div class="success-icon">✓</div>
-        <h3>Pickup Scheduled Successfully!</h3>
-        <p id="successSummary"></p>
-        <button class="btn btn-primary" id="successDoneBtn">Done</button>
+        <button class="btn btn-outline btn-full" id="exportCalendarBtn" style="margin-top: 20px;">
+          Export to Calendar (.ics)
+        </button>
       </div>
     </div>
   </div>
 
+  <!-- ============================================== -->
+  <!-- MODAL: BULKY PICKUP (SPECIFICATION CONTRACT)  -->
+  <!-- ============================================== -->
+  <div class="modal-overlay" id="bulkyModal" aria-hidden="true">
+    <div class="modal-sheet" role="dialog" aria-modal="true" aria-labelledby="bulkyModalTitle">
+      <div class="sheet-header">
+        <button class="back-btn" id="closeBulkyModalBtn">&times;</button>
+        <h2 id="bulkyModalTitle">Book a bulky pickup</h2>
+        <div style="width: 24px;"></div>
+      </div>
+      <div class="sheet-body">
+        <div class="demo-callout">
+          <strong>Council prototype feature:</strong> Bulky collections are subject to local council quota and availability rules.
+        </div>
+        <form id="bulkyForm">
+          <div class="form-group">
+            <label>Household Address</label>
+            <input type="text" value="12 Greenview Ave, Riverton" readonly />
+          </div>
+          <div class="form-group">
+            <label>Items for pickup (max 3 items)</label>
+            <input type="text" placeholder="e.g., Mattress, broken armchair, timber desk" required />
+          </div>
+          <div class="form-group">
+            <label>Available collection window</label>
+            <select required>
+              <option value="">Select available council window...</option>
+              <option value="Tue 06 Oct (Morning)">Tuesday, 06 Oct (6:00 am – 12:00 pm)</option>
+              <option value="Tue 13 Oct (Morning)">Tuesday, 13 Oct (6:00 am – 12:00 pm)</option>
+            </select>
+          </div>
+          <button type="submit" class="btn btn-primary btn-full">Submit demo request</button>
+        </form>
+        <div id="bulkySuccess" style="display: none; text-align: center; padding: 20px 0;">
+          <h3 style="color: var(--primary);">Request recorded (Demo)</h3>
+          <p style="font-size: 0.9rem; margin-top: 8px;">Non-binding council booking simulation. No operational truck has been dispatched.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================== -->
+  <!-- MODAL: DISPOSAL CENTRES (SPECIFICATION)       -->
+  <!-- ============================================== -->
+  <div class="modal-overlay" id="centresModal" aria-hidden="true">
+    <div class="modal-sheet" role="dialog" aria-modal="true" aria-labelledby="centresModalTitle">
+      <div class="sheet-header">
+        <button class="back-btn" id="closeCentresModalBtn">&times;</button>
+        <h2 id="centresModalTitle">Find a disposal centre</h2>
+        <div style="width: 24px;"></div>
+      </div>
+      <div class="sheet-body">
+        <div class="facility-card">
+          <h4>Riverton Resource Recovery Centre</h4>
+          <p class="facility-address">45 Quarry Road, Riverton</p>
+          <div class="facility-meta">
+            <span class="meta-tag">Open: Sat–Wed 8:00am–4:00pm</span>
+            <span class="meta-tag">Fees: Free for residents</span>
+          </div>
+          <p class="facility-accepted"><strong>Accepted:</strong> E-Waste, Paint, Mattresses, Scrap Metal, Car Batteries</p>
+        </div>
+
+        <div class="facility-card">
+          <h4>East Valley Eco Hub</h4>
+          <p class="facility-address">12 Industrial Parkway, East Valley</p>
+          <div class="facility-meta">
+            <span class="meta-tag">Open: Mon–Fri 7:30am–3:30pm</span>
+            <span class="meta-tag">Fees: Council voucher or standard rates</span>
+          </div>
+          <p class="facility-accepted"><strong>Accepted:</strong> Green waste, Clean timber, Cardboard, Household chemicals</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================== -->
+  <!-- MODAL: CHANGE ADDRESS SWITCHER                -->
+  <!-- ============================================== -->
+  <div class="modal-overlay" id="addressModal" aria-hidden="true">
+    <div class="modal-sheet" role="dialog" aria-modal="true" aria-labelledby="addressModalTitle">
+      <div class="sheet-header">
+        <button class="back-btn" id="closeAddressModalBtn">&times;</button>
+        <h2 id="addressModalTitle">Select demo address</h2>
+        <div style="width: 24px;"></div>
+      </div>
+      <div class="sheet-body">
+        <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 16px;">
+          Choose an address to test area-specific collection schedules:
+        </p>
+        <div class="address-options">
+          <button class="address-btn active" data-addr="12 Greenview Ave, Riverton" data-name="John">
+            <strong>12 Greenview Ave, Riverton</strong>
+            <span>Zone A • Thursday collection (Moved to Friday this week)</span>
+          </button>
+          <button class="address-btn" data-addr="84 High Street, Riverton" data-name="Sarah">
+            <strong>84 High Street, Riverton</strong>
+            <span>Zone B • Monday collection</span>
+          </button>
+          <button class="address-btn" data-addr="5 Parklands Crescent, Riverton" data-name="Michael">
+            <strong>5 Parklands Crescent, Riverton</strong>
+            <span>Zone C • Wednesday collection</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- JavaScript -->
   <script src="script.js"></script>
 </body>
 </html>
