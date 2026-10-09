@@ -1,0 +1,43 @@
+# Markdown files
+*.md
+*.markdown
+# Keep README.md tracked (remove or comment out the next line if you also want README.md ignored)
+!README.md
+
+# Document formats
+*.doc
+*.docx
+*.odt
+*.rtf
+*.txt
+*.pages
+
+# PDF files
+*.pdf
+
+# Presentations & Spreadsheets
+*.ppt
+*.pptx
+*.xls
+*.xlsx
+*.csv
+
+# Documentation directories
+docs/
+doc/
+
+# Operating System files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDE & Editor files
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
