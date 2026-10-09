@@ -8,208 +8,521 @@
 </head>
 <body>
 
-  <!-- Top Header (Image 3: Brand on left, top-right red flag, desktop nav in middle) -->
-  <header class="app-header">
-    <div class="container header-container">
-      <a href="#" class="brand-link">
-        <span class="brand-circle">
-          <svg viewBox="0 0 24 24" fill="currentColor">
-            <circle cx="12" cy="12" r="10" />
-            <path d="M7 17L17 7" stroke="#FFF" stroke-width="2.5" stroke-linecap="round" />
-          </svg>
-        </span>
-        <span class="brand-text">EcoTrack</span>
-      </a>
+  <!-- ========================================================= -->
+  <!-- SCREEN 01: WELCOME (Image 1, Left)                        -->
+  <!-- ========================================================= -->
+  <section class="screen-view active-view" id="screenWelcome">
+    <div class="onboarding-container">
+      <div class="onboarding-card">
+        <header class="welcome-header">
+          <div class="brand-mini">
+            <span class="brand-icon">
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <circle cx="12" cy="12" r="10" />
+                <path d="M7 17L17 7" stroke="#FFF" stroke-width="2.5" stroke-linecap="round" />
+              </svg>
+            </span>
+            <span class="brand-title">EcoTrack</span>
+          </div>
+        </header>
 
-      <!-- Desktop Nav Links (Disabled/Muted except Home) -->
-      <nav class="desktop-nav-items" aria-label="Main Navigation">
-        <span class="d-link active">Home</span>
-        <span class="d-link disabled">Schedule</span>
-        <span class="d-link disabled">Recycle</span>
-        <span class="d-link disabled">Disposal centres</span>
-        <span class="d-link disabled">Account</span>
-      </nav>
-
-      <!-- Small Header Red Flag Button (Image 3) -->
-      <button class="header-flag-btn" id="homeReportFlagBtn" aria-label="Report a problem" title="Report a problem">
-        <svg viewBox="0 0 20 20" fill="currentColor">
-          <path fill-rule="evenodd" d="M3 3a1 1 0 011-1h12a1 1 0 01.8 1.6L14.25 7l2.55 3.4A1 1 0 0116 12H4v5a1 1 0 11-2 0V3z" clip-rule="evenodd" />
-        </svg>
-      </button>
-    </div>
-  </header>
-
-  <!-- Main Home Content (Image 3: 05 / Resident Home) -->
-  <main class="home-main">
-    <div class="container home-container">
-      
-      <!-- Greeting Subhead -->
-      <section class="user-greeting-section">
-        <h1 class="resident-name">Good afternoon, John</h1>
-        <div class="address-line">
-          <span id="homeAddressLabel">12 Greenview Ave</span>
-          <span class="dot-sep">·</span>
-          <button class="change-link" id="homeChangeAddrBtn">Change</button>
-        </div>
-      </section>
-
-      <!-- Holiday Notice Card (Image 3: Rounded amber border and soft yellow bg) -->
-      <div class="holiday-notice-card">
-        <strong class="notice-title">Collection moved to Friday</strong>
-        <span class="notice-sub">Public holiday notice · demo</span>
-      </div>
-
-      <!-- Two-column responsive desktop layout (Stacked on mobile) -->
-      <div class="home-layout-grid">
-        
-        <!-- Primary / Main Column (Left on Desktop, Full on Mobile) -->
-        <div class="home-primary-col">
+        <div class="welcome-content">
+          <div class="welcome-hero-icon">
+            <svg viewBox="0 0 80 80" fill="none">
+              <circle cx="40" cy="40" r="38" fill="#15803D" />
+              <line x1="24" y1="56" x2="56" y2="24" stroke="white" stroke-width="6" stroke-linecap="round" />
+            </svg>
+          </div>
+          <h2 class="welcome-brand-name">EcoTrack</h2>
           
-          <!-- NEXT COLLECTION CARD (Image 3: Mint bg, tag, dates, white bin cards) -->
-          <div class="next-collection-card">
-            <span class="tag-next">NEXT COLLECTION</span>
-            
-            <div class="date-header-group">
-              <h2 class="date-big">Friday, 25 Sept</h2>
-              <div class="date-badges">
-                <span class="pill-badge pill-in-days">In 3 days</span>
-                <span class="pill-badge pill-usually">Usually Thursday</span>
-              </div>
+          <h1 class="welcome-heading">Never miss bin day again</h1>
+          <p class="welcome-subhead">Collection days, simple reminders, and clear recycling answers.</p>
+
+          <div class="welcome-features">
+            <div class="feature-pill">
+              <span class="feat-icon">
+                <svg viewBox="0 0 20 20" fill="#15803D"><rect x="3" y="4" width="14" height="13" rx="2" fill="none" stroke="#15803D" stroke-width="2"/><line x1="3" y1="8" x2="17" y2="8" stroke="#15803D" stroke-width="2"/></svg>
+              </span>
+              <span>All your collection days</span>
             </div>
 
-            <!-- Two White Bin Cards inside Next Collection -->
-            <div class="due-bins-flex">
-              <div class="due-bin-card">
-                <div class="bin-icon-wheelie bin-red-lid">
-                  <div class="w-lid"></div>
-                  <div class="w-body"></div>
-                </div>
-                <div class="due-bin-text">
-                  <strong>General</strong>
-                  <span>Red lid</span>
-                </div>
-              </div>
-
-              <div class="due-bin-card">
-                <div class="bin-icon-wheelie bin-yellow-lid">
-                  <div class="w-lid"></div>
-                  <div class="w-body"></div>
-                </div>
-                <div class="due-bin-text">
-                  <strong>Recycling</strong>
-                  <span>Yellow lid</span>
-                </div>
-              </div>
+            <div class="feature-pill">
+              <span class="feat-icon">
+                <svg viewBox="0 0 20 20" fill="#15803D"><path d="M10 2a6 6 0 00-6 6v3l-2 2h16l-2-2V8a6 6 0 00-6-6z" fill="none" stroke="#15803D" stroke-width="2"/><circle cx="10" cy="17" r="1.5" fill="#15803D"/></svg>
+              </span>
+              <span>A reminder the night before</span>
             </div>
 
-            <p class="put-bins-time">Put bins out by 7:00 am</p>
-
-            <!-- Prominent Green Button (Image 3) -->
-            <button class="btn-green btn-block" id="homeViewScheduleBtn">View full schedule</button>
+            <div class="feature-pill">
+              <span class="feat-icon">
+                <svg viewBox="0 0 20 20" fill="#15803D"><path d="M4 6h12M6 6v9a2 2 0 002 2h4a2 2 0 002-2V6M9 6V4a1 1 0 011-1h0a1 1 0 011 1v2" fill="none" stroke="#15803D" stroke-width="2"/></svg>
+              </span>
+              <span>Know which bin to use</span>
+            </div>
           </div>
 
-          <!-- Reminder Row Card (Image 3) -->
-          <div class="card-remind-row">
-            <span class="remind-row-text">Remind me · Thursday 7:00 pm</span>
+          <button class="btn-green btn-block" id="welcomeStartBtn">Get started</button>
+          <button class="lang-link">Language: English</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================= -->
+  <!-- SCREEN 02: FIND ADDRESS (Image 1, Right)                  -->
+  <!-- ========================================================= -->
+  <section class="screen-view" id="screenAddress" style="display: none;">
+    <div class="onboarding-container">
+      <div class="onboarding-card">
+        <header class="flow-header">
+          <button class="back-nav" id="backToWelcomeBtn" aria-label="Go back">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg>
+          </button>
+          <h2>Set up EcoTrack</h2>
+        </header>
+
+        <!-- Stepper -->
+        <div class="stepper">
+          <div class="step-bars">
+            <div class="step-bar active"></div>
+            <div class="step-bar"></div>
+            <div class="step-bar"></div>
+          </div>
+          <div class="step-labels">
+            <span class="step-label active">1. Address</span>
+            <span class="step-label">2. Bins</span>
+            <span class="step-label">3. Reminders</span>
+          </div>
+        </div>
+
+        <div class="flow-body">
+          <h1 class="flow-title">Where do you live?</h1>
+          <p class="flow-subtitle">We use your address to find bin days.</p>
+
+          <div class="input-group">
+            <label class="input-label" for="addressSearchInput">Street address</label>
+            <div class="input-wrap has-focus-green">
+              <input type="text" id="addressSearchInput" value="12 green" placeholder="Enter street address" />
+            </div>
+          </div>
+
+          <div class="suggestions-section">
+            <h3 class="suggestions-header">Suggested addresses</h3>
+            <div class="suggestion-list">
+              <button class="suggestion-card" data-addr="12 Greenview Ave, Riverton">
+                <div class="sugg-icon">
+                  <svg viewBox="0 0 24 24" fill="#15803D"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 110-5 2.5 2.5 0 010 5z"/></svg>
+                </div>
+                <div class="sugg-text">
+                  <strong>12 Greenview Ave, Riverton</strong>
+                  <span>Demo location</span>
+                </div>
+                <svg class="chevron-arrow" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/></svg>
+              </button>
+
+              <button class="suggestion-card" data-addr="12 Greenway St, Riverton">
+                <div class="sugg-icon">
+                  <svg viewBox="0 0 24 24" fill="#15803D"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 110-5 2.5 2.5 0 010 5z"/></svg>
+                </div>
+                <div class="sugg-text">
+                  <strong>12 Greenway St, Riverton</strong>
+                  <span>Demo location</span>
+                </div>
+                <svg class="chevron-arrow" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/></svg>
+              </button>
+
+              <button class="suggestion-card" data-addr="120 Greenview Ave, Riverton">
+                <div class="sugg-icon">
+                  <svg viewBox="0 0 24 24" fill="#15803D"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 110-5 2.5 2.5 0 010 5z"/></svg>
+                </div>
+                <div class="sugg-text">
+                  <strong>120 Greenview Ave, Riverton</strong>
+                  <span>Demo location</span>
+                </div>
+                <svg class="chevron-arrow" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/></svg>
+              </button>
+            </div>
+          </div>
+
+          <button class="link-action-green" id="useLocationBtn">Use my current location</button>
+          <p class="footnote-muted">If no address is found, try postcode search.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================= -->
+  <!-- SCREEN 03: CONFIRM BINS (Image 2, Left)                   -->
+  <!-- ========================================================= -->
+  <section class="screen-view" id="screenBins" style="display: none;">
+    <div class="onboarding-container">
+      <div class="onboarding-card">
+        <header class="flow-header">
+          <button class="back-nav" id="backToAddressBtn" aria-label="Go back">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg>
+          </button>
+          <h2>Set up EcoTrack</h2>
+        </header>
+
+        <!-- Stepper -->
+        <div class="stepper">
+          <div class="step-bars">
+            <div class="step-bar active"></div>
+            <div class="step-bar active"></div>
+            <div class="step-bar"></div>
+          </div>
+          <div class="step-labels">
+            <span class="step-label active">1. Address</span>
+            <span class="step-label active">2. Bins</span>
+            <span class="step-label">3. Reminders</span>
+          </div>
+        </div>
+
+        <div class="flow-body">
+          <h1 class="flow-title">Your bins</h1>
+          <p class="flow-subtitle">Demo schedule for your address</p>
+
+          <div class="bins-setup-list">
+            <!-- General Waste -->
+            <div class="bin-setup-card">
+              <div class="bin-figure bin-red-fig">
+                <div class="fig-lid"></div>
+                <div class="fig-body"></div>
+              </div>
+              <div class="bin-setup-info">
+                <strong>General waste</strong>
+                <span>Every Thursday</span>
+              </div>
+              <div class="check-circle-green">✓</div>
+            </div>
+
+            <!-- Recycling -->
+            <div class="bin-setup-card">
+              <div class="bin-figure bin-yellow-fig">
+                <div class="fig-lid"></div>
+                <div class="fig-body"></div>
+              </div>
+              <div class="bin-setup-info">
+                <strong>Recycling</strong>
+                <span>Every second Thursday</span>
+              </div>
+              <div class="check-circle-green">✓</div>
+            </div>
+
+            <!-- Garden & Food -->
+            <div class="bin-setup-card">
+              <div class="bin-figure bin-green-fig">
+                <div class="fig-lid"></div>
+                <div class="fig-body"></div>
+              </div>
+              <div class="bin-setup-info">
+                <strong>Garden & food</strong>
+                <span>Every second Thursday</span>
+              </div>
+              <div class="check-circle-green">✓</div>
+            </div>
+          </div>
+
+          <button class="link-action-green align-left" id="reportMismatchBtn">Something not right? Tell us</button>
+
+          <div class="flow-bottom-action">
+            <button class="btn-green btn-block" id="confirmBinsBtn">Yes, that's right</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================= -->
+  <!-- SCREEN 04: ENABLE REMINDERS (Image 2, Right)              -->
+  <!-- ========================================================= -->
+  <section class="screen-view" id="screenReminders" style="display: none;">
+    <div class="onboarding-container">
+      <div class="onboarding-card">
+        <header class="flow-header">
+          <button class="back-nav" id="backToBinsBtn" aria-label="Go back">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg>
+          </button>
+          <h2>Set up EcoTrack</h2>
+        </header>
+
+        <!-- Stepper -->
+        <div class="stepper">
+          <div class="step-bars">
+            <div class="step-bar active"></div>
+            <div class="step-bar active"></div>
+            <div class="step-bar active"></div>
+          </div>
+          <div class="step-labels">
+            <span class="step-label active">1. Address</span>
+            <span class="step-label active">2. Bins</span>
+            <span class="step-label active">3. Reminders</span>
+          </div>
+        </div>
+
+        <div class="flow-body">
+          <h1 class="flow-title">Stay on schedule</h1>
+          <p class="flow-subtitle">Choose when you want a reminder.</p>
+
+          <!-- Toggle card -->
+          <div class="card-setting-toggle">
+            <div class="setting-text">
+              <strong>Collection reminders</strong>
+              <span>Tell me what bins to put out</span>
+            </div>
             <label class="switch-ui" aria-label="Toggle collection reminders">
-              <input type="checkbox" id="homeReminderToggle" checked />
+              <input type="checkbox" id="setupRemindersToggle" checked />
               <span class="slider-ui"></span>
             </label>
           </div>
 
-          <!-- What can I recycle? Card (Image 3) -->
-          <div class="recycle-input-card">
-            <div class="search-input-box">
-              <input type="text" id="homeRecycleSearch" placeholder="What can I recycle?" autocomplete="off" />
+          <!-- When section -->
+          <div class="sub-section">
+            <h3 class="sub-section-title">When?</h3>
+            <div class="option-cards-group">
+              <button class="option-time-card selected" id="optNightBefore">
+                <span class="opt-chevron">&gt;</span>
+                <span class="opt-label">Night before · 7:00 pm</span>
+                <svg class="chevron-arrow" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/></svg>
+              </button>
+
+              <button class="option-time-card" id="optMorningOf">
+                <span class="opt-chevron">&gt;</span>
+                <span class="opt-label">Morning of · 6:00 am</span>
+                <svg class="chevron-arrow" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/></svg>
+              </button>
             </div>
-            <!-- Instant guidance results drawer -->
-            <div class="instant-results" id="homeInstantResults" style="display: none;"></div>
           </div>
 
+          <!-- Notification method -->
+          <div class="sub-section">
+            <h3 class="sub-section-title">Notification method</h3>
+            <div class="method-pills-row">
+              <button class="method-pill active">In-app</button>
+              <button class="method-pill disabled">SMS · later</button>
+              <button class="method-pill disabled">Email · later</button>
+            </div>
+          </div>
+
+          <div class="flow-bottom-action">
+            <button class="btn-green btn-block" id="finishSetupBtn">Finish setup</button>
+          </div>
         </div>
-
-        <!-- Secondary Column (Sidebar on Desktop, Below on Mobile) -->
-        <div class="home-secondary-col">
-          
-          <!-- Other Services Card -->
-          <div class="side-card">
-            <h3 class="side-card-title">Other services</h3>
-            <div class="side-action-btn" id="sideBulkyBtn">
-              <div>
-                <strong>Book a bulky pickup</strong>
-                <span>Subject to council availability</span>
-              </div>
-              <svg class="chevron-arrow" viewBox="0 0 20 20" fill="currentColor">
-                <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/>
-              </svg>
-            </div>
-            <div class="side-action-btn" id="sideCentresBtn">
-              <div>
-                <strong>Find a disposal centre</strong>
-                <span>See facilities and accepted items</span>
-              </div>
-              <svg class="chevron-arrow" viewBox="0 0 20 20" fill="currentColor">
-                <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/>
-              </svg>
-            </div>
-          </div>
-
-          <!-- Upcoming Card -->
-          <div class="side-card">
-            <h3 class="side-card-title">Upcoming</h3>
-            <div class="up-row">
-              <strong>01 Oct</strong>
-              <span>· General waste + Garden & food</span>
-            </div>
-            <div class="up-row">
-              <strong>08 Oct</strong>
-              <span>· General waste + Recycling</span>
-            </div>
-            <div class="up-row">
-              <strong>15 Oct</strong>
-              <span>· General waste + Garden & food</span>
-            </div>
-          </div>
-
-        </div>
-
       </div>
+    </div>
+  </section>
+
+  <!-- ========================================================= -->
+  <!-- SCREEN 05: RESIDENT HOME (Image 3)                        -->
+  <!-- ========================================================= -->
+  <section class="screen-view" id="screenHome" style="display: none;">
+    <div class="home-wrapper">
+
+      <!-- Top Header -->
+      <header class="app-header">
+        <div class="container header-container">
+          <a href="#" class="brand-link" id="homeBrandLink">
+            <span class="brand-circle">
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <circle cx="12" cy="12" r="10" />
+                <path d="M7 17L17 7" stroke="#FFF" stroke-width="2.5" stroke-linecap="round" />
+              </svg>
+            </span>
+            <span class="brand-text">EcoTrack</span>
+          </a>
+
+          <!-- Desktop Nav Links -->
+          <nav class="desktop-nav-items" aria-label="Main Navigation">
+            <span class="d-link active">Home</span>
+            <span class="d-link disabled">Schedule</span>
+            <span class="d-link disabled">Recycle</span>
+            <span class="d-link disabled">Disposal centres</span>
+            <span class="d-link disabled">Account</span>
+          </nav>
+
+          <!-- Small Header Red Flag Button -->
+          <button class="header-flag-btn" id="homeReportFlagBtn" aria-label="Report a problem" title="Report a problem">
+            <svg viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M3 3a1 1 0 011-1h12a1 1 0 01.8 1.6L14.25 7l2.55 3.4A1 1 0 0116 12H4v5a1 1 0 11-2 0V3z" clip-rule="evenodd" />
+            </svg>
+          </button>
+        </div>
+      </header>
+
+      <!-- Main Home Content -->
+      <main class="home-main">
+        <div class="container home-container">
+          
+          <!-- Greeting Subhead -->
+          <section class="user-greeting-section">
+            <h1 class="resident-name">Good afternoon, John</h1>
+            <div class="address-line">
+              <span id="homeAddressLabel">12 Greenview Ave</span>
+              <span class="dot-sep">·</span>
+              <button class="change-link" id="homeChangeAddrBtn">Change</button>
+            </div>
+          </section>
+
+          <!-- Holiday Notice Card -->
+          <div class="holiday-notice-card">
+            <strong class="notice-title">Collection moved to Friday</strong>
+            <span class="notice-sub">Public holiday notice · demo</span>
+          </div>
+
+          <!-- Two-column responsive desktop layout (Stacked on mobile) -->
+          <div class="home-layout-grid">
+            
+            <!-- Primary Column -->
+            <div class="home-primary-col">
+              
+              <!-- NEXT COLLECTION CARD -->
+              <div class="next-collection-card">
+                <span class="tag-next">NEXT COLLECTION</span>
+                
+                <div class="date-header-group">
+                  <h2 class="date-big">Friday, 25 Sept</h2>
+                  <div class="date-badges">
+                    <span class="pill-badge pill-in-days">In 3 days</span>
+                    <span class="pill-badge pill-usually">Usually Thursday</span>
+                  </div>
+                </div>
+
+                <!-- Two White Bin Cards inside Next Collection -->
+                <div class="due-bins-flex">
+                  <div class="due-bin-card">
+                    <div class="bin-icon-wheelie bin-red-lid">
+                      <div class="w-lid"></div>
+                      <div class="w-body"></div>
+                    </div>
+                    <div class="due-bin-text">
+                      <strong>General</strong>
+                      <span>Red lid</span>
+                    </div>
+                  </div>
+
+                  <div class="due-bin-card">
+                    <div class="bin-icon-wheelie bin-yellow-lid">
+                      <div class="w-lid"></div>
+                      <div class="w-body"></div>
+                    </div>
+                    <div class="due-bin-text">
+                      <strong>Recycling</strong>
+                      <span>Yellow lid</span>
+                    </div>
+                  </div>
+                </div>
+
+                <p class="put-bins-time">Put bins out by 7:00 am</p>
+
+                <!-- Prominent Green Button -->
+                <button class="btn-green btn-block" id="homeViewScheduleBtn">View full schedule</button>
+              </div>
+
+              <!-- Reminder Row Card -->
+              <div class="card-remind-row">
+                <span class="remind-row-text">Remind me · Thursday 7:00 pm</span>
+                <label class="switch-ui" aria-label="Toggle collection reminders">
+                  <input type="checkbox" id="homeReminderToggle" checked />
+                  <span class="slider-ui"></span>
+                </label>
+              </div>
+
+              <!-- What can I recycle? Card -->
+              <div class="recycle-input-card">
+                <div class="search-input-box">
+                  <input type="text" id="homeRecycleSearch" placeholder="What can I recycle?" autocomplete="off" />
+                </div>
+                <!-- Instant guidance results drawer -->
+                <div class="instant-results" id="homeInstantResults" style="display: none;"></div>
+              </div>
+
+            </div>
+
+            <!-- Secondary Column (Sidebar on Desktop) -->
+            <div class="home-secondary-col">
+              
+              <!-- Other Services Card -->
+              <div class="side-card">
+                <h3 class="side-card-title">Other services</h3>
+                <div class="side-action-btn" id="sideBulkyBtn">
+                  <div>
+                    <strong>Book a bulky pickup</strong>
+                    <span>Subject to council availability</span>
+                  </div>
+                  <svg class="chevron-arrow" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/>
+                  </svg>
+                </div>
+                <div class="side-action-btn" id="sideCentresBtn">
+                  <div>
+                    <strong>Find a disposal centre</strong>
+                    <span>See facilities and accepted items</span>
+                  </div>
+                  <svg class="chevron-arrow" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/>
+                  </svg>
+                </div>
+              </div>
+
+              <!-- Upcoming Card -->
+              <div class="side-card">
+                <h3 class="side-card-title">Upcoming</h3>
+                <div class="up-row">
+                  <strong>01 Oct</strong>
+                  <span>· General waste + Garden & food</span>
+                </div>
+                <div class="up-row">
+                  <strong>08 Oct</strong>
+                  <span>· General waste + Recycling</span>
+                </div>
+                <div class="up-row">
+                  <strong>15 Oct</strong>
+                  <span>· General waste + Garden & food</span>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+      </main>
+
+      <!-- Mobile Bottom Tab Bar -->
+      <nav class="bottom-tab-bar" aria-label="Mobile Navigation">
+        <div class="tab-button active">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+          </svg>
+          <span>Home</span>
+        </div>
+        <div class="tab-button disabled">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+            <line x1="16" y1="2" x2="16" y2="6" /><line x1="8" y1="2" x2="8" y2="6" /><line x1="3" y1="10" x2="21" y2="10" />
+          </svg>
+          <span>Schedule</span>
+        </div>
+        <div class="tab-button disabled">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M7 19H4.8a1.8 1.8 0 0 1-1.6-.9 1.8 1.8 0 0 1 0-1.8L7.2 9.5" />
+            <path d="M11 19h8.2a1.8 1.8 0 0 0 1.6-.9 1.8 1.8 0 0 0 0-1.8L17.5 11" />
+            <path d="m14 4.5 4.5 7.5" /><path d="m5 16 2.5 3L10 16" /><path d="m17 7-3-4.5L11 7" /><path d="M9 13.5 6.5 9H12" />
+          </svg>
+          <span>Recycle</span>
+        </div>
+        <div class="tab-button disabled">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" />
+          </svg>
+          <span>Account</span>
+        </div>
+      </nav>
 
     </div>
-  </main>
+  </section>
 
-  <!-- Mobile Bottom Tab Bar (Image 3: Fixed 4 tabs) -->
-  <nav class="bottom-tab-bar" aria-label="Mobile Navigation">
-    <div class="tab-button active">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
-      </svg>
-      <span>Home</span>
-    </div>
-    <div class="tab-button disabled">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
-        <line x1="16" y1="2" x2="16" y2="6" /><line x1="8" y1="2" x2="8" y2="6" /><line x1="3" y1="10" x2="21" y2="10" />
-      </svg>
-      <span>Schedule</span>
-    </div>
-    <div class="tab-button disabled">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="M7 19H4.8a1.8 1.8 0 0 1-1.6-.9 1.8 1.8 0 0 1 0-1.8L7.2 9.5" />
-        <path d="M11 19h8.2a1.8 1.8 0 0 0 1.6-.9 1.8 1.8 0 0 0 0-1.8L17.5 11" />
-        <path d="m14 4.5 4.5 7.5" /><path d="m5 16 2.5 3L10 16" /><path d="m17 7-3-4.5L11 7" /><path d="M9 13.5 6.5 9H12" />
-      </svg>
-      <span>Recycle</span>
-    </div>
-    <div class="tab-button disabled">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" />
-      </svg>
-      <span>Account</span>
-    </div>
-  </nav>
-
-  <!-- Lightweight Modal: Report problem (Opens from header red flag) -->
+  <!-- Lightweight Modal: Report problem -->
   <div class="simple-modal-backdrop" id="reportProblemModal" style="display: none;">
     <div class="simple-modal-box">
       <div class="modal-head">
@@ -254,7 +567,7 @@
     </div>
   </div>
 
-  <!-- Lightweight Modal: Full Schedule (Opens from View full schedule) -->
+  <!-- Lightweight Modal: Full Schedule -->
   <div class="simple-modal-backdrop" id="fullScheduleModal" style="display: none;">
     <div class="simple-modal-box">
       <div class="modal-head">
@@ -276,28 +589,6 @@
             <strong>Thu 08 Oct</strong>
             <span>General + Recycling</span>
           </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Lightweight Modal: Change Address -->
-  <div class="simple-modal-backdrop" id="addressChangeModal" style="display: none;">
-    <div class="simple-modal-box">
-      <div class="modal-head">
-        <h3>Select demo address</h3>
-        <button class="modal-x" id="closeAddressModalX" aria-label="Close modal">&times;</button>
-      </div>
-      <div class="modal-body">
-        <div class="issue-select-list">
-          <button class="addr-item-btn active" data-addr="12 Greenview Ave">
-            <strong>12 Greenview Ave</strong>
-            <small>Riverton • Zone A</small>
-          </button>
-          <button class="addr-item-btn" data-addr="84 High Street">
-            <strong>84 High Street</strong>
-            <small>Riverton • Zone B</small>
-          </button>
         </div>
       </div>
     </div>

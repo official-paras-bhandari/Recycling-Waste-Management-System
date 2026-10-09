@@ -1,31 +1,102 @@
 // ==========================================================
-// EcoTrack Resident Home System Logic (Image 3)
+// EcoTrack End-to-End Walkthrough & Resident Home Logic
+// Initial Entry: 01 / Welcome -> 02 / Address -> 03 / Bins -> 04 / Reminders -> 05 / Resident Home
 // ==========================================================
 
-// Address Switcher Modal
-const addressChangeModal = document.getElementById("addressChangeModal");
-const homeChangeAddrBtn = document.getElementById("homeChangeAddrBtn");
-const closeAddressModalX = document.getElementById("closeAddressModalX");
+const screens = {
+  welcome: document.getElementById("screenWelcome"),
+  address: document.getElementById("screenAddress"),
+  bins: document.getElementById("screenBins"),
+  reminders: document.getElementById("screenReminders"),
+  home: document.getElementById("screenHome")
+};
+
+function showScreen(screenKey) {
+  Object.keys(screens).forEach(key => {
+    if (screens[key]) {
+      screens[key].style.display = key === screenKey ? "block" : "none";
+    }
+  });
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+// ==========================================================
+// SCREEN 01: Welcome -> 02 Address
+// ==========================================================
+document.getElementById("welcomeStartBtn").addEventListener("click", () => {
+  showScreen("address");
+});
+
+// ==========================================================
+// SCREEN 02: Address -> 03 Bins
+// ==========================================================
+document.getElementById("backToWelcomeBtn").addEventListener("click", () => {
+  showScreen("welcome");
+});
+
 const homeAddressLabel = document.getElementById("homeAddressLabel");
+const addressSearchInput = document.getElementById("addressSearchInput");
 
-homeChangeAddrBtn.addEventListener("click", () => {
-  addressChangeModal.style.display = "flex";
-});
-
-closeAddressModalX.addEventListener("click", () => {
-  addressChangeModal.style.display = "none";
-});
-
-document.querySelectorAll(".addr-item-btn").forEach(btn => {
-  btn.addEventListener("click", () => {
-    document.querySelectorAll(".addr-item-btn").forEach(b => b.classList.remove("active"));
-    btn.classList.add("active");
-    homeAddressLabel.textContent = btn.getAttribute("data-addr");
-    addressChangeModal.style.display = "none";
+document.querySelectorAll(".suggestion-card").forEach(card => {
+  card.addEventListener("click", () => {
+    const chosen = card.getAttribute("data-addr");
+    if (homeAddressLabel) homeAddressLabel.textContent = chosen.split(",")[0];
+    if (addressSearchInput) addressSearchInput.value = chosen;
+    showScreen("bins");
   });
 });
 
-// Report Flag Modal (Header red flag)
+document.getElementById("useLocationBtn").addEventListener("click", () => {
+  if (homeAddressLabel) homeAddressLabel.textContent = "12 Greenview Ave";
+  showScreen("bins");
+});
+
+// ==========================================================
+// SCREEN 03: Confirm Bins -> 04 Reminders
+// ==========================================================
+document.getElementById("backToAddressBtn").addEventListener("click", () => {
+  showScreen("address");
+});
+
+document.getElementById("confirmBinsBtn").addEventListener("click", () => {
+  showScreen("reminders");
+});
+
+document.getElementById("reportMismatchBtn").addEventListener("click", () => {
+  alert("Feedback noted: We will verify council bin assignments for your address.");
+});
+
+// ==========================================================
+// SCREEN 04: Enable Reminders -> 05 Resident Home
+// ==========================================================
+document.getElementById("backToBinsBtn").addEventListener("click", () => {
+  showScreen("bins");
+});
+
+const optNightBefore = document.getElementById("optNightBefore");
+const optMorningOf = document.getElementById("optMorningOf");
+
+[optNightBefore, optMorningOf].forEach(opt => {
+  opt.addEventListener("click", () => {
+    [optNightBefore, optMorningOf].forEach(o => o.classList.remove("selected"));
+    opt.classList.add("selected");
+  });
+});
+
+document.getElementById("finishSetupBtn").addEventListener("click", () => {
+  showScreen("home");
+});
+
+// ==========================================================
+// SCREEN 05: Resident Home Handlers
+// ==========================================================
+
+// Change address button in header returns to address setup
+document.getElementById("homeChangeAddrBtn").addEventListener("click", () => {
+  showScreen("address");
+});
+
+// Report Problem Modal (Header red flag)
 const reportProblemModal = document.getElementById("reportProblemModal");
 const homeReportFlagBtn = document.getElementById("homeReportFlagBtn");
 const closeReportModalX = document.getElementById("closeReportModalX");
@@ -70,7 +141,7 @@ closeScheduleModalX.addEventListener("click", () => {
 });
 
 // Close modals when clicking outside
-[reportProblemModal, fullScheduleModal, addressChangeModal].forEach(modal => {
+[reportProblemModal, fullScheduleModal].forEach(modal => {
   modal.addEventListener("click", (e) => {
     if (e.target === modal) modal.style.display = "none";
   });
@@ -124,3 +195,6 @@ const homeReminderToggle = document.getElementById("homeReminderToggle");
 homeReminderToggle.addEventListener("change", () => {
   localStorage.setItem("ecotrack_reminder_active", homeReminderToggle.checked);
 });
+
+// Start immediately on Onboarding Welcome UI (Image 1, Left)
+showScreen("welcome");
