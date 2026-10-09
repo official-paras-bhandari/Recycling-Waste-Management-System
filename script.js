@@ -96,13 +96,7 @@ document.getElementById("homeChangeAddrBtn").addEventListener("click", () => {
   showScreen("address");
 });
 
-// Report flag button (Image 3)
-const homeReportFlagBtn = document.getElementById("homeReportFlagBtn");
-if (homeReportFlagBtn) {
-  homeReportFlagBtn.addEventListener("click", () => {
-    alert("Report issue: Street, bin, or illegal dumping issue reporting.");
-  });
-}
+
 
 // "What can I recycle?" Search
 const recycleData = [
