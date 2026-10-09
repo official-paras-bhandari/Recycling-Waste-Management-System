@@ -34,88 +34,93 @@
     <main class="welcome-main">
       <div class="container welcome-grid">
         
-        <!-- Left: Text & Action -->
+        <!-- Left: Text, CTA & Feature Rows -->
         <div class="welcome-text-col">
-          <div class="welcome-hero-icon-mobile">
-            <svg viewBox="0 0 80 80" fill="none">
-              <circle cx="40" cy="40" r="38" fill="#15803D" />
-              <line x1="24" y1="56" x2="56" y2="24" stroke="white" stroke-width="6" stroke-linecap="round" />
-            </svg>
-          </div>
           <span class="welcome-tag">Resident Portal</span>
           <h1 class="welcome-heading">Never miss bin day again</h1>
           <p class="welcome-subhead">Collection days, simple reminders, and clear recycling answers for your household.</p>
 
-          <div class="welcome-features-list">
-            <div class="feat-card">
-              <div class="feat-icon-box">
-                <svg viewBox="0 0 20 20" fill="none" stroke="#15803D" stroke-width="2">
-                  <rect x="3" y="4" width="14" height="13" rx="2"/>
-                  <line x1="3" y1="8" x2="17" y2="8"/>
-                </svg>
-              </div>
-              <div class="feat-info">
-                <strong>All your collection days</strong>
-                <span>Accurate council schedules adjusted for holidays</span>
-              </div>
-            </div>
-
-            <div class="feat-card">
-              <div class="feat-icon-box">
-                <svg viewBox="0 0 20 20" fill="none" stroke="#15803D" stroke-width="2">
-                  <path d="M10 2a6 6 0 00-6 6v3l-2 2h16l-2-2V8a6 6 0 00-6-6z"/>
-                  <circle cx="10" cy="17" r="1" fill="#15803D"/>
-                </svg>
-              </div>
-              <div class="feat-info">
-                <strong>A reminder the night before</strong>
-                <span>Timely notifications so your bins are out before 7:00 am</span>
-              </div>
-            </div>
-
-            <div class="feat-card">
-              <div class="feat-icon-box">
-                <svg viewBox="0 0 20 20" fill="none" stroke="#15803D" stroke-width="2">
-                  <path d="M4 6h12M6 6v9a2 2 0 002 2h4a2 2 0 002-2V6M9 6V4a1 1 0 011-1h0a1 1 0 011 1v2"/>
-                </svg>
-              </div>
-              <div class="feat-info">
-                <strong>Know which bin to use</strong>
-                <span>Search household items to avoid contamination</span>
-              </div>
-            </div>
+          <div class="welcome-action-wrap">
+            <button class="btn-primary-hero" id="welcomeStartBtn">Get started</button>
           </div>
 
-          <div class="welcome-actions-row">
-            <button class="btn-green btn-large" id="welcomeStartBtn">Get started</button>
+          <div class="welcome-features-list">
+            <div class="feat-row">
+              <div class="feat-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                  <line x1="16" y1="2" x2="16" y2="6"></line>
+                  <line x1="8" y1="2" x2="8" y2="6"></line>
+                  <line x1="3" y1="10" x2="21" y2="10"></line>
+                </svg>
+              </div>
+              <div class="feat-content">
+                <h4 class="feat-title">All your collection days</h4>
+                <p class="feat-desc">Accurate council schedules adjusted for holidays</p>
+              </div>
+            </div>
+
+            <div class="feat-row">
+              <div class="feat-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                  <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                </svg>
+              </div>
+              <div class="feat-content">
+                <h4 class="feat-title">A reminder the night before</h4>
+                <p class="feat-desc">Timely notifications so your bins are out before 7:00 am</p>
+              </div>
+            </div>
+
+            <div class="feat-row">
+              <div class="feat-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="3 6 5 6 21 6"></polyline>
+                  <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                </svg>
+              </div>
+              <div class="feat-content">
+                <h4 class="feat-title">Know which bin to use</h4>
+                <p class="feat-desc">Search household items to avoid contamination</p>
+              </div>
+            </div>
           </div>
         </div>
 
-        <!-- Right: Desktop Visual Graphic Preview -->
+        <!-- Right: Desktop Collection Preview Container -->
         <div class="welcome-visual-col">
-          <div class="visual-preview-card">
-            <div class="preview-card-header">
+          <div class="collection-preview-card">
+            <div class="preview-header">
               <span class="preview-badge">Riverton Council Area</span>
-              <span class="preview-dot"></span>
+              <span class="preview-live-dot" aria-label="Active status indicator"></span>
             </div>
-            <h3>Smart Waste Management</h3>
-            <p>Enter your street address to preview your exact kerbside collection days.</p>
+            <h3 class="preview-title">Smart Waste Management</h3>
+            <p class="preview-desc">Enter your street address to preview your exact kerbside collection days.</p>
             
-            <div class="preview-bins-demo">
-              <div class="p-bin-chip">
-                <span class="chip-bar bin-red-bg"></span>
-                <strong>General waste</strong>
-                <small>Every Thursday</small>
+            <div class="preview-schedule-list">
+              <div class="preview-schedule-row">
+                <div class="schedule-type">
+                  <span class="indicator-bar indicator-red"></span>
+                  <span class="schedule-name">General waste</span>
+                </div>
+                <span class="schedule-timing">Every Thursday</span>
               </div>
-              <div class="p-bin-chip">
-                <span class="chip-bar bin-yellow-bg"></span>
-                <strong>Recycling</strong>
-                <small>Every 2nd Thursday</small>
+              
+              <div class="preview-schedule-row">
+                <div class="schedule-type">
+                  <span class="indicator-bar indicator-yellow"></span>
+                  <span class="schedule-name">Recycling</span>
+                </div>
+                <span class="schedule-timing">Every 2nd Thursday</span>
               </div>
-              <div class="p-bin-chip">
-                <span class="chip-bar bin-green-bg"></span>
-                <strong>Garden & food</strong>
-                <small>Every 2nd Thursday</small>
+
+              <div class="preview-schedule-row">
+                <div class="schedule-type">
+                  <span class="indicator-bar indicator-green"></span>
+                  <span class="schedule-name">Garden & food</span>
+                </div>
+                <span class="schedule-timing">Every 2nd Thursday</span>
               </div>
             </div>
           </div>
