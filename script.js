@@ -96,41 +96,11 @@ document.getElementById("homeChangeAddrBtn").addEventListener("click", () => {
   showScreen("address");
 });
 
-// Report Problem Modal (Header red flag)
-const reportProblemModal = document.getElementById("reportProblemModal");
+// Report flag button (Image 3)
 const homeReportFlagBtn = document.getElementById("homeReportFlagBtn");
-const closeReportModalX = document.getElementById("closeReportModalX");
-const submitIssueBtn = document.getElementById("submitIssueBtn");
-const issueSubmittedFeedback = document.getElementById("issueSubmittedFeedback");
-
-homeReportFlagBtn.addEventListener("click", () => {
-  issueSubmittedFeedback.style.display = "none";
-  reportProblemModal.style.display = "flex";
-});
-
-closeReportModalX.addEventListener("click", () => {
-  reportProblemModal.style.display = "none";
-});
-
-document.querySelectorAll(".issue-radio-box").forEach(box => {
-  box.addEventListener("click", () => {
-    document.querySelectorAll(".issue-radio-box").forEach(b => b.classList.remove("selected"));
-    box.classList.add("selected");
-    box.querySelector("input").checked = true;
-  });
-});
-
-submitIssueBtn.addEventListener("click", () => {
-  issueSubmittedFeedback.style.display = "block";
-  setTimeout(() => {
-    reportProblemModal.style.display = "none";
-  }, 1200);
-});
-
-// Close modals when clicking outside
-if (reportProblemModal) {
-  reportProblemModal.addEventListener("click", (e) => {
-    if (e.target === reportProblemModal) reportProblemModal.style.display = "none";
+if (homeReportFlagBtn) {
+  homeReportFlagBtn.addEventListener("click", () => {
+    alert("Report issue: Street, bin, or illegal dumping issue reporting.");
   });
 }
 
