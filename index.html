@@ -3,86 +3,148 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>EcoTrack</title>
+  <title>EcoTrack | Waste & Recycling System</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
   <!-- ========================================================= -->
-  <!-- SCREEN 01: WELCOME (Image 1, Left)                        -->
+  <!-- SCREEN 01: WELCOME (Responsive Web Hero & Mobile)         -->
   <!-- ========================================================= -->
   <section class="screen-view active-view" id="screenWelcome">
-    <div class="onboarding-container">
-      <div class="onboarding-card">
-        <header class="welcome-header">
-          <div class="brand-mini">
-            <span class="brand-icon">
-              <svg viewBox="0 0 24 24" fill="currentColor">
-                <circle cx="12" cy="12" r="10" />
-                <path d="M7 17L17 7" stroke="#FFF" stroke-width="2.5" stroke-linecap="round" />
-              </svg>
-            </span>
-            <span class="brand-title">EcoTrack</span>
-          </div>
-        </header>
+    <!-- Full-width Web Header -->
+    <header class="site-header">
+      <div class="container header-flex">
+        <a href="#" class="brand-link">
+          <span class="brand-circle">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <circle cx="12" cy="12" r="10" />
+              <path d="M7 17L17 7" stroke="#FFF" stroke-width="2.5" stroke-linecap="round" />
+            </svg>
+          </span>
+          <span class="brand-text">EcoTrack</span>
+        </a>
+        <div class="header-right-meta">
+          <button class="lang-btn">Language: English</button>
+        </div>
+      </div>
+    </header>
 
-        <div class="welcome-content">
-          <div class="welcome-hero-icon">
+    <!-- Responsive Hero Container -->
+    <main class="welcome-main">
+      <div class="container welcome-grid">
+        
+        <!-- Left: Text & Action -->
+        <div class="welcome-text-col">
+          <div class="welcome-hero-icon-mobile">
             <svg viewBox="0 0 80 80" fill="none">
               <circle cx="40" cy="40" r="38" fill="#15803D" />
               <line x1="24" y1="56" x2="56" y2="24" stroke="white" stroke-width="6" stroke-linecap="round" />
             </svg>
           </div>
-          <h2 class="welcome-brand-name">EcoTrack</h2>
-          
+          <span class="welcome-tag">Resident Portal</span>
           <h1 class="welcome-heading">Never miss bin day again</h1>
-          <p class="welcome-subhead">Collection days, simple reminders, and clear recycling answers.</p>
+          <p class="welcome-subhead">Collection days, simple reminders, and clear recycling answers for your household.</p>
 
-          <div class="welcome-features">
-            <div class="feature-pill">
-              <span class="feat-icon">
-                <svg viewBox="0 0 20 20" fill="#15803D"><rect x="3" y="4" width="14" height="13" rx="2" fill="none" stroke="#15803D" stroke-width="2"/><line x1="3" y1="8" x2="17" y2="8" stroke="#15803D" stroke-width="2"/></svg>
-              </span>
-              <span>All your collection days</span>
+          <div class="welcome-features-list">
+            <div class="feat-card">
+              <div class="feat-icon-box">
+                <svg viewBox="0 0 20 20" fill="none" stroke="#15803D" stroke-width="2">
+                  <rect x="3" y="4" width="14" height="13" rx="2"/>
+                  <line x1="3" y1="8" x2="17" y2="8"/>
+                </svg>
+              </div>
+              <div class="feat-info">
+                <strong>All your collection days</strong>
+                <span>Accurate council schedules adjusted for holidays</span>
+              </div>
             </div>
 
-            <div class="feature-pill">
-              <span class="feat-icon">
-                <svg viewBox="0 0 20 20" fill="#15803D"><path d="M10 2a6 6 0 00-6 6v3l-2 2h16l-2-2V8a6 6 0 00-6-6z" fill="none" stroke="#15803D" stroke-width="2"/><circle cx="10" cy="17" r="1.5" fill="#15803D"/></svg>
-              </span>
-              <span>A reminder the night before</span>
+            <div class="feat-card">
+              <div class="feat-icon-box">
+                <svg viewBox="0 0 20 20" fill="none" stroke="#15803D" stroke-width="2">
+                  <path d="M10 2a6 6 0 00-6 6v3l-2 2h16l-2-2V8a6 6 0 00-6-6z"/>
+                  <circle cx="10" cy="17" r="1" fill="#15803D"/>
+                </svg>
+              </div>
+              <div class="feat-info">
+                <strong>A reminder the night before</strong>
+                <span>Timely notifications so your bins are out before 7:00 am</span>
+              </div>
             </div>
 
-            <div class="feature-pill">
-              <span class="feat-icon">
-                <svg viewBox="0 0 20 20" fill="#15803D"><path d="M4 6h12M6 6v9a2 2 0 002 2h4a2 2 0 002-2V6M9 6V4a1 1 0 011-1h0a1 1 0 011 1v2" fill="none" stroke="#15803D" stroke-width="2"/></svg>
-              </span>
-              <span>Know which bin to use</span>
+            <div class="feat-card">
+              <div class="feat-icon-box">
+                <svg viewBox="0 0 20 20" fill="none" stroke="#15803D" stroke-width="2">
+                  <path d="M4 6h12M6 6v9a2 2 0 002 2h4a2 2 0 002-2V6M9 6V4a1 1 0 011-1h0a1 1 0 011 1v2"/>
+                </svg>
+              </div>
+              <div class="feat-info">
+                <strong>Know which bin to use</strong>
+                <span>Search household items to avoid contamination</span>
+              </div>
             </div>
           </div>
 
-          <button class="btn-green btn-block" id="welcomeStartBtn">Get started</button>
-          <button class="lang-link">Language: English</button>
+          <div class="welcome-actions-row">
+            <button class="btn-green btn-large" id="welcomeStartBtn">Get started</button>
+          </div>
         </div>
+
+        <!-- Right: Desktop Visual Graphic Preview -->
+        <div class="welcome-visual-col">
+          <div class="visual-preview-card">
+            <div class="preview-card-header">
+              <span class="preview-badge">Riverton Council Area</span>
+              <span class="preview-dot"></span>
+            </div>
+            <h3>Smart Waste Management</h3>
+            <p>Enter your street address to preview your exact kerbside collection days.</p>
+            
+            <div class="preview-bins-demo">
+              <div class="p-bin-chip">
+                <span class="chip-bar bin-red-bg"></span>
+                <strong>General waste</strong>
+                <small>Every Thursday</small>
+              </div>
+              <div class="p-bin-chip">
+                <span class="chip-bar bin-yellow-bg"></span>
+                <strong>Recycling</strong>
+                <small>Every 2nd Thursday</small>
+              </div>
+              <div class="p-bin-chip">
+                <span class="chip-bar bin-green-bg"></span>
+                <strong>Garden & food</strong>
+                <small>Every 2nd Thursday</small>
+              </div>
+            </div>
+          </div>
+        </div>
+
       </div>
-    </div>
+    </main>
   </section>
 
   <!-- ========================================================= -->
-  <!-- SCREEN 02: FIND ADDRESS (Image 1, Right)                  -->
+  <!-- SCREEN 02: FIND ADDRESS (Responsive Web & Mobile)         -->
   <!-- ========================================================= -->
   <section class="screen-view" id="screenAddress" style="display: none;">
-    <div class="onboarding-container">
-      <div class="onboarding-card">
-        <header class="flow-header">
-          <button class="back-nav" id="backToWelcomeBtn" aria-label="Go back">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg>
-          </button>
-          <h2>Set up EcoTrack</h2>
-        </header>
+    <header class="site-header">
+      <div class="container header-flex">
+        <button class="back-link-btn" id="backToWelcomeBtn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg>
+          <span>Back</span>
+        </button>
+        <span class="flow-header-title">Set up EcoTrack</span>
+        <div style="width: 60px;"></div>
+      </div>
+    </header>
 
-        <!-- Stepper -->
-        <div class="stepper">
+    <main class="setup-main">
+      <div class="container setup-container">
+        
+        <!-- Responsive Stepper Bar -->
+        <div class="stepper-wide">
           <div class="step-bars">
             <div class="step-bar active"></div>
             <div class="step-bar"></div>
@@ -95,7 +157,7 @@
           </div>
         </div>
 
-        <div class="flow-body">
+        <div class="setup-content-card">
           <h1 class="flow-title">Where do you live?</h1>
           <p class="flow-subtitle">We use your address to find bin days.</p>
 
@@ -108,7 +170,7 @@
 
           <div class="suggestions-section">
             <h3 class="suggestions-header">Suggested addresses</h3>
-            <div class="suggestion-list">
+            <div class="suggestion-grid">
               <button class="suggestion-card" data-addr="12 Greenview Ave, Riverton">
                 <div class="sugg-icon">
                   <svg viewBox="0 0 24 24" fill="#15803D"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 110-5 2.5 2.5 0 010 5z"/></svg>
@@ -144,28 +206,36 @@
             </div>
           </div>
 
-          <button class="link-action-green" id="useLocationBtn">Use my current location</button>
-          <p class="footnote-muted">If no address is found, try postcode search.</p>
+          <div class="location-action-bar">
+            <button class="link-action-green" id="useLocationBtn">Use my current location</button>
+            <p class="footnote-muted">If no address is found, try postcode search.</p>
+          </div>
         </div>
+
       </div>
-    </div>
+    </main>
   </section>
 
   <!-- ========================================================= -->
-  <!-- SCREEN 03: CONFIRM BINS (Image 2, Left)                   -->
+  <!-- SCREEN 03: CONFIRM BINS (Responsive Web & Mobile)         -->
   <!-- ========================================================= -->
   <section class="screen-view" id="screenBins" style="display: none;">
-    <div class="onboarding-container">
-      <div class="onboarding-card">
-        <header class="flow-header">
-          <button class="back-nav" id="backToAddressBtn" aria-label="Go back">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg>
-          </button>
-          <h2>Set up EcoTrack</h2>
-        </header>
+    <header class="site-header">
+      <div class="container header-flex">
+        <button class="back-link-btn" id="backToAddressBtn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg>
+          <span>Back</span>
+        </button>
+        <span class="flow-header-title">Set up EcoTrack</span>
+        <div style="width: 60px;"></div>
+      </div>
+    </header>
 
+    <main class="setup-main">
+      <div class="container setup-container">
+        
         <!-- Stepper -->
-        <div class="stepper">
+        <div class="stepper-wide">
           <div class="step-bars">
             <div class="step-bar active"></div>
             <div class="step-bar active"></div>
@@ -178,11 +248,12 @@
           </div>
         </div>
 
-        <div class="flow-body">
+        <div class="setup-content-card">
           <h1 class="flow-title">Your bins</h1>
           <p class="flow-subtitle">Demo schedule for your address</p>
 
-          <div class="bins-setup-list">
+          <!-- 3-Column Responsive Grid on Desktop -->
+          <div class="bins-setup-grid">
             <!-- General Waste -->
             <div class="bin-setup-card">
               <div class="bin-figure bin-red-fig">
@@ -223,31 +294,36 @@
             </div>
           </div>
 
-          <button class="link-action-green align-left" id="reportMismatchBtn">Something not right? Tell us</button>
-
-          <div class="flow-bottom-action">
-            <button class="btn-green btn-block" id="confirmBinsBtn">Yes, that's right</button>
+          <div class="bins-actions-bar">
+            <button class="link-action-green" id="reportMismatchBtn">Something not right? Tell us</button>
+            <button class="btn-green btn-large" id="confirmBinsBtn">Yes, that's right</button>
           </div>
         </div>
+
       </div>
-    </div>
+    </main>
   </section>
 
   <!-- ========================================================= -->
-  <!-- SCREEN 04: ENABLE REMINDERS (Image 2, Right)              -->
+  <!-- SCREEN 04: ENABLE REMINDERS (Responsive Web & Mobile)     -->
   <!-- ========================================================= -->
   <section class="screen-view" id="screenReminders" style="display: none;">
-    <div class="onboarding-container">
-      <div class="onboarding-card">
-        <header class="flow-header">
-          <button class="back-nav" id="backToBinsBtn" aria-label="Go back">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg>
-          </button>
-          <h2>Set up EcoTrack</h2>
-        </header>
+    <header class="site-header">
+      <div class="container header-flex">
+        <button class="back-link-btn" id="backToBinsBtn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg>
+          <span>Back</span>
+        </button>
+        <span class="flow-header-title">Set up EcoTrack</span>
+        <div style="width: 60px;"></div>
+      </div>
+    </header>
 
+    <main class="setup-main">
+      <div class="container setup-container">
+        
         <!-- Stepper -->
-        <div class="stepper">
+        <div class="stepper-wide">
           <div class="step-bars">
             <div class="step-bar active"></div>
             <div class="step-bar active"></div>
@@ -260,11 +336,10 @@
           </div>
         </div>
 
-        <div class="flow-body">
+        <div class="setup-content-card">
           <h1 class="flow-title">Stay on schedule</h1>
           <p class="flow-subtitle">Choose when you want a reminder.</p>
 
-          <!-- Toggle card -->
           <div class="card-setting-toggle">
             <div class="setting-text">
               <strong>Collection reminders</strong>
@@ -276,10 +351,10 @@
             </label>
           </div>
 
-          <!-- When section -->
+          <!-- When options (Responsive Grid on Desktop) -->
           <div class="sub-section">
             <h3 class="sub-section-title">When?</h3>
-            <div class="option-cards-group">
+            <div class="option-cards-grid">
               <button class="option-time-card selected" id="optNightBefore">
                 <span class="opt-chevron">&gt;</span>
                 <span class="opt-label">Night before · 7:00 pm</span>
@@ -294,7 +369,7 @@
             </div>
           </div>
 
-          <!-- Notification method -->
+          <!-- Notification Method -->
           <div class="sub-section">
             <h3 class="sub-section-title">Notification method</h3>
             <div class="method-pills-row">
@@ -304,12 +379,13 @@
             </div>
           </div>
 
-          <div class="flow-bottom-action">
-            <button class="btn-green btn-block" id="finishSetupBtn">Finish setup</button>
+          <div class="setup-finish-bar">
+            <button class="btn-green btn-large" id="finishSetupBtn">Finish setup</button>
           </div>
         </div>
+
       </div>
-    </div>
+    </main>
   </section>
 
   <!-- ========================================================= -->
@@ -318,9 +394,9 @@
   <section class="screen-view" id="screenHome" style="display: none;">
     <div class="home-wrapper">
 
-      <!-- Top Header -->
-      <header class="app-header">
-        <div class="container header-container">
+      <!-- Full-width Sticky Header -->
+      <header class="site-header">
+        <div class="container header-flex">
           <a href="#" class="brand-link" id="homeBrandLink">
             <span class="brand-circle">
               <svg viewBox="0 0 24 24" fill="currentColor">
@@ -331,7 +407,7 @@
             <span class="brand-text">EcoTrack</span>
           </a>
 
-          <!-- Desktop Nav Links -->
+          <!-- Desktop Nav Links (Disabled/Muted except Home) -->
           <nav class="desktop-nav-items" aria-label="Main Navigation">
             <span class="d-link active">Home</span>
             <span class="d-link disabled">Schedule</span>
@@ -340,8 +416,8 @@
             <span class="d-link disabled">Account</span>
           </nav>
 
-          <!-- Small Header Red Flag Button -->
-          <button class="header-flag-btn" id="homeReportFlagBtn" aria-label="Report a problem" title="Report a problem">
+          <!-- Top-right Red Flag Icon (Image 3) -->
+          <button class="header-flag-btn" id="homeReportFlagBtn" aria-label="Report issue">
             <svg viewBox="0 0 20 20" fill="currentColor">
               <path fill-rule="evenodd" d="M3 3a1 1 0 011-1h12a1 1 0 01.8 1.6L14.25 7l2.55 3.4A1 1 0 0116 12H4v5a1 1 0 11-2 0V3z" clip-rule="evenodd" />
             </svg>
@@ -363,7 +439,7 @@
             </div>
           </section>
 
-          <!-- Holiday Notice Card -->
+          <!-- Holiday Notice Card (Image 3: Amber border and soft yellow bg) -->
           <div class="holiday-notice-card">
             <strong class="notice-title">Collection moved to Friday</strong>
             <span class="notice-sub">Public holiday notice · demo</span>
