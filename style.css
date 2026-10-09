@@ -45,56 +45,6 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* ================= Top Prototype Switcher Bar ================= */
-.prototype-bar {
-  background-color: #1F2937;
-  color: #F3F4F6;
-  padding: 8px 0;
-  font-size: 0.82rem;
-  border-bottom: 1px solid #374151;
-  position: sticky;
-  top: 0;
-  z-index: 100;
-}
-
-.proto-inner {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-.proto-actions {
-  display: flex;
-  gap: 6px;
-  flex-wrap: wrap;
-}
-
-.proto-btn {
-  background-color: #374151;
-  color: #D1D5DB;
-  border: 1px solid #4B5563;
-  padding: 4px 10px;
-  border-radius: 4px;
-  font-size: 0.78rem;
-  font-weight: 600;
-  cursor: pointer;
-  font-family: inherit;
-  transition: all 0.15s ease;
-}
-
-.proto-btn:hover {
-  background-color: #4B5563;
-  color: #FFFFFF;
-}
-
-.proto-btn.active {
-  background-color: var(--primary-green);
-  border-color: var(--primary-green);
-  color: #FFFFFF;
-}
-
 /* Container */
 .container {
   width: 100%;
@@ -628,7 +578,7 @@ body {
   background: var(--surface);
   border-bottom: 1px solid var(--border);
   position: sticky;
-  top: 37px; /* Below prototype bar */
+  top: 0;
   z-index: 50;
 }
 
