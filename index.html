@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EcoCycle | Recycling & Waste Management System</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- Header / Navigation -->
+  <header class="header">
+    <div class="container nav-container">
+      <a href="#" class="brand-logo">
+        <svg class="logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M7 19H4.815a1.83 1.83 0 0 1-1.57-.881 1.785 1.785 0 0 1-.004-1.784L7.196 9.5" />
+          <path d="M11 19h8.2a1.8 1.8 0 0 0 1.572-.89 1.8 1.8 0 0 0-.012-1.815L17.5 11" />
+          <path d="m14 4.5 4.5 7.5" />
+          <path d="m5 16 2.5 3L10 16" />
+          <path d="m17 7-3-4.5L11 7" />
+          <path d="M9 13.5 6.5 9H12" />
+        </svg>
+        <span>EcoCycle</span>
+      </a>
+
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </button>
+
+      <nav class="nav-menu" id="navMenu">
+        <ul class="nav-links">
+          <li><a href="#hero">Home</a></li>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#waste-guide">Sorting Guide</a></li>
+          <li><a href="#impact">Our Impact</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+        <button class="btn btn-primary" id="openPickupModalBtn">Schedule Pickup</button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero" id="hero">
+    <div class="container hero-grid">
+      <div class="hero-content">
+        <span class="badge">Smart Waste & Resource Recovery</span>
+        <h1 class="hero-title">Smarter Waste Management for a Sustainable Future</h1>
+        <p class="hero-subtitle">
+          Effortlessly sort your household and commercial waste, request scheduled pickups, 
+          and track real-time recycling progress in your neighborhood.
+        </p>
+        <div class="hero-actions">
+          <button class="btn btn-primary btn-large" id="heroScheduleBtn">Schedule a Pickup</button>
+          <a href="#waste-guide" class="btn btn-outline btn-large">Explore Sorting Guide</a>
+        </div>
+        <div class="hero-metrics">
+          <div class="metric-item">
+            <span class="metric-number">98%</span>
+            <span class="metric-label">Collection Rate</span>
+          </div>
+          <div class="metric-divider"></div>
+          <div class="metric-item">
+            <span class="metric-number">45K+</span>
+            <span class="metric-label">Tons Recycled</span>
+          </div>
+          <div class="metric-divider"></div>
+          <div class="metric-item">
+            <span class="metric-number">120+</span>
+            <span class="metric-label">Communities Served</span>
+          </div>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="card hero-card">
+          <div class="hero-card-header">
+            <h3>Quick Waste Sorter</h3>
+            <span class="pulse-dot"></span>
+          </div>
+          <p>Not sure which bin an item belongs to? Check below or use the interactive guide.</p>
+          <div class="bin-preview-grid">
+            <div class="bin-chip bin-blue">
+              <span class="bin-chip-dot"></span>
+              <strong>Blue Bin</strong>
+              <small>Paper & Cardboard</small>
+            </div>
+            <div class="bin-chip bin-yellow">
+              <span class="bin-chip-dot"></span>
+              <strong>Yellow Bin</strong>
+              <small>Plastics & Metals</small>
+            </div>
+            <div class="bin-chip bin-green">
+              <span class="bin-chip-dot"></span>
+              <strong>Green Bin</strong>
+              <small>Organic & Food</small>
+            </div>
+            <div class="bin-chip bin-red">
+              <span class="bin-chip-dot"></span>
+              <strong>Red / Special</strong>
+              <small>E-Waste & Hazards</small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services Section -->
+  <section class="services" id="services">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">What We Do</span>
+        <h2>Comprehensive Waste Solutions</h2>
+        <p>From everyday household recycling to specialized commercial collections, we keep communities clean.</p>
+      </div>
+
+      <div class="services-grid">
+        <div class="service-card">
+          <div class="service-icon icon-emerald">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+              <polyline points="9 22 9 12 15 12 15 22" />
+            </svg>
+          </div>
+          <h3>Residential Collection</h3>
+          <p>Regular bi-weekly pickup schedules for recyclables, general waste, and compostable organic matter.</p>
+        </div>
+
+        <div class="service-card">
+          <div class="service-icon icon-blue">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="2" y="7" width="20" height="14" rx="2" ry="2" />
+              <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
+            </svg>
+          </div>
+          <h3>Commercial Waste</h3>
+          <p>Tailored bulk pickup contracts and zero-waste auditing for retail, offices, and industrial complexes.</p>
+        </div>
+
+        <div class="service-card">
+          <div class="service-icon icon-amber">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="4" y="4" width="16" height="16" rx="2" />
+              <rect x="9" y="9" width="6" height="6" />
+              <line x1="9" y1="1" x2="9" y2="4" />
+              <line x1="15" y1="1" x2="15" y2="4" />
+              <line x1="9" y1="20" x2="9" y2="23" />
+              <line x1="15" y1="20" x2="15" y2="23" />
+              <line x1="20" y1="9" x2="23" y2="9" />
+              <line x1="20" y1="14" x2="23" y2="14" />
+              <line x1="1" y1="9" x2="4" y2="9" />
+              <line x1="1" y1="14" x2="4" y2="14" />
+            </svg>
+          </div>
+          <h3>E-Waste Recycling</h3>
+          <p>Safe extraction and disposal of decommissioned computers, phones, batteries, and appliances.</p>
+        </div>
+
+        <div class="service-card">
+          <div class="service-icon icon-teal">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+            </svg>
+          </div>
+          <h3>Rewards & Incentives</h3>
+          <p>Earn green points for every kilogram of verified recyclables delivered to our community hubs.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive Waste Sorting Guide -->
+  <section class="waste-guide" id="waste-guide">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Interactive Lookup</span>
+        <h2>How to Sort Your Waste</h2>
+        <p>Type any household item or filter by category to find the correct bin and disposal instructions.</p>
+      </div>
+
+      <div class="guide-controls">
+        <div class="search-box">
+          <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <input 
+            type="text" 
+            id="wasteSearchInput" 
+            placeholder="Search items (e.g. plastic bottle, battery, cardboard, banana peel)..." 
+            autocomplete="off"
+          />
+          <button id="clearSearchBtn" class="clear-btn" aria-label="Clear search" style="display: none;">&times;</button>
+        </div>
+
+        <div class="category-filters" id="categoryFilters">
+          <button class="filter-btn active" data-category="all">All Items</button>
+          <button class="filter-btn" data-category="plastic">Plastics</button>
+          <button class="filter-btn" data-category="paper">Paper & Cardboard</button>
+          <button class="filter-btn" data-category="organic">Organic / Compost</button>
+          <button class="filter-btn" data-category="glass">Glass & Metals</button>
+          <button class="filter-btn" data-category="hazardous">E-Waste & Hazardous</button>
+        </div>
+      </div>
+
+      <!-- Item cards injected via JS -->
+      <div class="guide-grid" id="guideGrid"></div>
+      <div class="no-results" id="noResults" style="display: none;">
+        <p>No matching items found. Try searching another item name or view all categories.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Impact & Stats Section -->
+  <section class="impact" id="impact">
+    <div class="container">
+      <div class="impact-wrapper">
+        <div class="impact-text">
+          <span class="section-tag light">Measurable Impact</span>
+          <h2>Turning Waste Into Renewed Resources</h2>
+          <p>
+            Proper sorting prevents landfill overcrowding, reduces greenhouse gas emissions, 
+            and conserves vital raw materials.
+          </p>
+          <ul class="impact-checklist">
+            <li>✔ Over 82% diversion from municipal landfills</li>
+            <li>✔ Closed-loop processing for post-consumer plastics</li>
+            <li>✔ Certified environmental safe-handling compliance</li>
+          </ul>
+        </div>
+        <div class="impact-stats-grid">
+          <div class="stat-box">
+            <h3>45,200</h3>
+            <p>Tons Recycled</p>
+          </div>
+          <div class="stat-box">
+            <h3>31,800</h3>
+            <p>MWh Energy Saved</p>
+          </div>
+          <div class="stat-box">
+            <h3>18,400</h3>
+            <p>CO₂ Reduced (Tons)</p>
+          </div>
+          <div class="stat-box">
+            <h3>9,250</h3>
+            <p>Trees Preserved</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact / CTA Banner -->
+  <section class="contact" id="contact">
+    <div class="container">
+      <div class="cta-banner">
+        <h2>Ready for Cleaner Surroundings?</h2>
+        <p>Schedule your next household or business recycling pickup with just a few clicks.</p>
+        <button class="btn btn-primary btn-large" id="ctaScheduleBtn">Book a Pickup Now</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container footer-content">
+      <div class="footer-info">
+        <div class="brand-logo footer-logo">
+          <svg class="logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M7 19H4.815a1.83 1.83 0 0 1-1.57-.881 1.785 1.785 0 0 1-.004-1.784L7.196 9.5" />
+            <path d="M11 19h8.2a1.8 1.8 0 0 0 1.572-.89 1.8 1.8 0 0 0-.012-1.815L17.5 11" />
+            <path d="m14 4.5 4.5 7.5" />
+            <path d="m5 16 2.5 3L10 16" />
+            <path d="m17 7-3-4.5L11 7" />
+            <path d="M9 13.5 6.5 9H12" />
+          </svg>
+          <span>EcoCycle</span>
+        </div>
+        <p>Sustainable waste management, smart recycling systems, and community environmental solutions.</p>
+      </div>
+      <div class="footer-links">
+        <h4>Navigation</h4>
+        <ul>
+          <li><a href="#hero">Home</a></li>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#waste-guide">Sorting Guide</a></li>
+          <li><a href="#impact">Our Impact</a></li>
+        </ul>
+      </div>
+      <div class="footer-links">
+        <h4>Support</h4>
+        <ul>
+          <li><a href="#">Disposal FAQ</a></li>
+          <li><a href="#">Bin Collection Schedule</a></li>
+          <li><a href="#">Report Illegal Dumping</a></li>
+          <li><a href="#">Emergency Hotline</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="container footer-bottom">
+      <p>&copy; 2026 EcoCycle Waste Management System. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Modal: Schedule Pickup Form -->
+  <div class="modal-overlay" id="pickupModal" aria-hidden="true">
+    <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <button class="modal-close" id="closeModalBtn" aria-label="Close modal">&times;</button>
+      <div class="modal-header">
+        <h3 id="modalTitle">Schedule a Waste Pickup</h3>
+        <p>Fill out the details below to request a doorstep collection.</p>
+      </div>
+
+      <form id="pickupForm" class="pickup-form">
+        <div class="form-group">
+          <label for="fullName">Full Name</label>
+          <input type="text" id="fullName" required placeholder="Jane Doe" />
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="phone">Phone Number</label>
+            <input type="tel" id="phone" required placeholder="e.g. 0412 345 678" />
+          </div>
+          <div class="form-group">
+            <label for="pickupDate">Preferred Date</label>
+            <input type="date" id="pickupDate" required />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="address">Pickup Address</label>
+          <input type="text" id="address" required placeholder="Street address, suburb, post code" />
+        </div>
+
+        <div class="form-group">
+          <label for="wasteType">Primary Waste Category</label>
+          <select id="wasteType" required>
+            <option value="">Select waste type...</option>
+            <option value="General Recyclables (Plastics, Paper, Cans)">General Recyclables (Plastics, Paper, Cans)</option>
+            <option value="Organic & Garden Compost">Organic & Garden Compost</option>
+            <option value="Electronic Waste (E-Waste)">Electronic Waste (E-Waste)</option>
+            <option value="Bulky Household Goods & Furniture">Bulky Household Goods & Furniture</option>
+            <option value="Hazardous / Chemical Waste">Hazardous / Chemical Waste</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="notes">Additional Notes / Approximate Weight</label>
+          <textarea id="notes" rows="2" placeholder="e.g., 2 boxes of books, 1 old microwave..."></textarea>
+        </div>
+
+        <div class="modal-actions">
+          <button type="button" class="btn btn-outline" id="cancelModalBtn">Cancel</button>
+          <button type="submit" class="btn btn-primary">Confirm Pickup Request</button>
+        </div>
+      </form>
+
+      <!-- Success Confirmation (hidden by default) -->
+      <div class="booking-success" id="bookingSuccess" style="display: none;">
+        <div class="success-icon">✓</div>
+        <h3>Pickup Scheduled Successfully!</h3>
+        <p id="successSummary"></p>
+        <button class="btn btn-primary" id="successDoneBtn">Done</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
