@@ -93,6 +93,34 @@ body {
 }
 
 /* ========================================================= */
+/* ONBOARDING FLOW CONTAINERS (Desktop Centered, Mobile Full) */
+/* ========================================================= */
+.onboarding-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 16px;
+  background-color: var(--canvas);
+}
+
+.onboarding-card {
+  width: 100%;
+  max-width: 440px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 28px;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.welcome-header {
+  padding: 24px 24px 0;
+}
+
+/* ========================================================= */
 /* SCREEN 01: WELCOME STYLES (Image 1, Left)                 */
 /* ========================================================= */
 .app-header-simple {
