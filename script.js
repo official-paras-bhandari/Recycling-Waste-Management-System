@@ -1,181 +1,217 @@
 // ==========================================================
-// EcoTrack End-to-End Walkthrough Controller
-// Screens: 01 Welcome -> 02 Find address -> 03 Confirm bins -> 04 Reminders -> 05 Resident Home
+// EcoTrack End-to-End Walkthrough & Resident Home Logic
 // ==========================================================
 
+// Screens
 const screens = {
-  1: document.getElementById("screen1"),
-  2: document.getElementById("screen2"),
-  3: document.getElementById("screen3"),
-  4: document.getElementById("screen4"),
-  5: document.getElementById("screen5")
+  welcome: document.getElementById("screenWelcome"),
+  address: document.getElementById("screenAddress"),
+  bins: document.getElementById("screenBins"),
+  reminders: document.getElementById("screenReminders"),
+  home: document.getElementById("screenHome")
 };
 
-const pills = document.querySelectorAll(".step-pill");
-let chosenAddress = "12 Greenview Ave, Riverton";
+// Top prototype buttons
+const protoBtns = {
+  welcome: document.getElementById("protoGoWelcome"),
+  address: document.getElementById("protoGoAddress"),
+  bins: document.getElementById("protoGoBins"),
+  reminders: document.getElementById("protoGoReminders"),
+  home: document.getElementById("protoGoHome")
+};
 
-// Switch active screen
-function goToScreen(stepNumber) {
-  // Hide all screens
-  Object.values(screens).forEach(screen => {
-    if (screen) screen.style.display = "none";
+function navigateTo(screenKey) {
+  Object.keys(screens).forEach(key => {
+    if (screens[key]) {
+      screens[key].style.display = key === screenKey ? "block" : "none";
+    }
+    if (protoBtns[key]) {
+      protoBtns[key].classList.toggle("active", key === screenKey);
+    }
   });
-
-  // Show target screen
-  if (screens[stepNumber]) {
-    screens[stepNumber].style.display = "flex";
-    screens[stepNumber].scrollTop = 0;
-  }
-
-  // Update top walkthrough switcher pills
-  pills.forEach(pill => {
-    pill.classList.toggle("active", parseInt(pill.getAttribute("data-step")) === stepNumber);
-  });
+  window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
-// Top walkthrough pills click listener
-pills.forEach(pill => {
-  pill.addEventListener("click", () => {
-    const step = parseInt(pill.getAttribute("data-step"));
-    goToScreen(step);
-  });
+// Prototype bar clicks
+protoBtns.welcome.addEventListener("click", () => navigateTo("welcome"));
+protoBtns.address.addEventListener("click", () => navigateTo("address"));
+protoBtns.bins.addEventListener("click", () => navigateTo("bins"));
+protoBtns.reminders.addEventListener("click", () => navigateTo("reminders"));
+protoBtns.home.addEventListener("click", () => navigateTo("home"));
+
+// ==========================================================
+// SCREEN 01: Welcome -> 02 Find Address
+// ==========================================================
+document.getElementById("welcomeStartBtn").addEventListener("click", () => {
+  navigateTo("address");
 });
 
-// Flow transitions
-// 01 Welcome -> 02 Find address
-const btnToScreen2 = document.getElementById("btnToScreen2");
-if (btnToScreen2) {
-  btnToScreen2.addEventListener("click", () => goToScreen(2));
-}
+// ==========================================================
+// SCREEN 02: Address Search -> 03 Confirm Bins
+// ==========================================================
+document.getElementById("backToWelcomeBtn").addEventListener("click", () => {
+  navigateTo("welcome");
+});
 
-// 02 Back to 01
-const backTo1 = document.getElementById("backTo1");
-if (backTo1) {
-  backTo1.addEventListener("click", () => goToScreen(1));
-}
+const homeAddressLabel = document.getElementById("homeAddressLabel");
+const addressSearchInput = document.getElementById("addressSearchInput");
 
-// 02 Address selection -> 03 Confirm bins
-document.querySelectorAll(".suggest-card").forEach(card => {
+document.querySelectorAll(".suggestion-card").forEach(card => {
   card.addEventListener("click", () => {
-    chosenAddress = card.getAttribute("data-address");
-    const shortAddr = chosenAddress.split(",")[0];
-    const homeAddressText = document.getElementById("homeAddressText");
-    if (homeAddressText) homeAddressText.textContent = shortAddr;
-    goToScreen(3);
+    const chosen = card.getAttribute("data-addr");
+    if (homeAddressLabel) homeAddressLabel.textContent = chosen.split(",")[0];
+    if (addressSearchInput) addressSearchInput.value = chosen;
+    navigateTo("bins");
   });
 });
 
-const useCurrentLocationBtn = document.getElementById("useCurrentLocationBtn");
-if (useCurrentLocationBtn) {
-  useCurrentLocationBtn.addEventListener("click", () => {
-    chosenAddress = "12 Greenview Ave, Riverton";
-    goToScreen(3);
+document.getElementById("useLocationBtn").addEventListener("click", () => {
+  if (homeAddressLabel) homeAddressLabel.textContent = "12 Greenview Ave";
+  navigateTo("bins");
+});
+
+// ==========================================================
+// SCREEN 03: Confirm Bins -> 04 Reminders
+// ==========================================================
+document.getElementById("backToAddressBtn").addEventListener("click", () => {
+  navigateTo("address");
+});
+
+document.getElementById("confirmBinsBtn").addEventListener("click", () => {
+  navigateTo("reminders");
+});
+
+document.getElementById("reportMismatchBtn").addEventListener("click", () => {
+  alert("Feedback received: We will review the council bin mapping for your address.");
+});
+
+// ==========================================================
+// SCREEN 04: Enable Reminders -> 05 Resident Home
+// ==========================================================
+document.getElementById("backToBinsBtn").addEventListener("click", () => {
+  navigateTo("bins");
+});
+
+const optNightBefore = document.getElementById("optNightBefore");
+const optMorningOf = document.getElementById("optMorningOf");
+
+[optNightBefore, optMorningOf].forEach(opt => {
+  opt.addEventListener("click", () => {
+    [optNightBefore, optMorningOf].forEach(o => o.classList.remove("selected"));
+    opt.classList.add("selected");
   });
-}
+});
 
-// 03 Back to 02
-const backTo2 = document.getElementById("backTo2");
-if (backTo2) {
-  backTo2.addEventListener("click", () => goToScreen(2));
-}
+document.getElementById("finishSetupBtn").addEventListener("click", () => {
+  navigateTo("home");
+});
 
-// 03 Confirm bins -> 04 Reminders
-const btnToScreen4 = document.getElementById("btnToScreen4");
-if (btnToScreen4) {
-  btnToScreen4.addEventListener("click", () => goToScreen(4));
-}
+// ==========================================================
+// SCREEN 05: Resident Home Interactive Handlers
+// ==========================================================
 
-// 03 Mismatch Link
-const reportMismatchLink = document.getElementById("reportMismatchLink");
-if (reportMismatchLink) {
-  reportMismatchLink.addEventListener("click", () => {
-    alert("Mismatch feedback recorded (Demo). We will verify your council area schedule.");
+// Change address button in header returns to address screen
+document.getElementById("homeChangeAddrBtn").addEventListener("click", () => {
+  navigateTo("address");
+});
+
+// Brand click goes to Home or Welcome
+document.getElementById("homeBrandClick").addEventListener("click", (e) => {
+  e.preventDefault();
+  navigateTo("home");
+});
+
+// Report Flag Modal
+const reportProblemModal = document.getElementById("reportProblemModal");
+const homeReportFlagBtn = document.getElementById("homeReportFlagBtn");
+const closeReportModalX = document.getElementById("closeReportModalX");
+const submitIssueBtn = document.getElementById("submitIssueBtn");
+const issueSubmittedFeedback = document.getElementById("issueSubmittedFeedback");
+
+homeReportFlagBtn.addEventListener("click", () => {
+  issueSubmittedFeedback.style.display = "none";
+  reportProblemModal.style.display = "flex";
+});
+
+closeReportModalX.addEventListener("click", () => {
+  reportProblemModal.style.display = "none";
+});
+
+document.querySelectorAll(".issue-radio-box").forEach(box => {
+  box.addEventListener("click", () => {
+    document.querySelectorAll(".issue-radio-box").forEach(b => b.classList.remove("selected"));
+    box.classList.add("selected");
+    box.querySelector("input").checked = true;
   });
-}
+});
 
-// 04 Back to 03
-const backTo3 = document.getElementById("backTo3");
-if (backTo3) {
-  backTo3.addEventListener("click", () => goToScreen(3));
-}
+submitIssueBtn.addEventListener("click", () => {
+  issueSubmittedFeedback.style.display = "block";
+  setTimeout(() => {
+    reportProblemModal.style.display = "none";
+  }, 1200);
+});
 
-// 04 Timing selection toggle
-const timeNightBefore = document.getElementById("timeNightBefore");
-const timeMorningOf = document.getElementById("timeMorningOf");
-if (timeNightBefore && timeMorningOf) {
-  timeNightBefore.addEventListener("click", () => {
-    timeNightBefore.classList.add("active");
-    timeMorningOf.classList.remove("active");
+// Full Schedule Modal
+const fullScheduleModal = document.getElementById("fullScheduleModal");
+const homeViewScheduleBtn = document.getElementById("homeViewScheduleBtn");
+const closeScheduleModalX = document.getElementById("closeScheduleModalX");
+
+homeViewScheduleBtn.addEventListener("click", () => {
+  fullScheduleModal.style.display = "flex";
+});
+
+closeScheduleModalX.addEventListener("click", () => {
+  fullScheduleModal.style.display = "none";
+});
+
+// Close modal on outside click
+[reportProblemModal, fullScheduleModal].forEach(modal => {
+  modal.addEventListener("click", (e) => {
+    if (e.target === modal) modal.style.display = "none";
   });
-  timeMorningOf.addEventListener("click", () => {
-    timeMorningOf.classList.add("active");
-    timeNightBefore.classList.remove("active");
-  });
-}
+});
 
-// 04 Finish setup -> 05 Resident Home
-const btnToScreen5 = document.getElementById("btnToScreen5");
-if (btnToScreen5) {
-  btnToScreen5.addEventListener("click", () => goToScreen(5));
-}
-
-// 05 Resident Home "Change" -> returns to 02 Find address
-const homeChangeAddrBtn = document.getElementById("homeChangeAddrBtn");
-if (homeChangeAddrBtn) {
-  homeChangeAddrBtn.addEventListener("click", () => goToScreen(2));
-}
-
-// 05 Report Flag button
-const homeReportBtn = document.getElementById("homeReportBtn");
-if (homeReportBtn) {
-  homeReportBtn.addEventListener("click", () => {
-    alert("Report issue hub: tap an issue (Missed collection, Damaged bin, Illegal dumping) to report to council.");
-  });
-}
-
-// 05 View full schedule button
-const btnViewFullSchedule = document.getElementById("btnViewFullSchedule");
-if (btnViewFullSchedule) {
-  btnViewFullSchedule.addEventListener("click", () => {
-    alert("Full Schedule for " + chosenAddress + ":\n• Fri 25 Sep: General + Recycling (Moved from Thu 24 due to holiday)\n• Thu 01 Oct: General + Garden & food\n• Thu 08 Oct: General + Recycling");
-  });
-}
-
-// 05 Search: What can I recycle?
-const homeSearchInput = document.getElementById("homeSearchInput");
-const homeSearchResults = document.getElementById("homeSearchResults");
-
-const recycleGuide = [
-  { item: "Plastic drink bottles", bin: "Recycling (Yellow lid)", tip: "Rinse & leave lid on" },
-  { item: "Cardboard boxes", bin: "Recycling (Yellow lid)", tip: "Flatten completely" },
-  { item: "Pizza box", bin: "Yellow (clean top) / Red (greasy base)", tip: "Tear clean cardboard top" },
-  { item: "Food scraps & fruit peels", bin: "Garden & food (Green lid)", tip: "Compostable organic matter" },
-  { item: "Batteries", bin: "Special Drop-off Depot", tip: "Never in kerbside bins. Fire hazard" },
-  { item: "Soft plastics & chip packets", bin: "General waste (Red lid)", tip: "Curbside general waste" }
+// What can I recycle search
+const recycleData = [
+  { item: "Plastic bottle", answer: "Yellow-lid bin (Recycling). Rinse and keep cap on." },
+  { item: "Cardboard box", answer: "Yellow-lid bin (Recycling). Flatten completely." },
+  { item: "Batteries", answer: "Dedicated drop-off depot. Never in kerbside bins." },
+  { item: "Food scraps", answer: "Green-lid bin (Garden & food organics)." },
+  { item: "Pizza box", answer: "Yellow-lid if clean; general waste if greasy base." }
 ];
 
-if (homeSearchInput && homeSearchResults) {
-  homeSearchInput.addEventListener("input", () => {
-    const q = homeSearchInput.value.trim().toLowerCase();
-    if (!q) {
-      homeSearchResults.style.display = "none";
-      return;
-    }
-    const matches = recycleGuide.filter(g => g.item.toLowerCase().includes(q) || g.bin.toLowerCase().includes(q));
-    if (matches.length === 0) {
-      homeSearchResults.innerHTML = `<span style="font-size:0.8rem;color:#6B7280;">No rule match found.</span>`;
-    } else {
-      homeSearchResults.innerHTML = matches.map(m => `
-        <div style="font-size:0.82rem;padding:4px 0;border-bottom:1px solid #F3F4F6;">
-          <strong>${m.item}</strong>: <span style="color:#15803D;font-weight:600;">${m.bin}</span> (${m.tip})
-        </div>
-      `).join("");
-    }
-    homeSearchResults.style.display = "flex";
-  });
-}
+const homeRecycleSearch = document.getElementById("homeRecycleSearch");
+const homeInstantResults = document.getElementById("homeInstantResults");
 
-// Default start: start at Screen 05 (Resident Home) or 01 based on user preference
-// Starting directly on Screen 5 so the user can immediately see the home screen,
-// and can click any step in the top bar to inspect 01, 02, 03, 04, 05!
-goToScreen(5);
+homeRecycleSearch.addEventListener("input", () => {
+  const q = homeRecycleSearch.value.trim().toLowerCase();
+  if (!q) {
+    homeInstantResults.style.display = "none";
+    return;
+  }
+  const matches = recycleData.filter(r => r.item.toLowerCase().includes(q));
+  if (matches.length > 0) {
+    homeInstantResults.innerHTML = matches.map(m => `
+      <div class="instant-res-card">
+        <strong>${m.item}</strong>: ${m.answer}
+      </div>
+    `).join("");
+    homeInstantResults.style.display = "block";
+  } else {
+    homeInstantResults.innerHTML = `<div class="instant-res-card">Check council depot rules for "${q}".</div>`;
+    homeInstantResults.style.display = "block";
+  }
+});
+
+// Secondary service buttons
+document.getElementById("sideBulkyBtn").addEventListener("click", () => {
+  alert("Bulky pickup booking: Subject to council availability (Prototype Demo).");
+});
+
+document.getElementById("sideCentresBtn").addEventListener("click", () => {
+  alert("Riverton Resource Recovery Centre: 45 Quarry Rd (Open Sat–Wed 8am–4pm).");
+});
+
+// Initialize on Home (or Welcome if preferred)
+navigateTo("home");
