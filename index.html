@@ -21,11 +21,11 @@
       </a>
 
       <nav class="nav-links" aria-label="Main Navigation">
-        <a href="#" class="nav-link active">Home</a>
-        <a href="#" class="nav-link" id="navSchedule">Schedule</a>
-        <a href="#" class="nav-link" id="navRecycle">Recycle</a>
-        <a href="#" class="nav-link" id="navCentres">Disposal centres</a>
-        <a href="#" class="nav-link" id="navAccount">Account</a>
+        <span class="nav-link active">Home</span>
+        <span class="nav-link nav-disabled">Schedule</span>
+        <span class="nav-link nav-disabled">Recycle</span>
+        <span class="nav-link nav-disabled">Disposal centres</span>
+        <span class="nav-link nav-disabled">Account</span>
       </nav>
 
       <button class="flag-btn" id="reportFlagBtn" aria-label="Report an issue" title="Report a problem">
@@ -201,30 +201,30 @@
 
   <!-- Mobile Bottom Tab Bar -->
   <nav class="bottom-tabs" aria-label="Mobile Bottom Navigation">
-    <button class="tab active" id="tabHome">
+    <div class="tab active">
       <svg viewBox="0 0 20 20" fill="currentColor">
         <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
       </svg>
       <span>Home</span>
-    </button>
-    <button class="tab" id="tabSchedule">
+    </div>
+    <div class="tab tab-disabled">
       <svg viewBox="0 0 20 20" fill="currentColor">
         <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd" />
       </svg>
       <span>Schedule</span>
-    </button>
-    <button class="tab" id="tabRecycle">
+    </div>
+    <div class="tab tab-disabled">
       <svg viewBox="0 0 20 20" fill="currentColor">
         <path fill-rule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clip-rule="evenodd" />
       </svg>
       <span>Recycle</span>
-    </button>
-    <button class="tab" id="tabAccount">
+    </div>
+    <div class="tab tab-disabled">
       <svg viewBox="0 0 20 20" fill="currentColor">
         <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
       </svg>
       <span>Account</span>
-    </button>
+    </div>
   </nav>
 
   <!-- Lightweight Modal: Report (Screen 02 in Blueprint) -->

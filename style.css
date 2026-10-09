@@ -119,6 +119,14 @@ body {
   font-weight: 600;
 }
 
+.nav-link.nav-disabled {
+  color: var(--text-muted);
+  opacity: 0.5;
+  cursor: default;
+  pointer-events: none;
+  user-select: none;
+}
+
 .flag-btn {
   width: 34px;
   height: 34px;
@@ -658,6 +666,13 @@ body {
 .tab.active {
   color: var(--primary);
   font-weight: 600;
+}
+
+.tab.tab-disabled {
+  opacity: 0.45;
+  cursor: default;
+  pointer-events: none;
+  user-select: none;
 }
 
 /* ================= Modals ================= */
