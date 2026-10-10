@@ -412,10 +412,10 @@
             <span class="brand-text">EcoTrack</span>
           </a>
 
-          <!-- Desktop Nav Links (Disabled/Muted except Home) -->
+          <!-- Desktop Nav Links -->
           <nav class="desktop-nav-items" aria-label="Main Navigation">
-            <span class="d-link active">Home</span>
-            <span class="d-link disabled">Schedule</span>
+            <button class="d-link active" id="homeNavHomeBtn">Home</button>
+            <button class="d-link" id="homeNavScheduleBtn">Schedule</button>
             <span class="d-link disabled">Recycle</span>
             <span class="d-link disabled">Disposal centres</span>
             <span class="d-link disabled">Account</span>
@@ -571,13 +571,289 @@
 
       <!-- Mobile Bottom Tab Bar -->
       <nav class="bottom-tab-bar" aria-label="Mobile Navigation">
-        <div class="tab-button active">
+        <div class="tab-button active" id="homeBottomTabHome">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
           </svg>
           <span>Home</span>
         </div>
+        <div class="tab-button" id="homeBottomTabSchedule">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+            <line x1="16" y1="2" x2="16" y2="6" /><line x1="8" y1="2" x2="8" y2="6" /><line x1="3" y1="10" x2="21" y2="10" />
+          </svg>
+          <span>Schedule</span>
+        </div>
         <div class="tab-button disabled">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M7 19H4.8a1.8 1.8 0 0 1-1.6-.9 1.8 1.8 0 0 1 0-1.8L7.2 9.5" />
+            <path d="M11 19h8.2a1.8 1.8 0 0 0 1.6-.9 1.8 1.8 0 0 0 0-1.8L17.5 11" />
+            <path d="m14 4.5 4.5 7.5" /><path d="m5 16 2.5 3L10 16" /><path d="m17 7-3-4.5L11 7" /><path d="M9 13.5 6.5 9H12" />
+          </svg>
+          <span>Recycle</span>
+        </div>
+        <div class="tab-button disabled">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" />
+          </svg>
+          <span>Account</span>
+        </div>
+      </nav>
+
+    </div>
+  </section>
+
+  <!-- ========================================================= -->
+  <!-- SCREEN 06: FULL COLLECTION SCHEDULE (Responsive Web & Mobile) -->
+  <!-- ========================================================= -->
+  <section class="screen-view" id="screenSchedule" style="display: none;">
+    <div class="schedule-wrapper">
+
+      <!-- Full-width Sticky Header -->
+      <header class="site-header">
+        <div class="container header-flex">
+          <a href="#" class="brand-link" id="scheduleBrandLink">
+            <span class="brand-circle">
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <circle cx="12" cy="12" r="10" />
+                <path d="M7 17L17 7" stroke="#FFF" stroke-width="2.5" stroke-linecap="round" />
+              </svg>
+            </span>
+            <span class="brand-text">EcoTrack</span>
+          </a>
+
+          <!-- Desktop Nav Links -->
+          <nav class="desktop-nav-items" aria-label="Main Navigation">
+            <button class="d-link" id="scheduleNavHomeBtn">Home</button>
+            <button class="d-link active" id="scheduleNavScheduleBtn">Schedule</button>
+            <span class="d-link disabled">Recycle</span>
+            <span class="d-link disabled">Disposal centres</span>
+            <span class="d-link disabled">Account</span>
+          </nav>
+
+          <!-- Back button on desktop header -->
+          <button class="back-link-btn" id="scheduleBackToHomeBtn" aria-label="Back to home">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg>
+            <span>Back to Home</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- Main Schedule View Container -->
+      <main class="schedule-main">
+        <div class="container schedule-container">
+
+          <!-- Header & Quick Actions Row -->
+          <div class="schedule-header-row">
+            <div class="schedule-title-meta">
+              <span class="welcome-tag">Riverton Council Area</span>
+              <h1 class="resident-name">Collection Schedule</h1>
+              <div class="address-line">
+                <span>Kerbside collection for </span>
+                <strong id="scheduleAddressLabel">12 Greenview Ave</strong>
+                <span class="dot-sep">·</span>
+                <button class="change-link" id="scheduleChangeAddrBtn">Change</button>
+              </div>
+            </div>
+
+            <!-- Top Actions -->
+            <div class="schedule-top-actions">
+              <button class="btn-outline-action" id="downloadIcsBtn" title="Download iCalendar file (.ics) for Apple, Google, or Outlook Calendar">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                  <line x1="16" y1="2" x2="16" y2="6" /><line x1="8" y1="2" x2="8" y2="6" />
+                  <line x1="3" y1="10" x2="21" y2="10" />
+                  <path d="M12 14v4m-2-2l2 2 2-2" />
+                </svg>
+                <span>Add to calendar (.ics)</span>
+              </button>
+              <button class="btn-outline-action" id="printScheduleBtn" title="Print this schedule or save as PDF">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="6 9 6 2 18 2 18 9" />
+                  <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2" />
+                  <rect x="6" y="14" width="12" height="8" />
+                </svg>
+                <span>Print / Save PDF</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Public Holiday Notice Banner -->
+          <div class="holiday-notice-card schedule-holiday-banner">
+            <div class="holiday-badge-row">
+              <span class="pill-badge pill-usually">Holiday Notice</span>
+              <strong class="notice-title">Thursday 24 September collection moved to Friday 25 September</strong>
+            </div>
+            <p class="notice-sub">Due to the Riverton public holiday. Kerbside collection will run on Friday. Place red and yellow lid bins out before 7:00 am.</p>
+          </div>
+
+          <!-- Controls Bar: Filter Chips & View Mode Switcher -->
+          <div class="schedule-controls-bar">
+            <!-- Filter Chips -->
+            <div class="bin-filter-chips" role="tablist" aria-label="Filter collection schedule by bin">
+              <button class="filter-chip active" data-filter="all">All Bins</button>
+              <button class="filter-chip chip-red" data-filter="red">
+                <span class="chip-dot red-dot"></span> General waste
+              </button>
+              <button class="filter-chip chip-yellow" data-filter="yellow">
+                <span class="chip-dot yellow-dot"></span> Recycling
+              </button>
+              <button class="filter-chip chip-green" data-filter="green">
+                <span class="chip-dot green-dot"></span> Garden & food
+              </button>
+            </div>
+
+            <!-- View Switcher -->
+            <div class="view-toggle-group">
+              <button class="view-btn active" id="viewTimelineBtn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <line x1="8" y1="6" x2="21" y2="6" /><line x1="8" y1="12" x2="21" y2="12" /><line x1="8" y1="18" x2="21" y2="18" />
+                  <line x1="3" y1="6" x2="3.01" y2="6" /><line x1="3" y1="12" x2="3.01" y2="12" /><line x1="3" y1="18" x2="3.01" y2="18" />
+                </svg>
+                <span>Timeline</span>
+              </button>
+              <button class="view-btn" id="viewCalendarBtn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                  <line x1="16" y1="2" x2="16" y2="6" /><line x1="8" y1="2" x2="8" y2="6" />
+                  <line x1="3" y1="10" x2="21" y2="10" />
+                </svg>
+                <span>Calendar</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Two-column responsive desktop layout (Stacked on mobile) -->
+          <div class="schedule-layout-grid">
+
+            <!-- Primary Column: Schedule Content -->
+            <div class="schedule-main-col">
+
+              <!-- VIEW 1: Timeline List View -->
+              <div class="schedule-view-section active-view" id="scheduleTimelineView">
+                <div id="scheduleTimelineContent"></div>
+              </div>
+
+              <!-- VIEW 2: Monthly Calendar View -->
+              <div class="schedule-view-section" id="scheduleCalendarView" style="display: none;">
+                <div class="calendar-card">
+                  <div class="calendar-nav-bar">
+                    <button class="cal-nav-btn" id="calPrevMonthBtn" aria-label="Previous month">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+                    </button>
+                    <h3 class="cal-month-title" id="calCurrentMonthTitle">September 2026</h3>
+                    <button class="cal-nav-btn" id="calNextMonthBtn" aria-label="Next month">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+                    </button>
+                  </div>
+                  <div class="calendar-weekdays-grid">
+                    <span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span>
+                  </div>
+                  <div class="calendar-days-grid" id="calendarDaysGrid"></div>
+                </div>
+
+                <!-- Selected Day Details Card -->
+                <div class="calendar-day-details-card" id="calSelectedDayDetails"></div>
+              </div>
+
+            </div>
+
+            <!-- Secondary Column (Sidebar on Desktop) -->
+            <div class="schedule-sidebar-col">
+
+              <!-- Reminder Preference Card -->
+              <div class="side-card">
+                <h3 class="side-card-title">Reminder preferences</h3>
+                <p class="side-card-caption">Receive notifications the evening prior to ensure bins are out by 7:00 am.</p>
+                <div class="card-remind-row" style="margin-bottom: 0; padding: 14px 16px;">
+                  <span class="remind-row-text">Night before · 7:00 pm</span>
+                  <label class="switch-ui" aria-label="Toggle collection reminders">
+                    <input type="checkbox" id="scheduleReminderToggle" checked />
+                    <span class="slider-ui"></span>
+                  </label>
+                </div>
+              </div>
+
+              <!-- Bin Types & Rules Guide Card -->
+              <div class="side-card">
+                <h3 class="side-card-title">Bin collection rules</h3>
+
+                <div class="bin-guide-item">
+                  <div class="bin-figure bin-red-fig">
+                    <div class="fig-lid"></div>
+                    <div class="fig-body"></div>
+                  </div>
+                  <div class="bin-guide-text">
+                    <strong>Red lid · General waste</strong>
+                    <span class="guide-frequency">Weekly (Every Thursday)</span>
+                    <span class="guide-items">Non-recyclable domestic items, bagged waste, broken glass (wrapped).</span>
+                  </div>
+                </div>
+
+                <div class="bin-guide-item">
+                  <div class="bin-figure bin-yellow-fig">
+                    <div class="fig-lid"></div>
+                    <div class="fig-body"></div>
+                  </div>
+                  <div class="bin-guide-text">
+                    <strong>Yellow lid · Recycling</strong>
+                    <span class="guide-frequency">Fortnightly (Every 2nd Thursday)</span>
+                    <span class="guide-items">Cardboard, paper, rigid plastics (#1–5), glass jars & bottles, tins. Rinse clean & leave lids loose.</span>
+                  </div>
+                </div>
+
+                <div class="bin-guide-item">
+                  <div class="bin-figure bin-green-fig">
+                    <div class="fig-lid"></div>
+                    <div class="fig-body"></div>
+                  </div>
+                  <div class="bin-guide-text">
+                    <strong>Green lid · Organics & FOGO</strong>
+                    <span class="guide-frequency">Fortnightly (Every 2nd Thursday)</span>
+                    <span class="guide-items">Food scraps, fruit peels, lawn clippings, leaves, pruned branches. No plastic bags or packaging!</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Kerbside Placement Tips -->
+              <div class="side-card">
+                <h3 class="side-card-title">Kerbside placement guidelines</h3>
+                <ul class="kerbside-tips-list">
+                  <li>
+                    <span class="tip-num">1</span>
+                    <span>Place bins out before <strong>7:00 am</strong> on collection day.</span>
+                  </li>
+                  <li>
+                    <span class="tip-num">2</span>
+                    <span>Leave at least <strong>50 cm</strong> between bins and clear of parked vehicles.</span>
+                  </li>
+                  <li>
+                    <span class="tip-num">3</span>
+                    <span>Keep lids fully closed so waste is not blown away or scavenged.</span>
+                  </li>
+                  <li>
+                    <span class="tip-num">4</span>
+                    <span>Position wheels towards your house and handles facing you.</span>
+                  </li>
+                </ul>
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+      </main>
+
+      <!-- Mobile Bottom Tab Bar -->
+      <nav class="bottom-tab-bar" aria-label="Mobile Navigation">
+        <div class="tab-button" id="scheduleBottomTabHome">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+          </svg>
+          <span>Home</span>
+        </div>
+        <div class="tab-button active" id="scheduleBottomTabSchedule">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
             <line x1="16" y1="2" x2="16" y2="6" /><line x1="8" y1="2" x2="8" y2="6" /><line x1="3" y1="10" x2="21" y2="10" />
