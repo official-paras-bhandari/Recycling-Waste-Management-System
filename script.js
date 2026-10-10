@@ -8,7 +8,8 @@ const screens = {
   address: document.getElementById("screenAddress"),
   bins: document.getElementById("screenBins"),
   reminders: document.getElementById("screenReminders"),
-  home: document.getElementById("screenHome")
+  home: document.getElementById("screenHome"),
+  schedule: document.getElementById("screenSchedule")
 };
 
 function showScreen(screenKey) {
@@ -26,6 +27,51 @@ function showScreen(screenKey) {
 document.getElementById("welcomeStartBtn").addEventListener("click", () => {
   showScreen("address");
 });
+
+const homeViewScheduleBtn = document.getElementById("homeViewScheduleBtn");
+if (homeViewScheduleBtn) {
+  homeViewScheduleBtn.addEventListener("click", () => showScreen("schedule"));
+}
+
+const scheduleBackToHomeBtn = document.getElementById("scheduleBackToHomeBtn");
+if (scheduleBackToHomeBtn) {
+  scheduleBackToHomeBtn.addEventListener("click", () => showScreen("home"));
+}
+
+const scheduleNavHomeBtn = document.getElementById("scheduleNavHomeBtn");
+if (scheduleNavHomeBtn) {
+  scheduleNavHomeBtn.addEventListener("click", () => showScreen("home"));
+}
+
+const scheduleBottomTabHome = document.getElementById("scheduleBottomTabHome");
+if (scheduleBottomTabHome) {
+  scheduleBottomTabHome.addEventListener("click", () => showScreen("home"));
+}
+
+const tabUpcoming = document.getElementById("tabUpcoming");
+const tabMonthView = document.getElementById("tabMonthView");
+const panelUpcoming = document.getElementById("panelUpcoming");
+const panelMonthView = document.getElementById("panelMonthView");
+const scheduleSubtitle = document.getElementById("scheduleSubtitle");
+
+function switchScheduleTab(view) {
+  const isUpcoming = view === "upcoming";
+
+  if (tabUpcoming) tabUpcoming.classList.toggle("active", isUpcoming);
+  if (tabMonthView) tabMonthView.classList.toggle("active", !isUpcoming);
+  if (tabUpcoming) tabUpcoming.setAttribute("aria-selected", String(isUpcoming));
+  if (tabMonthView) tabMonthView.setAttribute("aria-selected", String(!isUpcoming));
+
+  if (panelUpcoming) panelUpcoming.style.display = isUpcoming ? "block" : "none";
+  if (panelMonthView) panelMonthView.style.display = isUpcoming ? "none" : "block";
+
+  if (scheduleSubtitle) {
+    scheduleSubtitle.textContent = isUpcoming ? "Upcoming collections for your address" : "September 2026";
+  }
+}
+
+if (tabUpcoming) tabUpcoming.addEventListener("click", () => switchScheduleTab("upcoming"));
+if (tabMonthView) tabMonthView.addEventListener("click", () => switchScheduleTab("month"));
 
 // ==========================================================
 // SCREEN 02: Address -> 03 Bins

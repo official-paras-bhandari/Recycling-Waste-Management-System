@@ -1375,47 +1375,59 @@ body {
 .upcoming-item-card {
   background: #FFFFFF;
   border: 1px solid var(--border);
-  border-radius: 14px;
-  padding: 16px 20px;
-  display: flex;
+  border-radius: 16px;
+  padding: 16px 18px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
   align-items: center;
-  justify-content: space-between;
+  gap: 14px;
   transition: all 0.15s ease;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+}
+
+.upcoming-item-card:hover {
+  border-color: rgba(22, 163, 74, 0.35);
+  box-shadow: 0 10px 24px rgba(22, 163, 74, 0.08);
 }
 
 .upcoming-item-card.is-next-card {
   border: 1.5px solid #16A34A;
+  background: linear-gradient(180deg, #ffffff 0%, #f3fdf5 100%);
 }
 
 .uic-left {
   display: flex;
   flex-direction: column;
+  min-width: 0;
 }
 
 .uic-date {
-  font-size: 1.05rem;
-  font-weight: 700;
+  font-size: clamp(1.08rem, 2vw, 1.5rem);
+  font-weight: 800;
   color: var(--text-main);
-  line-height: 1.25;
-  margin-bottom: 3px;
+  line-height: 1.2;
+  letter-spacing: -0.03em;
+  margin-bottom: 4px;
 }
 
 .uic-bins {
-  font-size: 0.92rem;
+  font-size: 0.93rem;
   color: #4B5563;
-  line-height: 1.35;
+  line-height: 1.4;
   margin-bottom: 3px;
 }
 
 .uic-exception {
-  font-size: 0.82rem;
+  font-size: 0.8rem;
   color: #D97706;
-  font-weight: 600;
+  font-weight: 700;
+  letter-spacing: 0.01em;
 }
 
 .uic-countdown {
-  font-size: 0.82rem;
-  color: #9CA3AF;
+  font-size: 0.8rem;
+  color: #6B7280;
+  font-weight: 600;
 }
 
 /* Mini Wheelie Bin Graphic on Right (Image 1) */
@@ -1482,25 +1494,28 @@ body {
 .calendar-card-ui {
   background: #FFFFFF;
   border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: 24px 16px 20px;
+  border-radius: 18px;
+  padding: 20px 14px 18px;
   margin-bottom: 16px;
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.04);
 }
 
 .cal-grid-header {
   display: grid;
-  grid-template-columns: repeat(7, 1fr);
+  grid-template-columns: repeat(7, minmax(0, 1fr));
   text-align: center;
-  font-size: 0.88rem;
-  font-weight: 600;
+  font-size: 0.82rem;
+  font-weight: 700;
   color: #4B5563;
   margin-bottom: 18px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
 }
 
 .cal-grid-days {
   display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  row-gap: 14px;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  row-gap: 12px;
   column-gap: 4px;
   text-align: center;
 }
@@ -1510,21 +1525,27 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 42px;
+  min-height: 46px;
   cursor: pointer;
   user-select: none;
-  font-size: 0.95rem;
-  font-weight: 500;
+  font-size: 0.9rem;
+  font-weight: 600;
   color: #111827;
+  border-radius: 12px;
+  transition: all 0.15s ease;
+}
+
+.cal-cell:hover {
+  background: rgba(22, 163, 74, 0.04);
 }
 
 .cal-cell-empty {
-  min-height: 42px;
+  min-height: 46px;
 }
 
 .cal-day-num {
-  width: 34px;
-  height: 34px;
+  width: clamp(30px, 3vw, 36px);
+  height: clamp(30px, 3vw, 36px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1533,9 +1554,10 @@ body {
 }
 
 .cal-cell.is-selected .cal-day-num {
-  background-color: var(--primary-green);
+  background: linear-gradient(180deg, #22c55e 0%, #16a34a 100%);
   color: #FFFFFF;
-  font-weight: 700;
+  font-weight: 800;
+  box-shadow: 0 8px 18px rgba(34, 197, 94, 0.28);
 }
 
 .cal-cell-dot {
@@ -1612,8 +1634,17 @@ body {
   }
 
   .upcoming-item-card {
-    min-height: 148px;
-    padding: 18px 20px;
+    min-height: 156px;
+    padding: 20px 22px;
+    align-items: start;
+  }
+
+  .uic-left {
+    justify-content: center;
+  }
+
+  .uic-date {
+    margin-bottom: 6px;
   }
 
   .calendar-card-ui,
@@ -1621,6 +1652,14 @@ body {
     max-width: 760px;
     margin-left: auto;
     margin-right: auto;
+  }
+
+  .cal-grid-header {
+    font-size: 0.78rem;
+  }
+
+  .cal-grid-days {
+    row-gap: 14px;
   }
 }
 
