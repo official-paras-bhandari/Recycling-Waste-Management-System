@@ -1237,4 +1237,414 @@ body {
   .bins-setup-grid {
     grid-template-columns: 1fr;
   }
+
+  /* Schedule Mobile Layout */
+  .schedule-layout-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .schedule-main {
+    padding-bottom: 80px;
+  }
+
+  .schedule-header-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .schedule-top-actions {
+    width: 100%;
+  }
+
+  .schedule-top-actions .btn-outline-action {
+    flex: 1;
+    justify-content: center;
+  }
+
+  .schedule-controls-bar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .bin-filter-chips {
+    overflow-x: auto;
+    padding-bottom: 4px;
+    flex-wrap: nowrap;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .filter-chip {
+    flex-shrink: 0;
+  }
+
+  .view-toggle-group {
+    width: 100%;
+  }
+
+  .view-btn {
+    flex: 1;
+    justify-content: center;
+  }
+
+  .card-bins-list {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ========================================================= */
+/* SCREEN 06 & 07: COLLECTION SCHEDULE (Images 1 & 2)        */
+/* ========================================================= */
+.schedule-wrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.schedule-main {
+  padding: 24px 0 96px;
+  flex: 1;
+}
+
+.schedule-exact-container {
+  width: 100%;
+  max-width: 440px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.schedule-view-panel {
+  width: 100%;
+}
+
+.schedule-title-block {
+  margin-bottom: 20px;
+}
+
+.schedule-exact-title {
+  font-size: 1.85rem;
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  color: var(--text-main);
+  line-height: 1.2;
+  margin-bottom: 4px;
+}
+
+.schedule-exact-sub {
+  font-size: 0.98rem;
+  color: #6B7280;
+  line-height: 1.4;
+}
+
+/* Segmented Pill Switcher (Image 1 & 2) */
+.schedule-view-switcher {
+  display: inline-flex;
+  background: #F3F4F6;
+  padding: 3px;
+  border-radius: 9999px;
+  margin-bottom: 24px;
+  gap: 4px;
+}
+
+.switcher-pill {
+  border: none;
+  background: transparent;
+  padding: 6px 18px;
+  border-radius: 9999px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #4B5563;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.15s ease;
+}
+
+.switcher-pill.active {
+  background: #E8F5E9;
+  color: var(--primary-green);
+  font-weight: 600;
+}
+
+/* ================= Upcoming List (Image 1) ================= */
+.upcoming-list-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-bottom: 24px;
+}
+
+.upcoming-item-card {
+  background: #FFFFFF;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: all 0.15s ease;
+}
+
+.upcoming-item-card.is-next-card {
+  border: 1.5px solid #16A34A;
+}
+
+.uic-left {
+  display: flex;
+  flex-direction: column;
+}
+
+.uic-date {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text-main);
+  line-height: 1.25;
+  margin-bottom: 3px;
+}
+
+.uic-bins {
+  font-size: 0.92rem;
+  color: #4B5563;
+  line-height: 1.35;
+  margin-bottom: 3px;
+}
+
+.uic-exception {
+  font-size: 0.82rem;
+  color: #D97706;
+  font-weight: 600;
+}
+
+.uic-countdown {
+  font-size: 0.82rem;
+  color: #9CA3AF;
+}
+
+/* Mini Wheelie Bin Graphic on Right (Image 1) */
+.uic-bins-visual {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+}
+
+.mini-bin {
+  width: 14px;
+  height: 22px;
+  position: relative;
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+.mb-lid {
+  width: 14px;
+  height: 4px;
+  border-radius: 2px 2px 0 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.mb-body {
+  width: 11px;
+  height: 18px;
+  background-color: #2F3846;
+  border-radius: 0 0 2px 2px;
+  position: absolute;
+  top: 4px;
+  left: 1.5px;
+}
+
+.bin-red .mb-lid { background-color: #EF4444; }
+.bin-yellow .mb-lid { background-color: #EAB308; }
+.bin-green .mb-lid { background-color: #16A34A; }
+
+/* Add to Calendar Button (Image 1) */
+.btn-add-calendar {
+  width: 100%;
+  height: 48px;
+  background: #FFFFFF;
+  border: 1.5px solid var(--primary-green);
+  color: var(--primary-green);
+  border-radius: 12px;
+  font-size: 0.98rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease;
+}
+
+.btn-add-calendar:hover {
+  background-color: #F0FDF4;
+}
+
+/* ================= Month Calendar View (Image 2) ================= */
+.calendar-card-ui {
+  background: #FFFFFF;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 24px 16px 20px;
+  margin-bottom: 16px;
+}
+
+.cal-grid-header {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  text-align: center;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: #4B5563;
+  margin-bottom: 18px;
+}
+
+.cal-grid-days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  row-gap: 14px;
+  column-gap: 4px;
+  text-align: center;
+}
+
+.cal-cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 42px;
+  cursor: pointer;
+  user-select: none;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #111827;
+}
+
+.cal-cell-empty {
+  min-height: 42px;
+}
+
+.cal-day-num {
+  width: 34px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.15s ease;
+}
+
+.cal-cell.is-selected .cal-day-num {
+  background-color: var(--primary-green);
+  color: #FFFFFF;
+  font-weight: 700;
+}
+
+.cal-cell-dot {
+  width: 5px;
+  height: 5px;
+  background-color: #EAB308;
+  border-radius: 50%;
+  margin-top: 3px;
+}
+
+.cal-moved-callout {
+  background-color: #F0FDF4;
+  border: 1px solid #DCFCE7;
+  border-radius: 12px;
+  padding: 16px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.cal-moved-callout strong {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.cal-moved-callout span {
+  font-size: 0.88rem;
+  color: #4B5563;
+}
+
+/* Active Bottom Tab Pill (Image 1 & 2) */
+.tab-button.active .tab-icon-pill {
+  background-color: #E8F5E9;
+  border-radius: 9999px;
+  padding: 3px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tab-button.active {
+  color: var(--primary-green);
+  font-weight: 700;
+}
+
+/* Desktop Web Layout Adaptations */
+@media (min-width: 860px) {
+  .schedule-main {
+    padding: 40px 0 96px;
+  }
+
+  .schedule-exact-container {
+    max-width: 980px;
+    padding: 0 32px;
+  }
+
+  .schedule-title-block {
+    margin-bottom: 22px;
+  }
+
+  .schedule-exact-title {
+    font-size: 2.1rem;
+  }
+
+  .schedule-view-switcher {
+    margin-bottom: 28px;
+  }
+
+  .upcoming-list-wrap {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+  }
+
+  .upcoming-item-card {
+    min-height: 148px;
+    padding: 18px 20px;
+  }
+
+  .calendar-card-ui,
+  .cal-moved-callout {
+    max-width: 760px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+@media print {
+  .site-header,
+  .bottom-tab-bar,
+  .schedule-view-switcher,
+  .btn-add-calendar {
+    display: none !important;
+  }
+
+  body {
+    background: white;
+    color: black;
+  }
+
+  .schedule-exact-container {
+    max-width: 100%;
+    padding: 0;
+  }
+
+  .upcoming-item-card {
+    border: 1px solid #ccc;
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
 }
