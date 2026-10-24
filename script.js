@@ -532,6 +532,98 @@ if (recycleBrandLink) {
   });
 }
 
+function getHdWheelieBinSvg(binType) {
+  let lid0 = "#FDE047", lid1 = "#EAB308", lid2 = "#CA8A04", handle = "#A16207";
+  let badge = `
+    <!-- Mobius Loop Recycling Emblem -->
+    <g fill="#E2E8F0" opacity="0.85">
+      <path d="M60 75 L66 85 H54 Z"/>
+      <path d="M50 97 L56 87 L46 87 Z"/>
+      <path d="M70 97 L75 87 L65 87 Z"/>
+      <circle cx="60" cy="93" r="8" fill="none" stroke="#E2E8F0" stroke-width="2.5" stroke-dasharray="8 4" opacity="0.9"/>
+    </g>
+  `;
+  let alt = "Yellow lid recycling bin";
+
+  if (binType === "green" || binType === "organics") {
+    lid0 = "#4ADE80"; lid1 = "#16A34A"; lid2 = "#15803D"; handle = "#14532D";
+    badge = `
+      <!-- Organics Leaf Emblem -->
+      <g fill="#86EFAC" opacity="0.9">
+        <path d="M60 83 C52 83 48 91 48 99 C56 99 68 97 70 87 C70 83 66 83 60 83 Z"/>
+        <path d="M50 99 C56 93 62 89 70 87" stroke="#14532D" stroke-width="2" stroke-linecap="round"/>
+      </g>
+    `;
+    alt = "Green lid organics bin";
+  } else if (binType === "red" || binType === "general") {
+    lid0 = "#F87171"; lid1 = "#DC2626"; lid2 = "#B91C1C"; handle = "#7F1D1D";
+    badge = `
+      <!-- General Waste Emblem -->
+      <g opacity="0.85">
+        <circle cx="60" cy="93" r="9" fill="none" stroke="#FCA5A5" stroke-width="2.5"/>
+        <line x1="53" y1="86" x2="67" y2="100" stroke="#FCA5A5" stroke-width="2.5" stroke-linecap="round"/>
+      </g>
+    `;
+    alt = "Red lid general waste bin";
+  } else if (binType === "grey" || binType === "dropoff") {
+    lid0 = "#94A3B8"; lid1 = "#475569"; lid2 = "#334155"; handle = "#1E293B";
+    badge = `
+      <!-- Local Drop-off Pin Emblem -->
+      <g>
+        <path d="M60 81 C55 81 51 85 51 90 C51 96 60 104 60 104 C60 104 69 96 69 90 C69 85 65 81 60 81 Z" fill="#60A5FA"/>
+        <circle cx="60" cy="89" r="2.8" fill="#1E3A8A"/>
+      </g>
+    `;
+    alt = "Drop-off special items bin";
+  }
+
+  const uid = Math.random().toString(36).substring(2, 8);
+  const b_id = "bGrad_" + uid;
+  const l_id = "lGrad_" + uid;
+
+  return `
+    <svg class="hd-wheelie-bin" viewBox="0 0 120 160" aria-label="${alt}" role="img">
+      <defs>
+        <linearGradient id="${b_id}" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#2D3748"/>
+          <stop offset="25%" stop-color="#3A475A"/>
+          <stop offset="75%" stop-color="#3A475A"/>
+          <stop offset="100%" stop-color="#1F2937"/>
+        </linearGradient>
+        <linearGradient id="${l_id}" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="${lid0}"/>
+          <stop offset="50%" stop-color="${lid1}"/>
+          <stop offset="100%" stop-color="${lid2}"/>
+        </linearGradient>
+      </defs>
+      <ellipse cx="60" cy="154" rx="46" ry="6" fill="#000" opacity="0.16"/>
+      <circle cx="26" cy="142" r="13" fill="#1E293B"/>
+      <circle cx="26" cy="142" r="8" fill="#64748B"/>
+      <circle cx="26" cy="142" r="3" fill="#0F172A"/>
+      <circle cx="94" cy="142" r="13" fill="#1E293B"/>
+      <circle cx="94" cy="142" r="8" fill="#64748B"/>
+      <circle cx="94" cy="142" r="3" fill="#0F172A"/>
+      <rect x="26" y="140" width="68" height="4" fill="#334155"/>
+      <path d="M 28 38 L 92 38 L 84 140 C 84 144 80 146 76 146 L 44 146 C 40 146 36 144 36 140 Z" fill="url(#${b_id})"/>
+      <line x1="33" y1="54" x2="87" y2="54" stroke="#1F2937" stroke-width="1.5" opacity="0.55"/>
+      <line x1="35" y1="80" x2="85" y2="80" stroke="#1F2937" stroke-width="1.5" opacity="0.55"/>
+      <line x1="37" y1="110" x2="83" y2="110" stroke="#1F2937" stroke-width="1.5" opacity="0.55"/>
+      <rect x="42" y="44" width="36" height="5" rx="2" fill="#1A202C"/>
+      ${badge}
+      <rect x="24" y="32" width="72" height="7" rx="2" fill="#1F2937"/>
+      <path d="M 18 24 L 102 24 C 104 24 105 26 104 28 L 100 34 C 99 35 98 35 96 35 L 24 35 C 22 35 21 35 20 34 L 16 28 C 15 26 16 24 18 24 Z" fill="url(#${l_id})"/>
+      <path d="M 22 24 C 22 17 36 15 60 15 C 84 15 98 17 98 24 Z" fill="url(#${l_id})"/>
+      <rect x="44" y="13" width="32" height="4" rx="2" fill="${handle}"/>
+    </svg>
+  `;
+}
+
+const recycleNavHomeBtn = document.getElementById("recycleNavHomeBtn");
+if (recycleNavHomeBtn) {
+  recycleNavHomeBtn.addEventListener("click", () => showScreen("home"));
+}
+
+
 // ==========================================================
 // RECYCLE ITEMS DATASET & RENDERERS
 // ==========================================================
@@ -939,23 +1031,16 @@ function renderItemDetailView(itemKey) {
       binTag.textContent = "DROP OFF";
     }
 
-    binGraphic.innerHTML = `
-      <div class="rh-bin-graphic ${lidColorClass}">
-        <div class="mb-lid"></div>
-        <div class="mb-body"></div>
-        <div class="mb-wheel mb-wheel-l"></div>
-        <div class="mb-wheel mb-wheel-r"></div>
-      </div>
-    `;
+    binGraphic.innerHTML = getHdWheelieBinSvg(item.binType);
   }
 
   // Steps
   const stepsContainer = document.getElementById("itemHowToSteps");
   if (stepsContainer) {
     stepsContainer.innerHTML = item.steps.map((s, idx) => `
-      <div class="how-step-item">
+      <div class="how-step-item-web">
         <span class="step-num-bubble">${idx + 1}</span>
-        <span class="step-content-text">${s}</span>
+        <span class="step-content-text-web">${s}</span>
       </div>
     `).join("");
   }
@@ -1041,7 +1126,7 @@ if (allBinsBackBtn) {
 }
 
 // Click on any bin card in Hub or All Bins
-document.querySelectorAll(".rh-bin-card, .all-bin-row-card").forEach(btn => {
+document.querySelectorAll(".rh-bin-card, .rh-bin-card-web, .all-bin-row-card, .all-bin-card-web").forEach(btn => {
   btn.addEventListener("click", () => {
     const binType = btn.getAttribute("data-bin");
     renderBinDetailView(binType);
@@ -1184,14 +1269,7 @@ function renderBinDetailView(binKey) {
 
   const heroGraphic = document.getElementById("bdHeroGraphic");
   if (heroGraphic) {
-    heroGraphic.innerHTML = `
-      <div class="rh-bin-graphic ${data.lidClass}" style="width: 60px; height: 80px;">
-        <div class="mb-lid" style="height: 16px;"></div>
-        <div class="mb-body"></div>
-        <div class="mb-wheel mb-wheel-l"></div>
-        <div class="mb-wheel mb-wheel-r"></div>
-      </div>
-    `;
+    heroGraphic.innerHTML = getHdWheelieBinSvg(binKey);
   }
 
   const timing = document.getElementById("bdCollectionTiming");
@@ -1207,7 +1285,7 @@ function renderBinDetailView(binKey) {
   const whatGoesGrid = document.getElementById("bdWhatGoesInGrid");
   if (whatGoesGrid) {
     whatGoesGrid.innerHTML = data.goesIn.map(item => `
-      <button type="button" class="wg-tile" data-item="${item.key}">
+      <button type="button" class="wg-tile-web" data-item="${item.key}">
         <div class="wg-tile-icon">
           <svg viewBox="0 0 36 36" fill="none">${item.svg}</svg>
         </div>
@@ -1215,7 +1293,7 @@ function renderBinDetailView(binKey) {
       </button>
     `).join("");
 
-    whatGoesGrid.querySelectorAll(".wg-tile").forEach(btn => {
+    whatGoesGrid.querySelectorAll(".wg-tile, .wg-tile-web").forEach(btn => {
       btn.addEventListener("click", () => {
         const itemKey = btn.getAttribute("data-item");
         if (recycleItemsDB[itemKey]) {
@@ -1231,7 +1309,7 @@ function renderBinDetailView(binKey) {
   const whatNotRow = document.getElementById("bdWhatDoesntGoInRow");
   if (whatNotRow) {
     whatNotRow.innerHTML = data.doesntGoIn.map(item => `
-      <div class="wn-tile">
+      <div class="wn-tile-web">
         <span class="wn-bad-badge">&times;</span>
         <div class="wn-tile-icon">
           <svg viewBox="0 0 32 32" fill="none">${item.svg}</svg>
@@ -1288,7 +1366,7 @@ function renderBinItemsList(catFilter = "all") {
     : detailedBinItemsList.filter(i => i.cat === catFilter);
 
   container.innerHTML = filtered.map(item => `
-    <button type="button" class="wgi-item-card" data-item="${item.key}">
+    <button type="button" class="wgi-card-web" data-item="${item.key}">
       <div class="wgi-thumb">${item.icon}</div>
       <div class="wgi-meta">
         <strong>${item.name}</strong>
@@ -1298,7 +1376,7 @@ function renderBinItemsList(catFilter = "all") {
     </button>
   `).join("");
 
-  container.querySelectorAll(".wgi-item-card").forEach(c => {
+  container.querySelectorAll(".wgi-item-card, .wgi-card-web").forEach(c => {
     c.addEventListener("click", () => {
       const key = c.getAttribute("data-item");
       renderItemDetailView(key);
@@ -1345,7 +1423,7 @@ if (learnStartBtn) {
   });
 }
 
-document.querySelectorAll(".topic-box").forEach(box => {
+document.querySelectorAll(".topic-box, .topic-box-web").forEach(box => {
   box.addEventListener("click", () => {
     const topic = box.getAttribute("data-topic");
     if (topic === "basics") {
@@ -1361,7 +1439,7 @@ document.querySelectorAll(".topic-box").forEach(box => {
   });
 });
 
-document.querySelectorAll(".featured-video-row-item, .rh-video-card").forEach(item => {
+document.querySelectorAll(".featured-video-row-item, .rh-video-card, .rh-video-card-web").forEach(item => {
   item.addEventListener("click", () => {
     const videoKey = item.getAttribute("data-video");
     if (videoKey === "mistakes") {
