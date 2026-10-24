@@ -11,11 +11,15 @@
   <!-- ========================================================= -->
   <!-- SCREEN 01: WELCOME (Responsive Web Hero & Mobile)         -->
   <!-- ========================================================= -->
+  <!-- ========================================================= -->
+  <!-- SCREEN 01: MINIMALIST PROJECT WEBSITE (Square & Uber Inspired) -->
+  <!-- ========================================================= -->
   <section class="screen-view active-view" id="screenWelcome">
-    <!-- Full-width Web Header -->
-    <header class="site-header">
+    
+    <!-- Full-width Sticky Minimalist Header -->
+    <header class="site-header" id="topNav">
       <div class="container header-flex">
-        <a href="#" class="brand-link">
+        <a href="#schedule-lookup" class="brand-link" id="brandWelcomeLink" aria-label="EcoTrack Home">
           <span class="brand-circle">
             <svg viewBox="0 0 24 24" fill="currentColor">
               <circle cx="12" cy="12" r="10" />
@@ -23,111 +27,636 @@
             </svg>
           </span>
           <span class="brand-text">EcoTrack</span>
+          <span class="brand-pilot-tag">Riverton Pilot</span>
         </a>
+
+        <!-- Desktop Navigation Links -->
+        <nav class="site-nav" aria-label="Main Navigation">
+          <a href="#schedule-lookup" class="nav-item">Schedule</a>
+          <a href="#how-it-works" class="nav-item">How It Works</a>
+          <a href="#waste-guide" class="nav-item">Bin Guide</a>
+          <a href="#platform-features" class="nav-item">Platform</a>
+          <a href="#council-network" class="nav-item">Councils</a>
+          <a href="#faq" class="nav-item">FAQ</a>
+        </nav>
+
         <div class="header-right-meta">
-          <button class="lang-btn">Language: English</button>
+          <button class="btn-ghost-sm" id="navResidentPortalBtn">Resident Portal</button>
+          <button class="btn-primary-sm" id="navCheckScheduleBtn">Check Bin Day</button>
         </div>
       </div>
     </header>
 
-    <!-- Responsive Hero Container -->
-    <main class="welcome-main">
-      <div class="container welcome-grid">
+    <!-- HERO SECTION (Bold Minimalist Headline, Tactile Big CTA, Live Product Preview) -->
+    <section class="hero-section" id="schedule-lookup">
+      <div class="container hero-grid">
         
-        <!-- Left: Text, CTA & Feature Rows -->
-        <div class="welcome-text-col">
-          <span class="welcome-tag">Resident Portal</span>
-          <h1 class="welcome-heading">Never miss bin day again</h1>
-          <p class="welcome-subhead">Collection days, simple reminders, and clear recycling answers for your household.</p>
-
-          <div class="welcome-action-wrap">
-            <button class="btn-primary-hero" id="welcomeStartBtn">Get started</button>
+        <!-- Left Column: Big Headline & Uber/Square Action Box -->
+        <div class="hero-content">
+          <div class="hero-badge">
+            <span class="badge-dot"></span>
+            <span>Municipal Waste & Kerbside Platform</span>
           </div>
 
-          <div class="welcome-features-list">
-            <div class="feat-row">
-              <div class="feat-icon">
+          <h1 class="hero-headline">
+            Never miss bin day again.<br />
+            <span class="hero-subline-text">Waste management, simplified.</span>
+          </h1>
+
+          <p class="hero-description">
+            Accurate council collection days, automated night-before alerts, and instant contamination-free recycling guides — engineered for modern households and local governments.
+          </p>
+
+          <!-- Big Square / Uber Action Box -->
+          <div class="hero-cta-box">
+            <label for="heroAddressInput" class="cta-input-label">Find kerbside collection days for your street</label>
+            <div class="hero-input-bar">
+              <div class="input-icon-wrap" aria-hidden="true">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-                  <line x1="16" y1="2" x2="16" y2="6"></line>
-                  <line x1="8" y1="2" x2="8" y2="6"></line>
-                  <line x1="3" y1="10" x2="21" y2="10"></line>
+                  <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"></path>
+                  <circle cx="12" cy="9" r="2.5"></circle>
                 </svg>
               </div>
-              <div class="feat-content">
-                <h4 class="feat-title">All your collection days</h4>
-                <p class="feat-desc">Accurate council schedules adjusted for holidays</p>
-              </div>
+              <input 
+                type="text" 
+                id="heroAddressInput" 
+                placeholder="Enter street address (e.g. 12 Greenview Ave)" 
+                autocomplete="off"
+                value="12 Greenview Ave, Riverton"
+              />
+              <button type="button" class="btn-hero-cta" id="heroSearchBtn">
+                <span>Find Schedule</span>
+                <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>
+              </button>
             </div>
 
-            <div class="feat-row">
-              <div class="feat-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
-                  <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
-                </svg>
-              </div>
-              <div class="feat-content">
-                <h4 class="feat-title">A reminder the night before</h4>
-                <p class="feat-desc">Timely notifications so your bins are out before 7:00 am</p>
-              </div>
+            <!-- Quick Address Suggestion Chips -->
+            <div class="hero-suggestions">
+              <span class="sugg-label">Try address:</span>
+              <button type="button" class="hero-chip active" data-address="12 Greenview Ave, Riverton">12 Greenview Ave</button>
+              <button type="button" class="hero-chip" data-address="12 Greenway St, Riverton">12 Greenway St</button>
+              <button type="button" class="hero-chip" data-address="120 Greenview Ave, Riverton">120 Greenview Ave</button>
             </div>
 
-            <div class="feat-row">
-              <div class="feat-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <polyline points="3 6 5 6 21 6"></polyline>
-                  <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                </svg>
-              </div>
-              <div class="feat-content">
-                <h4 class="feat-title">Know which bin to use</h4>
-                <p class="feat-desc">Search household items to avoid contamination</p>
-              </div>
+            <div class="hero-secondary-action">
+              <button type="button" class="link-btn-text" id="welcomeStartBtn">
+                Launch interactive resident onboarding & walkthrough demo →
+              </button>
             </div>
           </div>
         </div>
 
-        <!-- Right: Desktop Collection Preview Container -->
-        <div class="welcome-visual-col">
-          <div class="collection-preview-card">
-            <div class="preview-header">
-              <span class="preview-badge">Riverton Council Area</span>
-              <span class="preview-live-dot" aria-label="Active status indicator"></span>
-            </div>
-            <h3 class="preview-title">Smart Waste Management</h3>
-            <p class="preview-desc">Enter your street address to preview your exact kerbside collection days.</p>
-            
-            <div class="preview-schedule-list">
-              <div class="preview-schedule-row">
-                <div class="schedule-type">
-                  <span class="indicator-bar indicator-red"></span>
-                  <span class="schedule-name">General waste</span>
-                </div>
-                <span class="schedule-timing">Every Thursday</span>
+        <!-- Right Column: Live Product Kerbside Preview Card -->
+        <div class="hero-preview-col">
+          <div class="product-preview-card" id="heroPreviewCard">
+            <div class="preview-card-top">
+              <div class="card-council-tag">
+                <span class="live-indicator"></span>
+                <span id="previewCouncilName">Riverton City Council · Zone 4B</span>
               </div>
-              
-              <div class="preview-schedule-row">
-                <div class="schedule-type">
-                  <span class="indicator-bar indicator-yellow"></span>
-                  <span class="schedule-name">Recycling</span>
+              <span class="status-pill-verified">Verified Route</span>
+            </div>
+
+            <div class="preview-address-display">
+              <span class="label-tiny">Selected Residence</span>
+              <h3 class="preview-address-text" id="previewAddressText">12 Greenview Ave, Riverton</h3>
+            </div>
+
+            <!-- Next Collection Details -->
+            <div class="preview-next-card">
+              <div class="next-meta">
+                <span class="next-tag">NEXT KERBSIDE COLLECTION</span>
+                <h4 class="next-date-title" id="previewNextDate">Friday, 25 Sep 2026</h4>
+                <div class="holiday-alert-pill">
+                  <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd" /></svg>
+                  <span>Moved 1 day from Thu 24 Sep · Public Holiday</span>
                 </div>
-                <span class="schedule-timing">Every 2nd Thursday</span>
               </div>
 
-              <div class="preview-schedule-row">
-                <div class="schedule-type">
-                  <span class="indicator-bar indicator-green"></span>
-                  <span class="schedule-name">Garden & food</span>
+              <!-- Due Bins Visual -->
+              <div class="preview-bins-row">
+                <div class="bin-card-item">
+                  <div class="mini-bin-render bin-red" title="General Waste bin (Red lid)">
+                    <div class="mb-lid"></div>
+                    <div class="mb-body"></div>
+                  </div>
+                  <div class="bin-details">
+                    <strong>General Waste</strong>
+                    <span>Red lid · Weekly</span>
+                  </div>
                 </div>
-                <span class="schedule-timing">Every 2nd Thursday</span>
+
+                <div class="bin-card-item">
+                  <div class="mini-bin-render bin-yellow" title="Recycling bin (Yellow lid)">
+                    <div class="mb-lid"></div>
+                    <div class="mb-body"></div>
+                  </div>
+                  <div class="bin-details">
+                    <strong>Recycling</strong>
+                    <span>Yellow lid · Fortnightly</span>
+                  </div>
+                </div>
               </div>
             </div>
+
+            <!-- Cutoff notice & Instant Actions -->
+            <div class="preview-card-footer">
+              <div class="cutoff-notice">
+                <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd" /></svg>
+                <span>Kerbside placement cut-off: <strong>6:00 AM Friday</strong></span>
+              </div>
+              
+              <div class="preview-card-buttons">
+                <button type="button" class="btn-card-action" id="heroDownloadIcsBtn">
+                  <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"/></svg>
+                  <span>Export to iCal (.ics)</span>
+                </button>
+                <button type="button" class="btn-card-action secondary" id="heroViewFullScheduleBtn">
+                  <span>View Full Month</span>
+                  <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/></svg>
+                </button>
+              </div>
+            </div>
+
           </div>
         </div>
 
       </div>
-    </main>
+    </section>
+
+    <!-- METRICS STRIP (Square-Style Hairlines) -->
+    <section class="metrics-bar" aria-label="Key Performance Indicators">
+      <div class="container">
+        <div class="metrics-grid">
+          <div class="metric-block">
+            <span class="metric-number">40+</span>
+            <span class="metric-label">Council Kerbside Zones</span>
+            <span class="metric-caption">Automated gazetted route feeds</span>
+          </div>
+          <div class="metric-block">
+            <span class="metric-number">99.4%</span>
+            <span class="metric-label">On-Time Reminder Delivery</span>
+            <span class="metric-caption">SMS, push & calendar sync rate</span>
+          </div>
+          <div class="metric-block">
+            <span class="metric-number">42%</span>
+            <span class="metric-label">Contamination Reduction</span>
+            <span class="metric-caption">Average drop across pilot zones</span>
+          </div>
+          <div class="metric-block">
+            <span class="metric-number">0s</span>
+            <span class="metric-label">Sign-up Friction</span>
+            <span class="metric-caption">Instant lookup, 100% free for residents</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- INTERACTIVE "WHAT GOES WHERE?" WASTE DIRECTORY -->
+    <section class="section-wrapper bg-canvas" id="waste-guide">
+      <div class="container">
+        <div class="section-header-center">
+          <span class="section-eyebrow">Zero Contamination Directory</span>
+          <h2 class="section-title">Know which bin to use in two seconds.</h2>
+          <p class="section-subtitle">Search common household items to prevent bin contamination and avoid council collection rejections.</p>
+        </div>
+
+        <div class="waste-guide-tool">
+          <div class="wg-controls">
+            <!-- Search Input -->
+            <div class="wg-search-bar">
+              <svg class="wg-search-icon" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" />
+              </svg>
+              <input 
+                type="text" 
+                id="wasteSearchInput" 
+                class="wg-search-input" 
+                placeholder="Search any item: pizza box, soft plastics, batteries, coffee cup, aerosol..." 
+              />
+            </div>
+
+            <!-- Filter Pills -->
+            <div class="wg-filter-pills" id="wasteFilterPills" role="tablist">
+              <button type="button" class="wg-pill active" data-category="all">All Items</button>
+              <button type="button" class="wg-pill" data-category="yellow">🟡 Recycling (Yellow)</button>
+              <button type="button" class="wg-pill" data-category="green">🟢 Organics & FOGO (Green)</button>
+              <button type="button" class="wg-pill" data-category="red">🔴 General Waste (Red)</button>
+              <button type="button" class="wg-pill" data-category="depot">⚡ Dedicated Depot (Drop-off)</button>
+            </div>
+          </div>
+
+          <!-- Dynamic Waste Item Grid -->
+          <div class="waste-cards-grid" id="wasteCardsGrid">
+            <!-- Populated via JavaScript dynamically with rich items -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- HOW IT WORKS (1-2-3 Architectural Steps) -->
+    <section class="section-wrapper" id="how-it-works">
+      <div class="container">
+        <div class="section-header-center">
+          <span class="section-eyebrow">Seamless Resident Workflow</span>
+          <h2 class="section-title">How EcoTrack works for your home.</h2>
+          <p class="section-subtitle">Three steps to ensure your kerbside bins are always out on time with zero contamination.</p>
+        </div>
+
+        <div class="steps-grid">
+          <div class="step-card">
+            <span class="step-number-pill">STEP 01</span>
+            <h3 class="step-title">Pinpoint your address</h3>
+            <p class="step-desc">
+              Enter your street number and name. EcoTrack instantly matches your residence to official council collection zones, accounting for public holiday schedule shifts.
+            </p>
+          </div>
+
+          <div class="step-card">
+            <span class="step-number-pill">STEP 02</span>
+            <h3 class="step-title">Set proactive alerts</h3>
+            <p class="step-desc">
+              Choose night-before reminders at 7:00 PM or morning-of alerts at 6:00 AM. Export to Apple Calendar or Google Calendar with a single click.
+            </p>
+          </div>
+
+          <div class="step-card">
+            <span class="step-number-pill">STEP 03</span>
+            <h3 class="step-title">Wheel out with confidence</h3>
+            <p class="step-desc">
+              Know exactly which bins are due each week — General Waste, Recycling, or FOGO. Use our two-second item directory to eliminate contamination.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PLATFORM CAPABILITIES (Square-Style Crisp 4-Grid) -->
+    <section class="section-wrapper bg-canvas" id="platform-features">
+      <div class="container">
+        <div class="section-header-center">
+          <span class="section-eyebrow">Enterprise-Grade Reliability</span>
+          <h2 class="section-title">Built for households, trusted by councils.</h2>
+          <p class="section-subtitle">Engineered with precision architecture to eliminate confusion on kerbside collection mornings.</p>
+        </div>
+
+        <div class="features-grid-square">
+          <div class="feature-box">
+            <div class="fb-icon-wrap">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            </div>
+            <h3 class="fb-title">Dynamic Holiday Rescheduling</h3>
+            <p class="fb-desc">
+              Public holidays like Christmas, Good Friday, and Australia Day disrupt normal collection days. EcoTrack automatically detects shifts and sends timely delay notices.
+            </p>
+            <div class="fb-tags">
+              <span class="fb-tag">Automatic Sync</span>
+              <span class="fb-tag">Holiday Exception Banners</span>
+            </div>
+          </div>
+
+          <div class="feature-box">
+            <div class="fb-icon-wrap">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+            </div>
+            <h3 class="fb-title">Multi-Stream Bin Compatibility</h3>
+            <p class="fb-desc">
+              Supports 2-bin, 3-bin (FOGO garden & food organics), and 4-bin (separated glass) municipal systems with lid colors matching your local council specifications.
+            </p>
+            <div class="fb-tags">
+              <span class="fb-tag">FOGO Ready</span>
+              <span class="fb-tag">Australian Standard Lids</span>
+            </div>
+          </div>
+
+          <div class="feature-box">
+            <div class="fb-icon-wrap">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+            </div>
+            <h3 class="fb-title">Native RFC 5545 Calendar Sync</h3>
+            <p class="fb-desc">
+              One-click standard `.ics` generation. Import your entire annual schedule directly into Apple Calendar, Google Calendar, or Microsoft Outlook with zero app installation.
+            </p>
+            <div class="fb-tags">
+              <span class="fb-tag">Offline Capable</span>
+              <span class="fb-tag">Universal .ICS Export</span>
+            </div>
+          </div>
+
+          <div class="feature-box">
+            <div class="fb-icon-wrap">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+            </div>
+            <h3 class="fb-title">One-Tap Municipal Service Requests</h3>
+            <p class="fb-desc">
+              Report missed bin collections, order replacement lids, or schedule annual bulky waste pick-ups in under 30 seconds directly from your resident portal.
+            </p>
+            <div class="fb-tags">
+              <span class="fb-tag">Council Direct</span>
+              <span class="fb-tag">Instant Ticket Dispatch</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- RESIDENT APP SHOWCASE (High-Impact Dark Canvas) -->
+    <section class="section-wrapper" id="app-demo">
+      <div class="container">
+        <div class="app-showcase-box">
+          <div class="app-showcase-grid">
+            <div class="as-content">
+              <span class="section-eyebrow">Interactive Prototype Demo</span>
+              <h2 class="as-headline">Experience the resident portal interface.</h2>
+              <p class="as-desc">
+                Step through the end-to-end user journey designed for residents: from address setup and wheelie bin assignment to personalized dashboard alerts and monthly collection calendars.
+              </p>
+
+              <div class="as-bullets">
+                <div class="as-bullet">
+                  <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                  <span>Real-time holiday rescheduling banner</span>
+                </div>
+                <div class="as-bullet">
+                  <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                  <span>Upcoming vs Month grid calendar switcher</span>
+                </div>
+                <div class="as-bullet">
+                  <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                  <span>Integrated recycling rules & instant search</span>
+                </div>
+              </div>
+
+              <button type="button" class="btn-showcase-cta" id="showcaseLaunchBtn">
+                <span>Launch Resident App Demo</span>
+                <svg viewBox="0 0 20 20" fill="currentColor" style="width: 18px; height: 18px;"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>
+              </button>
+            </div>
+
+            <!-- Visual Mockup Container -->
+            <div class="as-visual-card">
+              <div class="asv-header">
+                <div class="asv-dots">
+                  <span class="asv-dot"></span>
+                  <span class="asv-dot"></span>
+                  <span class="asv-dot"></span>
+                </div>
+                <span class="asv-title">EcoTrack Resident Dashboard</span>
+                <span style="width: 40px;"></span>
+              </div>
+
+              <div class="asv-item">
+                <div class="asv-item-left">
+                  <strong>Good afternoon, John</strong>
+                  <span>12 Greenview Ave · Riverton</span>
+                </div>
+                <span class="asv-badge-green">Zone 4B Active</span>
+              </div>
+
+              <div class="asv-item" style="border-left: 3px solid #EAB308;">
+                <div class="asv-item-left">
+                  <strong>Next Kerbside: Fri 25 Sept</strong>
+                  <span>General Waste (Red) + Recycling (Yellow)</span>
+                </div>
+                <span style="font-size: 11px; color: #FCD34D; font-weight: 600;">+1 Day Holiday Shift</span>
+              </div>
+
+              <div class="asv-item">
+                <div class="asv-item-left">
+                  <strong>Automated Reminder</strong>
+                  <span>Alert set for Thursday 7:00 PM</span>
+                </div>
+                <span style="font-size: 12px; color: #4ADE80; font-weight: 600;">Enabled</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- COUNCIL NETWORK & MUNICIPAL SOLUTIONS -->
+    <section class="section-wrapper bg-canvas" id="council-network">
+      <div class="container">
+        <div class="councils-card">
+          <div class="councils-grid">
+            <div class="cg-text">
+              <span class="section-eyebrow">Municipal Government Solutions</span>
+              <h2 class="section-title">Cut contaminated loads. Reduce call centre surges.</h2>
+              <p class="section-subtitle">
+                During holiday weeks, local councils experience hundreds of missed bin inquiries. EcoTrack synchronizes directly with municipal waste contracts to automate communications.
+              </p>
+
+              <div class="cg-bullets">
+                <div class="cg-bullet-item">
+                  <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                  <div>
+                    <strong>68% Reduction in Support Tickets</strong>
+                    <span>Residents receive automated holiday shift notifications before picking up the phone.</span>
+                  </div>
+                </div>
+
+                <div class="cg-bullet-item">
+                  <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                  <div>
+                    <strong>FOGO & Glass Rollout Support</strong>
+                    <span>Seamlessly guides households through new 3-bin and 4-bin transitions with localized rules.</span>
+                  </div>
+                </div>
+              </div>
+
+              <button type="button" class="btn-primary-hero" id="councilInquiryBtn">
+                Contact Municipal Solutions
+              </button>
+            </div>
+
+            <div class="council-stat-boxes">
+              <div class="cs-box">
+                <div class="cs-num">68%</div>
+                <div class="cs-lbl">Fewer Holiday Enquiries</div>
+              </div>
+              <div class="cs-box">
+                <div class="cs-num">42%</div>
+                <div class="cs-lbl">Lower Kerbside Contamination</div>
+              </div>
+              <div class="cs-box">
+                <div class="cs-num">100%</div>
+                <div class="cs-lbl">Real-time Schedule Accuracy</div>
+              </div>
+              <div class="cs-box">
+                <div class="cs-num">&lt; 30s</div>
+                <div class="cs-lbl">Resident Issue Report Time</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FREQUENTLY ASKED QUESTIONS (Accordion) -->
+    <section class="section-wrapper" id="faq">
+      <div class="container">
+        <div class="section-header-center">
+          <span class="section-eyebrow">Clear Answers</span>
+          <h2 class="section-title">Frequently asked questions.</h2>
+          <p class="section-subtitle">Everything you need to know about council collection schedules and recycling guidelines.</p>
+        </div>
+
+        <div class="faq-list" id="faqList">
+          <div class="faq-item active">
+            <button type="button" class="faq-question">
+              <span>How does EcoTrack handle public holiday delays?</span>
+              <svg class="faq-icon" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+            </button>
+            <div class="faq-answer">
+              <p>
+                When a public holiday (such as Christmas, Good Friday, or Easter Monday) shifts kerbside collections, EcoTrack recalculates your pickup day automatically. You receive an alert noting the changed day (e.g. "Collection moved from Thursday to Friday").
+              </p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button type="button" class="faq-question">
+              <span>What if my council uses a 3-bin system with FOGO?</span>
+              <svg class="faq-icon" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+            </button>
+            <div class="faq-answer">
+              <p>
+                EcoTrack fully supports 3-bin systems (General Waste Red, Mixed Recycling Yellow, and Food Organics/Garden Organics Green). In step 3 of setup, your bin types are automatically configured according to your council’s gazetted roll-out.
+              </p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button type="button" class="faq-question">
+              <span>Can I export collections to my Apple or Google Calendar?</span>
+              <svg class="faq-icon" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+            </button>
+            <div class="faq-answer">
+              <p>
+                Yes! Clicking "Export to iCal (.ics)" generates a standard RFC 5545 calendar file. It syncs with Apple Calendar, Google Calendar, and Microsoft Outlook, complete with automatic night-before alert alarms.
+              </p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button type="button" class="faq-question">
+              <span>What should I do if the council truck missed my bin?</span>
+              <svg class="faq-icon" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+            </button>
+            <div class="faq-answer">
+              <p>
+                Inside the EcoTrack Resident Home dashboard, tap the top-right flag button to log a missed collection report directly to council dispatch. You can also report damaged bin lids or book hard rubbish pick-ups.
+              </p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button type="button" class="faq-question">
+              <span>Is EcoTrack free for residential households?</span>
+              <svg class="faq-icon" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+            </button>
+            <div class="faq-answer">
+              <p>
+                EcoTrack is 100% free for all residents living within participating council areas. There are no subscriptions, ads, or hidden charges.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- BIG CLOSING CTA BANNER (Square & Uber High-Contrast Signature) -->
+    <section class="cta-banner-section">
+      <div class="container">
+        <div class="cta-banner-box">
+          <div class="cta-banner-tag">EcoTrack Municipal System</div>
+          <h2 class="cta-banner-heading">Never wake up to the sound of the bin truck again.</h2>
+          <p class="cta-banner-sub">
+            Join households across the Riverton Council area with accurate collection schedules, smart reminders, and zero missed collections.
+          </p>
+
+          <div class="cta-banner-buttons">
+            <button type="button" class="btn-cta-big-primary" id="ctaLaunchPortalBtn">
+              <span>Launch Resident Portal</span>
+              <svg viewBox="0 0 20 20" fill="currentColor" style="width: 18px; height: 18px;"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>
+            </button>
+            <button type="button" class="btn-cta-big-secondary" id="ctaCheckAddressBtn">
+              <span>Check Street Schedule</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SEMANTIC FOOTER -->
+    <footer class="site-footer">
+      <div class="container">
+        <div class="footer-grid">
+          
+          <div class="footer-brand-col">
+            <a href="#schedule-lookup" class="brand-link">
+              <span class="brand-circle">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                  <circle cx="12" cy="12" r="10" />
+                  <path d="M7 17L17 7" stroke="#FFF" stroke-width="2.5" stroke-linecap="round" />
+                </svg>
+              </span>
+              <span class="brand-text">EcoTrack</span>
+            </a>
+            <p class="footer-desc">
+              Next-generation municipal kerbside waste management and resident recycling intelligence platform.
+            </p>
+            <div class="footer-status-pill">
+              <span class="status-dot-green"></span>
+              <span>All Council Feeds Operational</span>
+            </div>
+          </div>
+
+          <div class="footer-col">
+            <h4 class="footer-col-title">Platform</h4>
+            <ul class="footer-links">
+              <li><a href="#schedule-lookup">Kerbside Lookup</a></li>
+              <li><a href="#how-it-works">How It Works</a></li>
+              <li><a href="#waste-guide">What Goes Where</a></li>
+              <li><a href="#platform-features">Holiday Rescheduling</a></li>
+              <li><a href="#faq">Frequently Asked Questions</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-col">
+            <h4 class="footer-col-title">Waste Streams</h4>
+            <ul class="footer-links">
+              <li><a href="#waste-guide">General Waste (Red Lid)</a></li>
+              <li><a href="#waste-guide">Mixed Recycling (Yellow Lid)</a></li>
+              <li><a href="#waste-guide">Food & Garden Organics (Green)</a></li>
+              <li><a href="#waste-guide">Hazardous Depot & E-Waste</a></li>
+              <li><a href="#app-demo">Bulky Hard Rubbish Booking</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-col">
+            <h4 class="footer-col-title">Project & Governance</h4>
+            <div class="footer-credits">
+              <p><strong>EcoTrack Capstone Project</strong></p>
+              <p>Parash Kumar Bhandari &amp; Suparth Sitaula</p>
+              <p style="margin-top: 8px;">Sprint 2 Production Prototype</p>
+              <p style="margin-top: 4px;">Zero framework runtime · Pure HTML5, CSS3 &amp; JS</p>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="footer-bottom">
+          <span>&copy; 2026 EcoTrack Waste &amp; Recycling Management System. All rights reserved.</span>
+          <div class="footer-bottom-links">
+            <a href="#schedule-lookup">Privacy</a>
+            <a href="#schedule-lookup">Terms of Service</a>
+            <a href="#council-network">Council Portal</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
   </section>
 
   <!-- ========================================================= -->
@@ -412,13 +941,12 @@
             <span class="brand-text">EcoTrack</span>
           </a>
 
-          <!-- Desktop Nav Links (Disabled/Muted except Home) -->
+          <!-- Desktop Nav Links -->
           <nav class="desktop-nav-items" aria-label="Main Navigation">
-            <span class="d-link active">Home</span>
-            <span class="d-link disabled">Schedule</span>
-            <span class="d-link disabled">Recycle</span>
-            <span class="d-link disabled">Disposal centres</span>
-            <span class="d-link disabled">Account</span>
+            <button type="button" class="d-link active" id="homeNavHomeBtn">Home</button>
+            <button type="button" class="d-link" id="homeNavScheduleBtn">Schedule</button>
+            <button type="button" class="d-link" id="homeNavRecycleBtn">Recycle</button>
+            <button type="button" class="d-link" id="homeNavOverviewBtn">Website</button>
           </nav>
 
           <!-- Top-right Red Flag Icon (Image 3) -->
@@ -571,20 +1099,20 @@
 
       <!-- Mobile Bottom Tab Bar -->
       <nav class="bottom-tab-bar" aria-label="Mobile Navigation">
-        <div class="tab-button active">
+        <div class="tab-button active" id="homeBottomTabHome">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
           </svg>
           <span>Home</span>
         </div>
-        <div class="tab-button disabled">
+        <div class="tab-button" id="homeBottomTabSchedule">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
             <line x1="16" y1="2" x2="16" y2="6" /><line x1="8" y1="2" x2="8" y2="6" /><line x1="3" y1="10" x2="21" y2="10" />
           </svg>
           <span>Schedule</span>
         </div>
-        <div class="tab-button disabled">
+        <div class="tab-button" id="homeBottomTabRecycle">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M7 19H4.8a1.8 1.8 0 0 1-1.6-.9 1.8 1.8 0 0 1 0-1.8L7.2 9.5" />
             <path d="M11 19h8.2a1.8 1.8 0 0 0 1.6-.9 1.8 1.8 0 0 0 0-1.8L17.5 11" />
@@ -592,7 +1120,7 @@
           </svg>
           <span>Recycle</span>
         </div>
-        <div class="tab-button disabled">
+        <div class="tab-button" id="homeBottomTabAccount">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" />
           </svg>
@@ -623,9 +1151,8 @@
           <nav class="desktop-nav-items" aria-label="Main Navigation">
             <button class="d-link" id="scheduleNavHomeBtn">Home</button>
             <button class="d-link active" id="scheduleNavScheduleBtn">Schedule</button>
-            <span class="d-link disabled">Recycle</span>
-            <span class="d-link disabled">Disposal centres</span>
-            <span class="d-link disabled">Account</span>
+            <button type="button" class="d-link" id="scheduleNavRecycleBtn">Recycle</button>
+            <button type="button" class="d-link" id="scheduleNavOverviewBtn">Website</button>
           </nav>
 
           <button class="back-link-btn" id="scheduleBackToHomeBtn" aria-label="Back to home">
@@ -763,9 +1290,815 @@
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2" /><line x1="16" y1="2" x2="16" y2="6" /><line x1="8" y1="2" x2="8" y2="6" /><line x1="3" y1="10" x2="21" y2="10" /></svg>
           <span>Schedule</span>
         </div>
+        <div class="tab-button" id="scheduleBottomTabRecycle">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M7 19H4.8a1.8 1.8 0 0 1-1.6-.9 1.8 1.8 0 0 1 0-1.8L7.2 9.5" />
+            <path d="M11 19h8.2a1.8 1.8 0 0 0 1.6-.9 1.8 1.8 0 0 0 0-1.8L17.5 11" />
+            <path d="m14 4.5 4.5 7.5" /><path d="m5 16 2.5 3L10 16" /><path d="m17 7-3-4.5L11 7" /><path d="M9 13.5 6.5 9H12" />
+          </svg>
+          <span>Recycle</span>
+        </div>
+        <div class="tab-button" id="scheduleBottomTabAccount">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" /></svg>
+          <span>Account</span>
+        </div>
       </nav>
     </div>
   </section>
+
+  <!-- ========================================================= -->
+  <!-- SCREEN: RECYCLE SYSTEM (Matches User Screenshots Exactly) -->
+  <!-- ========================================================= -->
+  <section class="screen-view" id="screenRecycle" style="display: none;">
+    <div class="recycle-app-wrapper">
+
+      <!-- ======================================================= -->
+      <!-- SUBVIEW 1: RECYCLE HUB (MAIN - Image 1/2 Left)          -->
+      <!-- ======================================================= -->
+      <div class="recycle-subview active" id="viewRecycleHub">
+        <!-- Top App Bar with EcoTrack Brand & User Avatar -->
+        <header class="recycle-top-bar">
+          <a href="#" class="brand-link" id="recycleBrandLink">
+            <span class="brand-circle">
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <circle cx="12" cy="12" r="10" />
+                <path d="M7 17L17 7" stroke="#FFF" stroke-width="2.5" stroke-linecap="round" />
+              </svg>
+            </span>
+            <span class="brand-text">EcoTrack</span>
+          </a>
+          <button type="button" class="user-avatar-badge" id="recycleAvatarBtn" title="Account Settings">JS</button>
+        </header>
+
+        <main class="recycle-hub-content">
+          <!-- Title & Subtitle -->
+          <div class="rh-header-block">
+            <h1 class="rh-title">Recycle</h1>
+            <p class="rh-subtitle">Find out what to do with your household items.</p>
+          </div>
+
+          <!-- Search Bar with Camera Icon -->
+          <div class="rh-search-container">
+            <div class="rh-search-box">
+              <svg class="rh-search-icon" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" />
+              </svg>
+              <input type="text" id="recycleHubSearchInput" placeholder="Search an item, e.g. pizza box" autocomplete="off" />
+              <button type="button" class="rh-camera-btn" id="rhSearchCameraBtn" aria-label="Scan an item with camera" title="Scan with camera">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+                  <circle cx="12" cy="13" r="4"></circle>
+                </svg>
+              </button>
+            </div>
+            <!-- Live Search Dropdown Suggestions -->
+            <div class="rh-search-dropdown" id="rhSearchDropdown" style="display: none;"></div>
+          </div>
+
+          <!-- Scan an item Banner Card -->
+          <button type="button" class="rh-scan-banner" id="rhScanItemBannerBtn">
+            <div class="scan-banner-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+                <circle cx="12" cy="13" r="4"></circle>
+              </svg>
+            </div>
+            <div class="scan-banner-text">
+              <strong>Scan an item</strong>
+              <span>Take a photo to find out how to dispose of it.</span>
+            </div>
+            <svg class="chevron-right" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/>
+            </svg>
+          </button>
+
+          <!-- Know your bins Section -->
+          <section class="rh-section">
+            <div class="rh-section-header">
+              <h2 class="rh-section-title">Know your bins</h2>
+              <button type="button" class="rh-link-action" id="rhViewAllBinsBtn">View all &rarr;</button>
+            </div>
+            <div class="rh-bins-row">
+              <!-- Recycling Card (Yellow) -->
+              <button type="button" class="rh-bin-card bin-yellow-card" data-bin="recycling">
+                <div class="rh-bin-graphic bin-yellow">
+                  <div class="mb-lid"></div>
+                  <div class="mb-body"></div>
+                  <div class="mb-wheel mb-wheel-l"></div>
+                  <div class="mb-wheel mb-wheel-r"></div>
+                </div>
+                <strong class="rh-bin-name">Recycling</strong>
+                <span class="rh-bin-lid-tag">Yellow lid</span>
+              </button>
+
+              <!-- Organics Card (Green) -->
+              <button type="button" class="rh-bin-card bin-green-card" data-bin="organics">
+                <div class="rh-bin-graphic bin-green">
+                  <div class="mb-lid"></div>
+                  <div class="mb-body"></div>
+                  <div class="mb-wheel mb-wheel-l"></div>
+                  <div class="mb-wheel mb-wheel-r"></div>
+                </div>
+                <strong class="rh-bin-name">Organics</strong>
+                <span class="rh-bin-lid-tag">Green lid</span>
+              </button>
+
+              <!-- General Waste Card (Red) -->
+              <button type="button" class="rh-bin-card bin-red-card" data-bin="general">
+                <div class="rh-bin-graphic bin-red">
+                  <div class="mb-lid"></div>
+                  <div class="mb-body"></div>
+                  <div class="mb-wheel mb-wheel-l"></div>
+                  <div class="mb-wheel mb-wheel-r"></div>
+                </div>
+                <strong class="rh-bin-name">General waste</strong>
+                <span class="rh-bin-lid-tag">Red lid</span>
+              </button>
+            </div>
+          </section>
+
+          <!-- Common searches Chips -->
+          <section class="rh-section">
+            <div class="rh-section-header">
+              <h2 class="rh-section-title">Common searches</h2>
+            </div>
+            <div class="rh-chips-grid">
+              <button type="button" class="rh-search-chip" data-item="pizza-box">
+                <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" /></svg>
+                <span>Pizza box</span>
+              </button>
+              <button type="button" class="rh-search-chip" data-item="plastic-bottle">
+                <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" /></svg>
+                <span>Plastic bottle</span>
+              </button>
+              <button type="button" class="rh-search-chip" data-item="coffee-cup">
+                <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" /></svg>
+                <span>Coffee cup</span>
+              </button>
+              <button type="button" class="rh-search-chip" data-item="batteries">
+                <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" /></svg>
+                <span>Batteries</span>
+              </button>
+              <button type="button" class="rh-search-chip" data-item="nappies">
+                <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" /></svg>
+                <span>Nappies</span>
+              </button>
+              <button type="button" class="rh-search-chip more-chip" id="rhMoreItemsBtn">
+                <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M3 5a2 2 0 012-2h10a2 2 0 012 2v10a2 2 0 01-2 2H5a2 2 0 01-2-2V5zm11 1H6v8h8V6z" clip-rule="evenodd"/></svg>
+                <span>More items</span>
+              </button>
+            </div>
+          </section>
+
+          <!-- Learn with short videos -->
+          <section class="rh-section">
+            <div class="rh-section-header">
+              <h2 class="rh-section-title">Learn with short videos</h2>
+              <button type="button" class="rh-link-action" id="rhSeeAllVideosBtn">See all &rarr;</button>
+            </div>
+            <div class="rh-videos-row">
+              <div class="rh-video-card" data-video="mistakes">
+                <div class="rh-video-thumb video-bg-1">
+                  <button type="button" class="rh-play-btn" aria-label="Play video">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                  </button>
+                  <span class="video-duration-badge">0:45</span>
+                </div>
+                <h3 class="rh-video-title">Recycling mistakes to avoid</h3>
+                <p class="rh-video-sub">5 common mistakes</p>
+              </div>
+
+              <div class="rh-video-card" data-video="prepare">
+                <div class="rh-video-thumb video-bg-2">
+                  <button type="button" class="rh-play-btn" aria-label="Play video">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                  </button>
+                  <span class="video-duration-badge">0:40</span>
+                </div>
+                <h3 class="rh-video-title">How to prepare items</h3>
+                <p class="rh-video-sub">Get the most out of recycling</p>
+              </div>
+            </div>
+          </section>
+        </main>
+      </div>
+
+      <!-- ======================================================= -->
+      <!-- SUBVIEW 2: ITEM DETAIL (Image 1 Middle - Plastic Bottle)-->
+      <!-- ======================================================= -->
+      <div class="recycle-subview" id="viewItemDetail" style="display: none;">
+        <header class="recycle-nav-header">
+          <button type="button" class="nav-back-icon-btn" id="itemDetailBackBtn" aria-label="Go back">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg>
+          </button>
+          <span class="nav-header-title" id="itemDetailTitle">Plastic bottle</span>
+          <button type="button" class="nav-action-icon-btn" id="itemDetailFavBtn" aria-label="Favorite item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+          </button>
+        </header>
+
+        <main class="item-detail-content">
+          <!-- Item Hero Card -->
+          <div class="item-hero-card">
+            <div class="item-visual-box" id="itemDetailVisual">
+              <!-- Rendered via SVG -->
+              <svg viewBox="0 0 64 64" fill="none">
+                <rect x="24" y="8" width="16" height="8" rx="2" fill="#3B82F6"/>
+                <path d="M20 18C20 16 24 16 24 16H40C40 16 44 16 44 18L46 36C46 48 42 56 32 56C22 56 18 48 18 36L20 18Z" fill="#93C5FD" fill-opacity="0.5" stroke="#3B82F6" stroke-width="2"/>
+                <path d="M22 28H42M21 38H43" stroke="#60A5FA" stroke-width="1.5" stroke-dasharray="2 2"/>
+              </svg>
+            </div>
+            <div class="item-status-col">
+              <div class="item-status-pill" id="itemDetailStatusPill">
+                <div class="status-check-circle" id="itemDetailStatusIcon">
+                  <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                </div>
+                <div class="status-text-wrap">
+                  <strong id="itemDetailStatusText">Yes, you can recycle this</strong>
+                  <span id="itemDetailStatusSub">Follow the steps below.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Target Bin Card -->
+          <div class="target-bin-box" id="itemTargetBinBox">
+            <div class="tb-bin-graphic" id="itemTargetBinGraphic">
+              <div class="rh-bin-graphic bin-yellow">
+                <div class="mb-lid"></div>
+                <div class="mb-body"></div>
+                <div class="mb-wheel mb-wheel-l"></div>
+                <div class="mb-wheel mb-wheel-r"></div>
+              </div>
+            </div>
+            <div class="tb-details">
+              <span class="tb-tag" id="itemTargetBinTag">PUT IN</span>
+              <h2 class="tb-title" id="itemTargetBinTitle">Yellow-lid bin</h2>
+              <p class="tb-desc" id="itemTargetBinDesc">Drink bottles, water bottles and similar plastic containers.</p>
+            </div>
+          </div>
+
+          <!-- Numbered Steps -->
+          <div class="how-to-block">
+            <h3 class="how-to-title">How to do it</h3>
+            <div class="how-step-list" id="itemHowToSteps">
+              <div class="how-step-item">
+                <span class="step-num-bubble">1</span>
+                <span class="step-content-text">Empty the bottle (no liquid).</span>
+              </div>
+              <div class="how-step-item">
+                <span class="step-num-bubble">2</span>
+                <span class="step-content-text">Keep the lid on (unless your council asks to remove it).</span>
+              </div>
+              <div class="how-step-item">
+                <span class="step-num-bubble">3</span>
+                <span class="step-content-text">No need to crush - a quick rinse is fine.</span>
+              </div>
+              <div class="how-step-item">
+                <span class="step-num-bubble">4</span>
+                <span class="step-content-text">Put it in loose, not inside a plastic bag.</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Blue Return & Earn Callout -->
+          <div class="callout-blue-box" id="itemRefundCallout">
+            <svg class="cbb-icon" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/>
+            </svg>
+            <span class="cbb-text">Eligible drink containers can also be returned for a 10c refund through Return and Earn.</span>
+            <svg class="chevron-right" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/></svg>
+          </div>
+
+          <!-- Watch a short guide -->
+          <div class="rh-section">
+            <h3 class="rh-section-title">Watch a short guide</h3>
+            <div class="watch-guide-card" id="itemWatchGuideBtn">
+              <div class="watch-guide-overlay">
+                <span class="wgo-title" id="itemGuideVideoTitle">How to prepare plastic bottles for recycling</span>
+                <div style="display: flex; align-items: flex-end; justify-content: space-between;">
+                  <button type="button" class="rh-play-btn" aria-label="Play guide">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                  </button>
+                  <span class="video-duration-badge">0:45</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Similar items -->
+          <div class="rh-section">
+            <div class="rh-section-header">
+              <h3 class="rh-section-title">Similar items</h3>
+              <button type="button" class="rh-link-action" id="similarSeeAllBtn">See all</button>
+            </div>
+            <div class="similar-items-row" id="similarItemsRow">
+              <button type="button" class="similar-item-card" data-item="plastic-bottle">
+                <div class="sic-thumb">
+                  <svg viewBox="0 0 36 36" fill="none"><path d="M14 6h8v4h-8z" fill="#3B82F6"/><path d="M12 11h12l1 18H11z" fill="#93C5FD"/></svg>
+                </div>
+                <span>Soft drink bottle</span>
+              </button>
+              <button type="button" class="similar-item-card" data-item="cartons">
+                <div class="sic-thumb">
+                  <svg viewBox="0 0 36 36" fill="none"><path d="M10 12l8-5 8 5v17H10z" fill="#E2E8F0"/><path d="M10 12h16v6H10z" fill="#93C5FD"/></svg>
+                </div>
+                <span>Milk bottle</span>
+              </button>
+              <button type="button" class="similar-item-card" data-item="plastic-tubs">
+                <div class="sic-thumb">
+                  <svg viewBox="0 0 36 36" fill="none"><path d="M8 12h20l-3 14H11z" fill="#CBD5E1"/><rect x="7" y="10" width="22" height="3" rx="1" fill="#64748B"/></svg>
+                </div>
+                <span>Plastic food container</span>
+              </button>
+            </div>
+          </div>
+        </main>
+      </div>
+
+      <!-- ======================================================= -->
+      <!-- SUBVIEW 3: ALL BINS (Image 2 Screen 2)                  -->
+      <!-- ======================================================= -->
+      <div class="recycle-subview" id="viewAllBins" style="display: none;">
+        <header class="recycle-nav-header">
+          <button type="button" class="nav-back-icon-btn" id="allBinsBackBtn" aria-label="Go back">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg>
+          </button>
+          <span class="nav-header-title">All bins</span>
+          <div style="width: 36px;"></div>
+        </header>
+
+        <main class="all-bins-content">
+          <p class="ab-subtitle">Learn what goes in each bin and how to prepare items.</p>
+
+          <div class="all-bins-list">
+            <!-- 1. Recycling Bin -->
+            <button type="button" class="all-bin-row-card" data-bin="recycling">
+              <div class="abr-graphic">
+                <div class="rh-bin-graphic bin-yellow">
+                  <div class="mb-lid"></div>
+                  <div class="mb-body"></div>
+                  <div class="mb-wheel mb-wheel-l"></div>
+                  <div class="mb-wheel mb-wheel-r"></div>
+                </div>
+              </div>
+              <div class="abr-meta">
+                <div class="abr-title-wrap">
+                  <h3 class="abr-title">Recycling bin</h3>
+                  <span class="abr-tag abr-tag-yellow">Yellow lid</span>
+                </div>
+                <p class="abr-desc">Clean and empty recyclable packaging, paper, glass, metals and more.</p>
+              </div>
+              <svg class="chevron-right" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/></svg>
+            </button>
+
+            <!-- 2. Organics Bin -->
+            <button type="button" class="all-bin-row-card" data-bin="organics">
+              <div class="abr-graphic">
+                <div class="rh-bin-graphic bin-green">
+                  <div class="mb-lid"></div>
+                  <div class="mb-body"></div>
+                  <div class="mb-wheel mb-wheel-l"></div>
+                  <div class="mb-wheel mb-wheel-r"></div>
+                </div>
+              </div>
+              <div class="abr-meta">
+                <div class="abr-title-wrap">
+                  <h3 class="abr-title">Organics bin</h3>
+                  <span class="abr-tag abr-tag-green">Green lid</span>
+                </div>
+                <p class="abr-desc">Food scraps and garden waste turned into compost.</p>
+              </div>
+              <svg class="chevron-right" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/></svg>
+            </button>
+
+            <!-- 3. General Waste Bin -->
+            <button type="button" class="all-bin-row-card" data-bin="general">
+              <div class="abr-graphic">
+                <div class="rh-bin-graphic bin-red">
+                  <div class="mb-lid"></div>
+                  <div class="mb-body"></div>
+                  <div class="mb-wheel mb-wheel-l"></div>
+                  <div class="mb-wheel mb-wheel-r"></div>
+                </div>
+              </div>
+              <div class="abr-meta">
+                <div class="abr-title-wrap">
+                  <h3 class="abr-title">General waste bin</h3>
+                  <span class="abr-tag abr-tag-red">Red lid</span>
+                </div>
+                <p class="abr-desc">Non-recyclable and non-organic household waste.</p>
+              </div>
+              <svg class="chevron-right" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/></svg>
+            </button>
+
+            <!-- 4. Drop-off & Special items -->
+            <button type="button" class="all-bin-row-card" data-bin="dropoff">
+              <div class="abr-graphic">
+                <div class="rh-bin-graphic bin-grey">
+                  <div class="mb-lid"></div>
+                  <div class="mb-body" style="background: #475569;">
+                    <div style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;">
+                      <svg viewBox="0 0 20 20" fill="#60A5FA" style="width: 16px; height: 16px;"><path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/></svg>
+                    </div>
+                  </div>
+                  <div class="mb-wheel mb-wheel-l"></div>
+                  <div class="mb-wheel mb-wheel-r"></div>
+                </div>
+              </div>
+              <div class="abr-meta">
+                <div class="abr-title-wrap">
+                  <h3 class="abr-title">Drop-off &amp; special items</h3>
+                  <span class="abr-tag abr-tag-blue">Local centres</span>
+                </div>
+                <p class="abr-desc">Items that don't go in your household bins.</p>
+              </div>
+              <svg class="chevron-right" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/></svg>
+            </button>
+          </div>
+
+          <!-- Info Callout -->
+          <div class="callout-blue-box" style="margin-top: 8px;">
+            <svg class="cbb-icon" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/>
+            </svg>
+            <div class="cbb-text">
+              <strong style="display: block; color: #1E3A8A; font-size: 13.5px;">Rules vary by council</strong>
+              <span>These guidelines are based on your local council. Check individual items for more details.</span>
+            </div>
+          </div>
+        </main>
+      </div>
+
+      <!-- ======================================================= -->
+      <!-- SUBVIEW 4: BIN DETAIL (Image 2 Screen 3 - Recycling Bin)-->
+      <!-- ======================================================= -->
+      <div class="recycle-subview" id="viewBinDetail" style="display: none;">
+        <header class="recycle-nav-header">
+          <button type="button" class="nav-back-icon-btn" id="binDetailBackBtn" aria-label="Go back">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg>
+          </button>
+          <span class="nav-header-title" id="binDetailTitle">Recycling bin</span>
+          <button type="button" class="nav-action-icon-btn" id="binDetailFavBtn" aria-label="Favorite bin">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+          </button>
+        </header>
+
+        <main class="bin-detail-content">
+          <!-- Hero Bin Header -->
+          <div class="bd-hero-card">
+            <div class="bd-hero-graphic" id="bdHeroGraphic">
+              <div class="rh-bin-graphic bin-yellow" style="width: 60px; height: 80px;">
+                <div class="mb-lid" style="height: 16px;"></div>
+                <div class="mb-body"></div>
+                <div class="mb-wheel mb-wheel-l"></div>
+                <div class="mb-wheel mb-wheel-r"></div>
+              </div>
+            </div>
+            <div class="bd-hero-meta">
+              <h1 id="bdHeroTitle">Recycling bin</h1>
+              <span class="abr-tag abr-tag-yellow" id="bdHeroTag">Yellow lid</span>
+              <p id="bdHeroDesc">Clean and empty recyclable packaging, paper, glass, metals and more.</p>
+            </div>
+          </div>
+
+          <!-- Collection Day Card -->
+          <div class="collection-day-card" id="bdCollectionDayCard">
+            <div class="cdc-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                <line x1="16" y1="2" x2="16" y2="6" /><line x1="8" y1="2" x2="8" y2="6" /><line x1="3" y1="10" x2="21" y2="10" />
+              </svg>
+            </div>
+            <div class="cdc-info">
+              <strong>Collection day</strong>
+              <span id="bdCollectionTiming">Every second Thursday</span>
+              <em id="bdCollectionCountdown">Next: Thu, 8 Oct (in 9 days)</em>
+            </div>
+            <svg class="chevron-right" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/></svg>
+          </div>
+
+          <!-- Blue Notice -->
+          <div class="callout-blue-box">
+            <svg class="cbb-icon" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/>
+            </svg>
+            <span class="cbb-text" id="bdTipText">Keep items clean, empty and loose. Do not put them in plastic bags.</span>
+          </div>
+
+          <!-- What goes in -->
+          <section class="rh-section">
+            <div class="rh-section-header">
+              <h3 class="rh-section-title">What goes in</h3>
+              <button type="button" class="rh-link-action" id="bdViewAllWhatGoesInBtn">View all &rarr;</button>
+            </div>
+            <div class="what-goes-grid" id="bdWhatGoesInGrid">
+              <!-- 6 tiles -->
+              <button type="button" class="wg-tile" data-item="plastic-bottle">
+                <div class="wg-tile-icon">
+                  <svg viewBox="0 0 36 36" fill="none"><path d="M14 6h8v4h-8z" fill="#3B82F6"/><path d="M12 11h12l1 18H11z" fill="#93C5FD"/></svg>
+                </div>
+                <span>Plastic packaging</span>
+              </button>
+              <button type="button" class="wg-tile" data-item="paper-cardboard">
+                <div class="wg-tile-icon">
+                  <svg viewBox="0 0 36 36" fill="none"><path d="M8 12h20v14H8z" fill="#FDE047"/><path d="M6 16h24v12H6z" fill="#FACC15"/></svg>
+                </div>
+                <span>Paper &amp; cardboard</span>
+              </button>
+              <button type="button" class="wg-tile" data-item="glass-bottles">
+                <div class="wg-tile-icon">
+                  <svg viewBox="0 0 36 36" fill="none"><path d="M15 6h6v5h-6z" fill="#15803D"/><path d="M12 12h12l1 18H11z" fill="#86EFAC"/></svg>
+                </div>
+                <span>Glass bottles and jars</span>
+              </button>
+              <button type="button" class="wg-tile" data-item="aluminium-cans">
+                <div class="wg-tile-icon">
+                  <svg viewBox="0 0 36 36" fill="none"><rect x="11" y="8" width="14" height="20" rx="3" fill="#94A3B8"/></svg>
+                </div>
+                <span>Metal cans and tins</span>
+              </button>
+              <button type="button" class="wg-tile" data-item="cartons">
+                <div class="wg-tile-icon">
+                  <svg viewBox="0 0 36 36" fill="none"><path d="M10 12l8-5 8 5v17H10z" fill="#E2E8F0"/></svg>
+                </div>
+                <span>Cartons</span>
+              </button>
+              <button type="button" class="wg-tile" data-item="clean-foil">
+                <div class="wg-tile-icon">
+                  <svg viewBox="0 0 36 36" fill="none"><rect x="8" y="14" width="20" height="12" rx="2" fill="#CBD5E1"/></svg>
+                </div>
+                <span>Clean foil and aluminium trays</span>
+              </button>
+            </div>
+          </section>
+
+          <!-- What doesn't go in -->
+          <section class="rh-section">
+            <div class="rh-section-header">
+              <h3 class="rh-section-title">What doesn't go in</h3>
+              <button type="button" class="rh-link-action" id="bdViewAllWhatDoesntBtn">View all &rarr;</button>
+            </div>
+            <div class="what-not-row" id="bdWhatDoesntGoInRow">
+              <div class="wn-tile">
+                <span class="wn-bad-badge">&times;</span>
+                <div class="wn-tile-icon">
+                  <svg viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="10" fill="#FCA5A5"/></svg>
+                </div>
+                <span>Food scraps</span>
+              </div>
+              <div class="wn-tile">
+                <span class="wn-bad-badge">&times;</span>
+                <div class="wn-tile-icon">
+                  <svg viewBox="0 0 32 32" fill="none"><path d="M10 10h12v14H10z" fill="#E2E8F0"/></svg>
+                </div>
+                <span>Plastic bags</span>
+              </div>
+              <div class="wn-tile">
+                <span class="wn-bad-badge">&times;</span>
+                <div class="wn-tile-icon">
+                  <svg viewBox="0 0 32 32" fill="none"><path d="M8 12h16c0 6-3 12-8 12s-8-6-8-12z" fill="#FED7AA"/></svg>
+                </div>
+                <span>Nappies</span>
+              </div>
+            </div>
+          </section>
+        </main>
+      </div>
+
+      <!-- ======================================================= -->
+      <!-- SUBVIEW 5: WHAT GOES IN THE RECYCLING BIN (Image 2 Sc 4)-->
+      <!-- ======================================================= -->
+      <div class="recycle-subview" id="viewBinItemsList" style="display: none;">
+        <header class="recycle-nav-header">
+          <button type="button" class="nav-back-icon-btn" id="binItemsListBackBtn" aria-label="Go back">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg>
+          </button>
+          <span class="nav-header-title">What goes in the recycling bin</span>
+          <div style="width: 36px;"></div>
+        </header>
+
+        <main class="wgi-content">
+          <!-- Filter Pills -->
+          <div class="wgi-filter-pills" id="wgiFilterPillBar">
+            <button type="button" class="wgi-pill-btn active" data-cat="all">All</button>
+            <button type="button" class="wgi-pill-btn" data-cat="plastic">Plastic</button>
+            <button type="button" class="wgi-pill-btn" data-cat="paper">Paper</button>
+            <button type="button" class="wgi-pill-btn" data-cat="glass">Glass</button>
+            <button type="button" class="wgi-pill-btn" data-cat="metal">Metal</button>
+          </div>
+
+          <!-- Items Detailed List -->
+          <div class="wgi-items-list" id="wgiItemsList">
+            <!-- Rendered via JS -->
+          </div>
+        </main>
+      </div>
+
+      <!-- ======================================================= -->
+      <!-- SUBVIEW 6: LEARN (Image 1 Screen 3)                     -->
+      <!-- ======================================================= -->
+      <div class="recycle-subview" id="viewLearn" style="display: none;">
+        <header class="recycle-nav-header">
+          <button type="button" class="nav-back-icon-btn" id="learnBackBtn" aria-label="Go back">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg>
+          </button>
+          <span class="nav-header-title">Learn</span>
+          <button type="button" class="nav-action-icon-btn" id="learnSearchIconBtn" aria-label="Search learning topics">
+            <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" /></svg>
+          </button>
+        </header>
+
+        <main class="learn-content">
+          <div class="rh-header-block">
+            <h1 class="rh-title">Learn</h1>
+            <p class="rh-subtitle">Discover how to recycle better and reduce waste.</p>
+          </div>
+
+          <!-- Hero Banner -->
+          <div class="learn-hero-banner">
+            <span class="lh-tag">&#9654; START HERE</span>
+            <h2 class="lh-title">Recycling made simple</h2>
+            <p class="lh-desc">A beginner-friendly series covering the essentials.</p>
+            <button type="button" class="btn-learn-start" id="learnStartBtn">
+              <span>Start learning &rarr;</span>
+            </button>
+          </div>
+
+          <!-- Browse Topics 2x2 Grid -->
+          <section class="rh-section">
+            <h3 class="rh-section-title">Browse topics</h3>
+            <div class="topics-grid-2x2">
+              <button type="button" class="topic-box" data-topic="basics">
+                <div class="tb-thumb-strip">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                </div>
+                <strong>Recycling basics</strong>
+                <span>Bins, materials and common mistakes</span>
+              </button>
+
+              <button type="button" class="topic-box" data-topic="materials">
+                <div class="tb-thumb-strip">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                </div>
+                <strong>Materials explained</strong>
+                <span>Plastic, glass, paper and metals</span>
+              </button>
+
+              <button type="button" class="topic-box" data-topic="tricky">
+                <div class="tb-thumb-strip">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="15" rx="2" ry="2"></rect><polyline points="17 2 12 7 7 2"></polyline></svg>
+                </div>
+                <strong>Tricky items</strong>
+                <span>Batteries, electronics and special waste</span>
+              </button>
+
+              <button type="button" class="topic-box" data-topic="reduce">
+                <div class="tb-thumb-strip">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm1 14.5v-9l6 4.5-6 4.5z"/></svg>
+                </div>
+                <strong>Reduce waste</strong>
+                <span>Composting, reuse and sustainable living</span>
+              </button>
+            </div>
+          </section>
+
+          <!-- Featured Videos -->
+          <section class="rh-section">
+            <div class="rh-section-header">
+              <h3 class="rh-section-title">Featured videos</h3>
+              <button type="button" class="rh-link-action" id="learnVideosSeeAllBtn">See all</button>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 10px;">
+              <div class="featured-video-row-item" data-video="journey">
+                <div class="fvi-thumb video-bg-3">
+                  <button type="button" class="rh-play-btn" aria-label="Play video"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></button>
+                  <span class="video-duration-badge">0:50</span>
+                </div>
+                <div class="fvi-meta">
+                  <strong>What actually happens to your recycling?</strong>
+                  <p>See the journey from your bin to new products.</p>
+                </div>
+              </div>
+
+              <div class="featured-video-row-item" data-video="packaging">
+                <div class="fvi-thumb video-bg-4">
+                  <button type="button" class="rh-play-btn" aria-label="Play video"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></button>
+                  <span class="video-duration-badge">0:45</span>
+                </div>
+                <div class="fvi-meta">
+                  <strong>Food packaging: what goes where?</strong>
+                  <p>Learn how to handle food-contaminated items.</p>
+                </div>
+              </div>
+            </div>
+          </section>
+        </main>
+      </div>
+
+      <!-- PERSISTENT MOBILE BOTTOM TAB BAR FOR RECYCLE APP -->
+      <nav class="bottom-tab-bar" aria-label="Mobile Navigation">
+        <div class="tab-button" id="recycleBottomTabHome">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" /></svg>
+          <span>Home</span>
+        </div>
+        <div class="tab-button" id="recycleBottomTabSchedule">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2" /><line x1="16" y1="2" x2="16" y2="6" /><line x1="8" y1="2" x2="8" y2="6" /><line x1="3" y1="10" x2="21" y2="10" /></svg>
+          <span>Schedule</span>
+        </div>
+        <div class="tab-button active" id="recycleBottomTabRecycle">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M7 19H4.8a1.8 1.8 0 0 1-1.6-.9 1.8 1.8 0 0 1 0-1.8L7.2 9.5" />
+            <path d="M11 19h8.2a1.8 1.8 0 0 0 1.6-.9 1.8 1.8 0 0 0 0-1.8L17.5 11" />
+            <path d="m14 4.5 4.5 7.5" /><path d="m5 16 2.5 3L10 16" /><path d="m17 7-3-4.5L11 7" /><path d="M9 13.5 6.5 9H12" />
+          </svg>
+          <span>Recycle</span>
+        </div>
+        <div class="tab-button" id="recycleBottomTabAccount">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" /></svg>
+          <span>Account</span>
+        </div>
+      </nav>
+
+    </div>
+  </section>
+
+  <!-- ========================================================= -->
+  <!-- MODAL: INTERACTIVE ITEM SCANNER (Camera Simulator)        -->
+  <!-- ========================================================= -->
+  <div class="app-modal-overlay" id="scannerModalOverlay" style="display: none;">
+    <div class="modal-content-card">
+      <div class="modal-header-bar">
+        <h3>Item Scanner</h3>
+        <button type="button" class="modal-close-icon-btn" id="scannerModalCloseBtn" aria-label="Close scanner">&times;</button>
+      </div>
+
+      <div class="scanner-camera-viewport">
+        <!-- Viewfinder Reticle & Laser animation -->
+        <div class="scanner-reticle-box">
+          <div class="scanner-laser-line"></div>
+          <svg id="scannerSampleItemIcon" viewBox="0 0 64 64" fill="none" style="width: 72px; height: 72px; opacity: 0.85;">
+            <rect x="24" y="8" width="16" height="8" rx="2" fill="#3B82F6"/>
+            <path d="M20 18C20 16 24 16 24 16H40C40 16 44 16 44 18L46 36C46 48 42 56 32 56C22 56 18 48 18 36L20 18Z" fill="#93C5FD" fill-opacity="0.5" stroke="#3B82F6" stroke-width="2"/>
+          </svg>
+        </div>
+        <div class="scanner-detected-badge" id="scannerDetectedBadge">
+          <span class="dot"></span>
+          <span id="scannerDetectedText">Plastic Bottle (PET 1) · 98% Match</span>
+        </div>
+      </div>
+
+      <div class="modal-body-pad">
+        <div>
+          <label style="display: block; font-size: 12px; font-weight: 700; color: #6B7280; text-transform: uppercase; margin-bottom: 6px;">Simulate Test Scan</label>
+          <div class="scanner-sim-buttons">
+            <button type="button" class="btn-sim-chip active" data-scan="plastic-bottle">Plastic Bottle</button>
+            <button type="button" class="btn-sim-chip" data-scan="pizza-box">Pizza Box</button>
+            <button type="button" class="btn-sim-chip" data-scan="batteries">Batteries</button>
+          </div>
+        </div>
+
+        <button type="button" class="btn-green btn-block" id="scannerViewGuideBtn">
+          View Disposal Guide &rarr;
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================= -->
+  <!-- MODAL: VIDEO PLAYER OVERLAY                               -->
+  <!-- ========================================================= -->
+  <div class="app-modal-overlay" id="videoModalOverlay" style="display: none;">
+    <div class="modal-content-card">
+      <div class="modal-header-bar">
+        <h3 id="videoModalTitle">Recycling mistakes to avoid</h3>
+        <button type="button" class="modal-close-icon-btn" id="videoModalCloseBtn" aria-label="Close video">&times;</button>
+      </div>
+
+      <div style="height: 220px; background: #0A0D12; position: relative; display: flex; align-items: center; justify-content: center;">
+        <svg viewBox="0 0 24 24" fill="#15803D" style="width: 64px; height: 64px; opacity: 0.9;"><circle cx="12" cy="12" r="10" fill="#FFFFFF"/><path d="M10 8l6 4-6 4V8z" fill="#15803D"/></svg>
+        <div style="position: absolute; bottom: 12px; left: 16px; right: 16px; display: flex; align-items: center; justify-content: space-between; color: #FFFFFF; font-size: 12px; font-weight: 600;">
+          <span>0:14 / 0:45</span>
+          <div style="flex: 1; height: 4px; background: rgba(255,255,255,0.3); border-radius: 2px; margin: 0 12px; overflow: hidden;">
+            <div style="width: 32%; height: 100%; background: #10B981;"></div>
+          </div>
+          <span>HD</span>
+        </div>
+      </div>
+
+      <div class="modal-body-pad">
+        <div id="videoModalNotes" style="font-size: 13.5px; color: #374151; line-height: 1.5;">
+          <strong>Key Takeaways:</strong>
+          <ul style="margin: 8px 0 0 18px;">
+            <li>Never bag recyclables — soft plastic bags wrap around sorting machinery.</li>
+            <li>Rinse food containers lightly; they do not need to be dishwashed.</li>
+            <li>Keep rigid plastic bottle caps on.</li>
+          </ul>
+        </div>
+        <button type="button" class="btn-green btn-block" id="videoModalDoneBtn">Got it</button>
+      </div>
+    </div>
+  </div>
 
   <script src="script.js"></script>
 </body>
