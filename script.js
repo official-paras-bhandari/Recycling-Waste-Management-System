@@ -565,7 +565,7 @@ function getHdWheelieBinSvg(binType) {
       </g>
     `;
     alt = "Red lid general waste bin";
-  } else if (binType === "grey" || binType === "dropoff") {
+  } else if (binType === "grey" || binType === "dropoff" || binType === "depot") {
     lid0 = "#94A3B8"; lid1 = "#475569"; lid2 = "#334155"; handle = "#1E293B";
     badge = `
       <!-- Local Drop-off Pin Emblem -->
@@ -1099,19 +1099,6 @@ if (itemDetailFavBtn) {
   });
 }
 
-// Watch Guide Card click
-const itemWatchGuideBtn = document.getElementById("itemWatchGuideBtn");
-if (itemWatchGuideBtn) {
-  itemWatchGuideBtn.addEventListener("click", () => {
-    const videoTitle = document.getElementById("itemGuideVideoTitle")?.textContent || "Recycling Guide";
-    openVideoModal(videoTitle, [
-      "Keep containers loose in your kerbside recycling bin.",
-      "Light rinse is sufficient — no need to run through a dishwasher.",
-      "Leave plastic bottle caps screwed on tightly."
-    ]);
-  });
-}
-
 // ==========================================================
 // ALL BINS SUBVIEW
 // ==========================================================
@@ -1133,12 +1120,16 @@ document.querySelectorAll(".rh-bin-card, .rh-bin-card-web, .all-bin-row-card, .a
   });
 });
 
-// Common searches chip clicks in Hub
+// Common searches populate the primary search field.
 document.querySelectorAll(".rh-search-chip").forEach(chip => {
   chip.addEventListener("click", () => {
     const itemKey = chip.getAttribute("data-item");
-    if (itemKey) {
-      renderItemDetailView(itemKey);
+    const item = recycleItemsDB[itemKey];
+    const searchInput = document.getElementById("recycleHubSearchInput");
+    if (item && searchInput) {
+      searchInput.value = item.name;
+      searchInput.dispatchEvent(new Event("input", { bubbles: true }));
+      searchInput.focus();
     }
   });
 });
@@ -1248,6 +1239,76 @@ const binDetailsDB = {
     ]
   }
 };
+
+function escapeRecycleText(value) {
+  return String(value).replace(/[&<>"']/g, character => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#39;"
+  })[character]);
+}
+
+function renderRecycleBinGuide() {
+  const grid = document.getElementById("rhBinsGuideGrid");
+  if (!grid) return;
+
+  const guideBins = [
+    { key: "recycling", type: "yellow", name: "Recycling", lid: "Yellow lid", className: "bin-yellow-card", pill: "pill-yellow" },
+    { key: "organics", type: "green", name: "Organics", lid: "Green lid", className: "bin-green-card", pill: "pill-green" },
+    { key: "general", type: "red", name: "General waste", lid: "Red lid", className: "bin-red-card", pill: "pill-red" }
+  ];
+
+  grid.innerHTML = guideBins.map(bin => {
+    const data = binDetailsDB[bin.key];
+    const acceptedItems = data.goesIn.map(item => item.name);
+    const excludedItems = data.doesntGoIn.map(item => item.name);
+    const controlId = `rh-bin-details-${bin.key}`;
+    return `
+      <article class="rh-bin-card-web ${bin.className}">
+        <div class="rh-bin-art">${getHdWheelieBinSvg(bin.type)}</div>
+        <h3 class="rh-bin-name">${bin.name}</h3>
+        <span class="rh-bin-pill ${bin.pill}">${bin.lid}</span>
+        <p class="rh-bin-examples"><strong>Examples:</strong> ${acceptedItems.slice(0, 3).map(escapeRecycleText).join(" · ")}</p>
+        <button type="button" class="rh-bin-toggle" aria-expanded="false" aria-controls="${controlId}">
+          What goes here?
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m7 10 5 5 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="rh-bin-details" id="${controlId}" hidden>
+          <div class="rh-bin-detail-group">
+            <h4>Goes in</h4>
+            <ul>${acceptedItems.map(item => `<li>${escapeRecycleText(item)}</li>`).join("")}</ul>
+          </div>
+          <div class="rh-bin-detail-group">
+            <h4>Keep out</h4>
+            <ul>${excludedItems.map(item => `<li>${escapeRecycleText(item)}</li>`).join("")}</ul>
+          </div>
+          <div class="rh-bin-detail-group">
+            <h4>Before disposal</h4>
+            <p>${escapeRecycleText(data.tip)}</p>
+          </div>
+          <p class="rh-bin-caveat">General guidance only. Local council rules can differ.</p>
+        </div>
+      </article>`;
+  }).join("");
+
+  grid.addEventListener("click", event => {
+    const toggle = event.target.closest(".rh-bin-toggle");
+    if (!toggle) return;
+    const details = document.getElementById(toggle.getAttribute("aria-controls"));
+    if (!details) return;
+    const expanded = toggle.getAttribute("aria-expanded") === "true";
+    toggle.setAttribute("aria-expanded", String(!expanded));
+    details.hidden = expanded;
+  });
+
+  const searchArea = document.querySelector("#viewRecycleHub .rh-search-area");
+  const commonSearches = document.querySelector("#viewRecycleHub .rh-common-searches");
+  if (searchArea && commonSearches) searchArea.after(commonSearches);
+}
+
+renderRecycleBinGuide();
 
 function renderBinDetailView(binKey) {
   const data = binDetailsDB[binKey] || binDetailsDB.recycling;
@@ -1401,11 +1462,6 @@ if (binItemsListBackBtn) {
 // ==========================================================
 // LEARN HUB SUBVIEW (Image 1 Screen 3)
 // ==========================================================
-const rhSeeAllVideosBtn = document.getElementById("rhSeeAllVideosBtn");
-if (rhSeeAllVideosBtn) {
-  rhSeeAllVideosBtn.addEventListener("click", () => switchRecycleSubview("viewLearn"));
-}
-
 const learnBackBtn = document.getElementById("learnBackBtn");
 if (learnBackBtn) {
   learnBackBtn.addEventListener("click", () => popRecycleSubview());
@@ -1413,14 +1469,7 @@ if (learnBackBtn) {
 
 const learnStartBtn = document.getElementById("learnStartBtn");
 if (learnStartBtn) {
-  learnStartBtn.addEventListener("click", () => {
-    openVideoModal("Recycling Made Simple: The Basics", [
-      "Yellow lid: empty bottles, cans, paper, and clean foil.",
-      "Green lid: all food scraps, garden prunings, and compostable caddy liners.",
-      "Red lid: soft plastic bags, coffee cups, nappies, and broken ceramics.",
-      "Special Depot: all household batteries, e-waste, and paint."
-    ]);
-  });
+  learnStartBtn.addEventListener("click", () => switchRecycleSubview("viewAllBins"));
 }
 
 document.querySelectorAll(".topic-box, .topic-box-web").forEach(box => {
@@ -1439,205 +1488,111 @@ document.querySelectorAll(".topic-box, .topic-box-web").forEach(box => {
   });
 });
 
-document.querySelectorAll(".featured-video-row-item, .rh-video-card, .rh-video-card-web").forEach(item => {
-  item.addEventListener("click", () => {
-    const videoKey = item.getAttribute("data-video");
-    if (videoKey === "mistakes") {
-      openVideoModal("Recycling mistakes to avoid (5 common mistakes)", [
-        "1. Bagging recyclables in plastic supermarket bags.",
-        "2. Leaving food scraps and grease in cardboard pizza boxes.",
-        "3. Tossing batteries into household bins (fire risk).",
-        "4. Putting takeaway coffee cups in yellow bins.",
-        "5. Leaving liquid in drink bottles."
-      ]);
-    } else if (videoKey === "prepare") {
-      openVideoModal("How to prepare items for recycling", [
-        "Empty liquids and scrape off food residue.",
-        "Quick cold-water rinse — spotless cleaning not needed.",
-        "Flatten boxes completely.",
-        "Screw plastic bottle caps back onto empty bottles."
-      ]);
-    } else if (videoKey === "journey") {
-      openVideoModal("What actually happens to your recycling?", [
-        "Collection trucks deliver loads to Materials Recovery Facilities (MRFs).",
-        "Optical sorters and magnets separate paper, aluminium, and plastics.",
-        "Baled materials are sent to local re-processors to make new bottles and paper.",
-        "Contaminated loads are redirected to landfill."
-      ]);
-    } else {
-      openVideoModal("Food packaging: what goes where?", [
-        "Clean aluminium trays & foil -> Yellow bin (scrunched).",
-        "Greasy pizza boxes -> Green FOGO bin or Red bin.",
-        "Yoghurt and takeaway tubs -> Yellow bin (rinsed).",
-        "Foil chip packets and bar wrappers -> Red bin."
-      ]);
-    }
-  });
-});
-
 // ==========================================================
 // SEARCH IN RECYCLE HUB
 // ==========================================================
 const recycleHubSearchInput = document.getElementById("recycleHubSearchInput");
 const rhSearchDropdown = document.getElementById("rhSearchDropdown");
+const rhClearSearchBtn = document.getElementById("rhClearSearchBtn");
 
 if (recycleHubSearchInput && rhSearchDropdown) {
-  recycleHubSearchInput.addEventListener("input", () => {
-    const q = recycleHubSearchInput.value.trim().toLowerCase();
-    if (!q) {
-      rhSearchDropdown.style.display = "none";
+  const closeRecycleSearchResults = () => {
+    rhSearchDropdown.hidden = true;
+    recycleHubSearchInput.setAttribute("aria-expanded", "false");
+  };
+
+  const openRecycleItem = key => {
+    if (!recycleItemsDB[key]) return;
+    recycleHubSearchInput.value = "";
+    if (rhClearSearchBtn) rhClearSearchBtn.hidden = true;
+    closeRecycleSearchResults();
+    renderItemDetailView(key);
+  };
+
+  const renderRecycleSearchResults = () => {
+    const query = recycleHubSearchInput.value.trim().toLowerCase();
+    if (rhClearSearchBtn) rhClearSearchBtn.hidden = !query;
+    if (!query) {
+      rhSearchDropdown.replaceChildren();
+      closeRecycleSearchResults();
       return;
     }
 
-    const matches = Object.keys(recycleItemsDB).filter(key => {
-      const item = recycleItemsDB[key];
-      return item.name.toLowerCase().includes(q) || item.desc.toLowerCase().includes(q);
-    });
+    const matches = Object.entries(recycleItemsDB).filter(([, item]) => {
+      const searchableText = [
+        item.name,
+        item.binName,
+        item.binDesc,
+        item.statusSub,
+        ...(item.steps || [])
+      ].join(" ").toLowerCase();
+      return searchableText.includes(query);
+    }).slice(0, 6);
 
-    if (matches.length > 0) {
-      rhSearchDropdown.innerHTML = matches.map(key => {
-        const item = recycleItemsDB[key];
-        const badgeColor = item.canRecycle ? "background: #DCFCE7; color: #15803D;" : "background: #FEE2E2; color: #DC2626;";
+    if (!matches.length) {
+      rhSearchDropdown.innerHTML = `
+        <p class="rh-no-results">No item guide found for “${escapeRecycleText(recycleHubSearchInput.value.trim())}”. Try a shorter search, such as “bottle” or “battery”.</p>
+      `;
+    } else {
+      rhSearchDropdown.innerHTML = matches.map(([key, item]) => {
+        const isSpecialDropoff = item.binType === "depot";
+        const destinationLabel = isSpecialDropoff ? "Special drop-off" : item.binName;
+        const prep = (item.steps || []).slice(0, 2).join(" ");
         return `
-          <div class="search-dropdown-item" data-key="${key}">
-            <div class="sdi-info">
-              <strong>${item.name}</strong>
-              <span>${item.binName}</span>
-            </div>
-            <span class="sdi-badge" style="${badgeColor}">${item.canRecycle ? "Recyclable" : "Special/Landfill"}</span>
-          </div>
+          <button type="button" class="rh-search-result" data-key="${key}">
+            <span class="rh-search-result-heading">
+              <strong>${escapeRecycleText(item.name)}</strong>
+              <span class="rh-search-result-destination ${isSpecialDropoff ? "is-special" : ""}">${escapeRecycleText(destinationLabel)}</span>
+            </span>
+            <span class="rh-search-result-prep">${escapeRecycleText(prep)}</span>
+            <span class="rh-search-result-caveat">General guidance — check local council rules.</span>
+          </button>
         `;
       }).join("");
-
-      rhSearchDropdown.querySelectorAll(".search-dropdown-item").forEach(item => {
-        item.addEventListener("click", () => {
-          const key = item.getAttribute("data-key");
-          renderItemDetailView(key);
-          rhSearchDropdown.style.display = "none";
-          recycleHubSearchInput.value = "";
-        });
-      });
-
-      rhSearchDropdown.style.display = "block";
-    } else {
-      rhSearchDropdown.innerHTML = `
-        <div class="search-dropdown-item" style="cursor: default;">
-          <div class="sdi-info">
-            <strong>No direct match for "${q}"</strong>
-            <span>Check council depot rules or general waste.</span>
-          </div>
-        </div>
-      `;
-      rhSearchDropdown.style.display = "block";
     }
-  });
 
-  // Hide dropdown on click outside
-  document.addEventListener("click", (e) => {
-    if (!recycleHubSearchInput.contains(e.target) && !rhSearchDropdown.contains(e.target)) {
-      rhSearchDropdown.style.display = "none";
-    }
-  });
-}
+    rhSearchDropdown.hidden = false;
+    recycleHubSearchInput.setAttribute("aria-expanded", "true");
+    rhSearchDropdown.querySelectorAll(".rh-search-result").forEach(result => {
+      result.addEventListener("click", () => openRecycleItem(result.getAttribute("data-key")));
+    });
+  };
 
-// ==========================================================
-// CAMERA SCANNER SIMULATOR MODAL
-// ==========================================================
-const scannerModalOverlay = document.getElementById("scannerModalOverlay");
-const rhScanItemBannerBtn = document.getElementById("rhScanItemBannerBtn");
-const rhSearchCameraBtn = document.getElementById("rhSearchCameraBtn");
-const scannerModalCloseBtn = document.getElementById("scannerModalCloseBtn");
-const scannerViewGuideBtn = document.getElementById("scannerViewGuideBtn");
-let currentScannedItem = "plastic-bottle";
-
-function openScannerModal() {
-  if (scannerModalOverlay) {
-    scannerModalOverlay.style.display = "flex";
-  }
-}
-
-function closeScannerModal() {
-  if (scannerModalOverlay) {
-    scannerModalOverlay.style.display = "none";
-  }
-}
-
-if (rhScanItemBannerBtn) rhScanItemBannerBtn.addEventListener("click", openScannerModal);
-if (rhSearchCameraBtn) rhSearchCameraBtn.addEventListener("click", openScannerModal);
-if (scannerModalCloseBtn) scannerModalCloseBtn.addEventListener("click", closeScannerModal);
-
-document.querySelectorAll(".btn-sim-chip").forEach(chip => {
-  chip.addEventListener("click", () => {
-    document.querySelectorAll(".btn-sim-chip").forEach(c => c.classList.remove("active"));
-    chip.classList.add("active");
-    currentScannedItem = chip.getAttribute("data-scan");
-    const badgeText = document.getElementById("scannerDetectedText");
-    if (badgeText) {
-      if (currentScannedItem === "plastic-bottle") {
-        badgeText.textContent = "Plastic Bottle (PET 1) · 98% Match";
-      } else if (currentScannedItem === "pizza-box") {
-        badgeText.textContent = "Pizza Box (Corrugated Cardboard) · 96% Match";
-      } else {
-        badgeText.textContent = "Household Alkaline Battery · 99% Match";
+  recycleHubSearchInput.addEventListener("input", renderRecycleSearchResults);
+  recycleHubSearchInput.addEventListener("keydown", event => {
+    if (event.key === "Escape") {
+      closeRecycleSearchResults();
+    } else if (event.key === "ArrowDown") {
+      const firstResult = rhSearchDropdown.querySelector(".rh-search-result");
+      if (firstResult) {
+        event.preventDefault();
+        firstResult.focus();
+      }
+    } else if (event.key === "Enter") {
+      const firstResult = rhSearchDropdown.querySelector(".rh-search-result");
+      if (firstResult) {
+        event.preventDefault();
+        firstResult.click();
       }
     }
   });
-});
 
-if (scannerViewGuideBtn) {
-  scannerViewGuideBtn.addEventListener("click", () => {
-    closeScannerModal();
-    renderItemDetailView(currentScannedItem);
-  });
-}
-
-// ==========================================================
-// VIDEO PLAYER MODAL
-// ==========================================================
-const videoModalOverlay = document.getElementById("videoModalOverlay");
-const videoModalCloseBtn = document.getElementById("videoModalCloseBtn");
-const videoModalDoneBtn = document.getElementById("videoModalDoneBtn");
-
-function openVideoModal(title, takeaways) {
-  const titleEl = document.getElementById("videoModalTitle");
-  if (titleEl) titleEl.textContent = title;
-
-  const notesEl = document.getElementById("videoModalNotes");
-  if (notesEl && takeaways) {
-    notesEl.innerHTML = `
-      <strong>Key Takeaways:</strong>
-      <ul style="margin: 8px 0 0 18px;">
-        ${takeaways.map(t => `<li>${t}</li>`).join("")}
-      </ul>
-    `;
+  if (rhClearSearchBtn) {
+    rhClearSearchBtn.addEventListener("click", () => {
+      recycleHubSearchInput.value = "";
+      renderRecycleSearchResults();
+      recycleHubSearchInput.focus();
+    });
   }
 
-  if (videoModalOverlay) {
-    videoModalOverlay.style.display = "flex";
-  }
-}
-
-function closeVideoModal() {
-  if (videoModalOverlay) {
-    videoModalOverlay.style.display = "none";
-  }
-}
-
-if (videoModalCloseBtn) videoModalCloseBtn.addEventListener("click", closeVideoModal);
-if (videoModalDoneBtn) videoModalDoneBtn.addEventListener("click", closeVideoModal);
-
-// Close modals when clicking backdrop
-if (scannerModalOverlay) {
-  scannerModalOverlay.addEventListener("click", (e) => {
-    if (e.target === scannerModalOverlay) closeScannerModal();
-  });
-}
-if (videoModalOverlay) {
-  videoModalOverlay.addEventListener("click", (e) => {
-    if (e.target === videoModalOverlay) closeVideoModal();
+  // Hide dropdown on click outside
+  document.addEventListener("click", event => {
+    const searchContainer = recycleHubSearchInput.closest(".rh-search-container");
+    if (searchContainer && !searchContainer.contains(event.target)) {
+      closeRecycleSearchResults();
+    }
   });
 }
 
 // Initial Screen: Welcome Landing Page
 showScreen("welcome");
-

@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>EcoTrack | Waste & Recycling System</title>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css?v=recycle-guide-5" />
 </head>
 <body>
 
@@ -1307,7 +1307,7 @@
   </section>
 
   <!-- ========================================================= -->
-  <!-- SCREEN: RECYCLE SYSTEM (Matches User Screenshots Exactly) -->
+  <!-- SCREEN: RECYCLE GUIDE -->
   <!-- ========================================================= -->
     <section class="screen-view" id="screenRecycle" style="display: none;">
     <div class="recycle-app-wrapper">
@@ -1329,7 +1329,6 @@
               <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd"/></svg>
               <span>Resident Home</span>
             </button>
-            <button type="button" class="user-avatar-badge" id="recycleAvatarBtn" title="Account Settings">JS</button>
           </div>
         </header>
 
@@ -1340,53 +1339,32 @@
           <!-- Hero Title & Subtitle -->
           <div class="rh-hero-header">
             <h1 class="rh-hero-title">Recycle</h1>
-            <p class="rh-hero-subtitle">Find out what to do with your household items with instant guidelines.</p>
+            <p class="rh-hero-subtitle">Find the right bin and how to prepare everyday items.</p>
           </div>
 
-          <!-- Top Action Row: Search Bar & Scan Card (Desktop 2-column, Mobile 1-col) -->
-          <div class="rh-top-action-row">
+          <div class="rh-search-area">
+            <label class="rh-search-label" for="recycleHubSearchInput">Search for an item</label>
             <div class="rh-search-container">
               <div class="rh-search-box">
-                <svg class="rh-search-icon" viewBox="0 0 20 20" fill="currentColor">
+                <svg class="rh-search-icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                   <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" />
                 </svg>
-                <input type="text" id="recycleHubSearchInput" placeholder="Search an item, e.g. pizza box, battery, foil" autocomplete="off" />
-                <button type="button" class="rh-camera-btn" id="rhSearchCameraBtn" aria-label="Scan an item with camera" title="Scan with camera">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
-                    <circle cx="12" cy="13" r="4"></circle>
-                  </svg>
+                <input type="search" id="recycleHubSearchInput" placeholder="Search an item, e.g. plastic bottle" autocomplete="off" aria-controls="rhSearchDropdown" aria-expanded="false" />
+                <button type="button" class="rh-clear-search" id="rhClearSearchBtn" aria-label="Clear search" hidden>
+                  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
                 </button>
               </div>
-              <!-- Live Search Dropdown Suggestions -->
-              <div class="rh-search-dropdown" id="rhSearchDropdown" style="display: none;"></div>
+              <div class="rh-search-dropdown" id="rhSearchDropdown" role="region" aria-label="Search results" aria-live="polite" hidden></div>
             </div>
-
-            <!-- Scan an item Banner Card -->
-            <button type="button" class="rh-scan-banner" id="rhScanItemBannerBtn">
-              <div class="scan-banner-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
-                  <circle cx="12" cy="13" r="4"></circle>
-                </svg>
-              </div>
-              <div class="scan-banner-text">
-                <strong>Scan an item</strong>
-                <span>Take a photo to find out how to dispose of it.</span>
-              </div>
-              <svg class="chevron-right" viewBox="0 0 20 20" fill="currentColor">
-                <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/>
-              </svg>
-            </button>
           </div>
 
           <!-- Know your bins Section (Responsive 3-column cards with HD SVGs) -->
-          <section class="rh-section-block">
+          <section class="rh-section-block rh-bin-guide-section">
             <div class="rh-section-header">
               <h2 class="rh-section-title">Know your bins</h2>
-              <button type="button" class="rh-link-action" id="rhViewAllBinsBtn">View all bins &rarr;</button>
             </div>
-            <div class="rh-bins-responsive-grid">
+            <p class="rh-guidance-note">General guidance only. Accepted items, especially food and garden waste, vary by council. Check your local council’s current rules.</p>
+            <div class="rh-bins-responsive-grid" id="rhBinsGuideGrid">
               <!-- Recycling Card (Yellow) -->
               <button type="button" class="rh-bin-card-web bin-yellow-card" data-bin="recycling">
                 <svg class="hd-wheelie-bin" viewBox="0 0 120 160" aria-label="Yellow lid recycling bin" role="img">
@@ -1554,7 +1532,7 @@
           </section>
 
           <!-- Common searches Chips -->
-          <section class="rh-section-block">
+          <section class="rh-section-block rh-common-searches">
             <div class="rh-section-header">
               <h2 class="rh-section-title">Common searches</h2>
             </div>
@@ -1586,39 +1564,20 @@
             </div>
           </section>
 
-          <!-- Learn with short videos -->
-          <section class="rh-section-block">
-            <div class="rh-section-header">
-              <h2 class="rh-section-title">Learn with short videos</h2>
-              <button type="button" class="rh-link-action" id="rhSeeAllVideosBtn">See all videos &rarr;</button>
-            </div>
-            <div class="rh-videos-grid">
-              <div class="rh-video-card-web" data-video="mistakes">
-                <div class="rh-video-thumb-web video-bg-1">
-                  <button type="button" class="rh-play-btn" aria-label="Play video">
-                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
-                  </button>
-                  <span class="video-duration-badge">0:45</span>
-                </div>
-                <div class="rh-video-meta-web">
-                  <strong>Recycling mistakes to avoid</strong>
-                  <span>5 common mistakes made at kerbside</span>
-                </div>
-              </div>
-
-              <div class="rh-video-card-web" data-video="prepare">
-                <div class="rh-video-thumb-web video-bg-2">
-                  <button type="button" class="rh-play-btn" aria-label="Play video">
-                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
-                  </button>
-                  <span class="video-duration-badge">0:40</span>
-                </div>
-                <div class="rh-video-meta-web">
-                  <strong>How to prepare items</strong>
-                  <span>Quick rinsing and lid tips</span>
-                </div>
-              </div>
-            </div>
+          <section class="rh-section-block rh-tips-section">
+            <h2 class="rh-section-title">A few useful tips</h2>
+            <details class="rh-tip">
+              <summary>Keep recyclables loose, clean and empty</summary>
+              <p>Empty containers, remove food residue and place items directly in the bin, not inside a bag.</p>
+            </details>
+            <details class="rh-tip">
+              <summary>Separate clean and greasy packaging</summary>
+              <p>For pizza boxes, the existing item guide says to separate clean cardboard from the food-soiled base.</p>
+            </details>
+            <details class="rh-tip">
+              <summary>Keep batteries out of household bins</summary>
+              <p>The item guide directs household batteries to a dedicated battery drop-off. Check local drop-off options before travelling.</p>
+            </details>
           </section>
         </div>
 
@@ -1750,22 +1709,6 @@
                   <div class="how-step-item-web">
                     <span class="step-num-bubble">4</span>
                     <span class="step-content-text-web">Put it in loose, not inside a plastic bag.</span>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Short Video Guide Card -->
-              <div class="rh-section-block">
-                <h3 class="rh-section-title">Watch a short guide</h3>
-                <div class="watch-guide-card" id="itemWatchGuideBtn">
-                  <div class="watch-guide-overlay">
-                    <span class="wgo-title" id="itemGuideVideoTitle">How to prepare plastic bottles for recycling</span>
-                    <div style="display: flex; align-items: flex-end; justify-content: space-between; margin-top: 12px;">
-                      <button type="button" class="rh-play-btn" aria-label="Play guide">
-                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
-                      </button>
-                      <span class="video-duration-badge">0:45</span>
-                    </div>
                   </div>
                 </div>
               </div>
@@ -2292,9 +2235,9 @@
               <span>Back to Recycle Hub</span>
             </button>
             <span class="subview-header-title">Learn</span>
-            <button type="button" class="subview-fav-btn" id="learnSearchIconBtn" aria-label="Search learning topics">
+            <span aria-hidden="true" style="width: 40px;">
               <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" /></svg>
-            </button>
+            </span>
           </header>
 
           <main style="display: flex; flex-direction: column; gap: 28px;">
@@ -2309,7 +2252,7 @@
               <h2 style="font-size: 1.75rem; font-weight: 800; margin: 0; letter-spacing: -0.02em;">Recycling made simple</h2>
               <p style="font-size: 15px; color: #DCFCE7; max-width: 600px; margin: 0; line-height: 1.5;">A beginner-friendly interactive curriculum covering kerbside essentials, council rules, and clean sorting.</p>
               <button type="button" class="btn-learn-start" id="learnStartBtn" style="margin-top: 8px; background: #FFFFFF; color: #15803D; border: none; font-weight: 700; padding: 12px 22px; border-radius: 10px; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; font-family: inherit;">
-                <span>Start learning &rarr;</span>
+                <span>Browse bin guidance &rarr;</span>
               </button>
             </div>
 
@@ -2351,35 +2294,16 @@
               </div>
             </section>
 
-            <!-- Featured Videos -->
-            <section class="rh-section-block">
-              <div class="rh-section-header">
-                <h3 class="rh-section-title">Featured videos</h3>
-                <button type="button" class="rh-link-action" id="learnVideosSeeAllBtn">See all videos &rarr;</button>
-              </div>
-              <div class="rh-videos-grid">
-                <div class="rh-video-card-web" data-video="journey">
-                  <div class="rh-video-thumb-web video-bg-3">
-                    <button type="button" class="rh-play-btn" aria-label="Play video"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></button>
-                    <span class="video-duration-badge">0:50</span>
-                  </div>
-                  <div class="rh-video-meta-web">
-                    <strong>What actually happens to your recycling?</strong>
-                    <span>See the journey from kerbside to manufacturing plants.</span>
-                  </div>
-                </div>
-
-                <div class="rh-video-card-web" data-video="packaging">
-                  <div class="rh-video-thumb-web video-bg-4">
-                    <button type="button" class="rh-play-btn" aria-label="Play video"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></button>
-                    <span class="video-duration-badge">0:45</span>
-                  </div>
-                  <div class="rh-video-meta-web">
-                    <strong>Food packaging: what goes where?</strong>
-                    <span>Learn how to handle greasy vs clean food containers.</span>
-                  </div>
-                </div>
-              </div>
+            <section class="rh-section-block rh-tips-section">
+              <h3 class="rh-section-title">Useful tips</h3>
+              <details class="rh-tip">
+                <summary>Keep recyclables loose, clean and empty</summary>
+                <p>Empty containers, remove food residue and place items directly in the bin, not inside a bag.</p>
+              </details>
+              <details class="rh-tip">
+                <summary>Check local composting rules</summary>
+                <p>Food scraps, garden waste and accepted caddy liners vary by council. Check your collection service before adding them to organics.</p>
+              </details>
             </section>
           </main>
         </div>
@@ -2412,83 +2336,6 @@
     </div>
   </section>
 
-<!-- ========================================================= -->
-  <!-- MODAL: INTERACTIVE ITEM SCANNER (Camera Simulator)        -->
-  <!-- ========================================================= -->
-  <div class="app-modal-overlay" id="scannerModalOverlay" style="display: none;">
-    <div class="modal-content-card">
-      <div class="modal-header-bar">
-        <h3>Item Scanner</h3>
-        <button type="button" class="modal-close-icon-btn" id="scannerModalCloseBtn" aria-label="Close scanner">&times;</button>
-      </div>
-
-      <div class="scanner-camera-viewport">
-        <!-- Viewfinder Reticle & Laser animation -->
-        <div class="scanner-reticle-box">
-          <div class="scanner-laser-line"></div>
-          <svg id="scannerSampleItemIcon" viewBox="0 0 64 64" fill="none" style="width: 72px; height: 72px; opacity: 0.85;">
-            <rect x="24" y="8" width="16" height="8" rx="2" fill="#3B82F6"/>
-            <path d="M20 18C20 16 24 16 24 16H40C40 16 44 16 44 18L46 36C46 48 42 56 32 56C22 56 18 48 18 36L20 18Z" fill="#93C5FD" fill-opacity="0.5" stroke="#3B82F6" stroke-width="2"/>
-          </svg>
-        </div>
-        <div class="scanner-detected-badge" id="scannerDetectedBadge">
-          <span class="dot"></span>
-          <span id="scannerDetectedText">Plastic Bottle (PET 1) · 98% Match</span>
-        </div>
-      </div>
-
-      <div class="modal-body-pad">
-        <div>
-          <label style="display: block; font-size: 12px; font-weight: 700; color: #6B7280; text-transform: uppercase; margin-bottom: 6px;">Simulate Test Scan</label>
-          <div class="scanner-sim-buttons">
-            <button type="button" class="btn-sim-chip active" data-scan="plastic-bottle">Plastic Bottle</button>
-            <button type="button" class="btn-sim-chip" data-scan="pizza-box">Pizza Box</button>
-            <button type="button" class="btn-sim-chip" data-scan="batteries">Batteries</button>
-          </div>
-        </div>
-
-        <button type="button" class="btn-green btn-block" id="scannerViewGuideBtn">
-          View Disposal Guide &rarr;
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <!-- ========================================================= -->
-  <!-- MODAL: VIDEO PLAYER OVERLAY                               -->
-  <!-- ========================================================= -->
-  <div class="app-modal-overlay" id="videoModalOverlay" style="display: none;">
-    <div class="modal-content-card">
-      <div class="modal-header-bar">
-        <h3 id="videoModalTitle">Recycling mistakes to avoid</h3>
-        <button type="button" class="modal-close-icon-btn" id="videoModalCloseBtn" aria-label="Close video">&times;</button>
-      </div>
-
-      <div style="height: 220px; background: #0A0D12; position: relative; display: flex; align-items: center; justify-content: center;">
-        <svg viewBox="0 0 24 24" fill="#15803D" style="width: 64px; height: 64px; opacity: 0.9;"><circle cx="12" cy="12" r="10" fill="#FFFFFF"/><path d="M10 8l6 4-6 4V8z" fill="#15803D"/></svg>
-        <div style="position: absolute; bottom: 12px; left: 16px; right: 16px; display: flex; align-items: center; justify-content: space-between; color: #FFFFFF; font-size: 12px; font-weight: 600;">
-          <span>0:14 / 0:45</span>
-          <div style="flex: 1; height: 4px; background: rgba(255,255,255,0.3); border-radius: 2px; margin: 0 12px; overflow: hidden;">
-            <div style="width: 32%; height: 100%; background: #10B981;"></div>
-          </div>
-          <span>HD</span>
-        </div>
-      </div>
-
-      <div class="modal-body-pad">
-        <div id="videoModalNotes" style="font-size: 13.5px; color: #374151; line-height: 1.5;">
-          <strong>Key Takeaways:</strong>
-          <ul style="margin: 8px 0 0 18px;">
-            <li>Never bag recyclables — soft plastic bags wrap around sorting machinery.</li>
-            <li>Rinse food containers lightly; they do not need to be dishwashed.</li>
-            <li>Keep rigid plastic bottle caps on.</li>
-          </ul>
-        </div>
-        <button type="button" class="btn-green btn-block" id="videoModalDoneBtn">Got it</button>
-      </div>
-    </div>
-  </div>
-
-  <script src="script.js"></script>
+  <script src="script.js?v=recycle-guide-3"></script>
 </body>
 </html>
