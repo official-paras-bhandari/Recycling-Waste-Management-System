@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>EcoTrack | Waste & Recycling System</title>
-  <link rel="stylesheet" href="style.css?v=recycle-guide-5" />
+  <link rel="stylesheet" href="style.css?v=premium-upgrade-1" />
 </head>
 <body>
 
@@ -27,49 +27,44 @@
             </svg>
           </span>
           <span class="brand-text">EcoTrack</span>
-          <span class="brand-pilot-tag">Riverton Pilot</span>
         </a>
 
         <!-- Desktop Navigation Links -->
         <nav class="site-nav" aria-label="Main Navigation">
           <a href="#schedule-lookup" class="nav-item">Schedule</a>
-          <a href="#how-it-works" class="nav-item">How It Works</a>
-          <a href="#waste-guide" class="nav-item">Bin Guide</a>
-          <a href="#platform-features" class="nav-item">Platform</a>
+          <a href="#waste-guide" class="nav-item">Bin guide</a>
+          <a href="#how-it-works" class="nav-item">How it works</a>
+          <a href="#platform-features" class="nav-item">Features</a>
           <a href="#council-network" class="nav-item">Councils</a>
           <a href="#faq" class="nav-item">FAQ</a>
+          <a href="#recycle" class="nav-item" id="navRecycleLink">Recycle</a>
         </nav>
 
         <div class="header-right-meta">
-          <button class="btn-ghost-sm" id="navResidentPortalBtn">Resident Portal</button>
-          <button class="btn-primary-sm" id="navCheckScheduleBtn">Check Bin Day</button>
+          <button class="btn-solid-sm" id="navResidentPortalBtn">Resident Dashboard</button>
         </div>
       </div>
     </header>
 
-    <!-- HERO SECTION (Bold Minimalist Headline, Tactile Big CTA, Live Product Preview) -->
+    <!-- HERO SECTION (What does the person need right now? Find schedule!) -->
     <section class="hero-section" id="schedule-lookup">
       <div class="container hero-grid">
         
-        <!-- Left Column: Big Headline & Uber/Square Action Box -->
+        <!-- Left Column: Clear Question, Big Headline, Soft Filled Search Tile -->
         <div class="hero-content">
-          <div class="hero-badge">
-            <span class="badge-dot"></span>
-            <span>Municipal Waste & Kerbside Platform</span>
-          </div>
+          <span class="section-label">Kerbside collection schedule</span>
 
           <h1 class="hero-headline">
-            Never miss bin day again.<br />
-            <span class="hero-subline-text">Waste management, simplified.</span>
+            Never miss bin day again.
           </h1>
 
           <p class="hero-description">
-            Accurate council collection days, automated night-before alerts, and instant contamination-free recycling guides — engineered for modern households and local governments.
+            Accurate council collection days, automated night-before alerts, and a quick guide for every bin on your street.
           </p>
 
-          <!-- Big Square / Uber Action Box -->
+          <!-- Soft Filled Action Box (Fill, don't outline) -->
           <div class="hero-cta-box">
-            <label for="heroAddressInput" class="cta-input-label">Find kerbside collection days for your street</label>
+            <label for="heroAddressInput" class="cta-input-label">Street address</label>
             <div class="hero-input-bar">
               <div class="input-icon-wrap" aria-hidden="true">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -80,12 +75,12 @@
               <input 
                 type="text" 
                 id="heroAddressInput" 
-                placeholder="Enter street address (e.g. 12 Greenview Ave)" 
+                placeholder="12 Greenview Ave, Riverton" 
                 autocomplete="off"
                 value="12 Greenview Ave, Riverton"
               />
               <button type="button" class="btn-hero-cta" id="heroSearchBtn">
-                <span>Find Schedule</span>
+                <span>Find schedule</span>
                 <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>
               </button>
             </div>
@@ -98,55 +93,65 @@
               <button type="button" class="hero-chip" data-address="120 Greenview Ave, Riverton">120 Greenview Ave</button>
             </div>
 
-            <div class="hero-secondary-action">
-              <button type="button" class="link-btn-text" id="welcomeStartBtn">
-                Launch interactive resident onboarding & walkthrough demo →
+            <!-- Tap the thing: Soft tappable row instead of naked link -->
+            <div class="hero-walkthrough-row">
+              <button type="button" class="tappable-row-btn" id="welcomeStartBtn">
+                <span>Browse zero-contamination bin guide</span>
+                <span class="row-arrow">›</span>
               </button>
             </div>
           </div>
         </div>
 
-        <!-- Right Column: Live Product Kerbside Preview Card -->
+        <!-- Right Column: Live Kerbside Preview Tile (Fill, don't outline) -->
         <div class="hero-preview-col">
+          <div class="hero-bin-scene" aria-hidden="true">
+            <span class="scene-sun"></span>
+            <span class="scene-line line-one"></span>
+            <span class="scene-line line-two"></span>
+            <div class="hero-bin hero-bin-yellow"><i></i><b></b><em></em></div>
+            <div class="hero-bin hero-bin-green"><i></i><b></b><em></em></div>
+            <div class="hero-bin hero-bin-red"><i></i><b></b><em></em></div>
+          </div>
           <div class="product-preview-card" id="heroPreviewCard">
+            
             <div class="preview-card-top">
-              <div class="card-council-tag">
-                <span class="live-indicator"></span>
-                <span id="previewCouncilName">Riverton City Council · Zone 4B</span>
-              </div>
-              <span class="status-pill-verified">Verified Route</span>
+              <span class="preview-council-label" id="previewCouncilName">Riverton City Council · Zone 4B</span>
+              <span class="status-live-dot" title="Operational"></span>
             </div>
 
             <div class="preview-address-display">
-              <span class="label-tiny">Selected Residence</span>
+              <span class="label-tiny">Your street</span>
               <h3 class="preview-address-text" id="previewAddressText">12 Greenview Ave, Riverton</h3>
             </div>
 
-            <!-- Next Collection Details -->
-            <div class="preview-next-card">
+            <!-- Next Collection Details Tile -->
+            <div class="preview-next-tile">
               <div class="next-meta">
-                <span class="next-tag">NEXT KERBSIDE COLLECTION</span>
-                <h4 class="next-date-title" id="previewNextDate">Friday, 25 Sep 2026</h4>
+                <span class="label-tiny">Next collection</span>
+                <div class="next-date-title" id="previewNextDate">Friday 25 Sep 2026</div>
+                
+                <!-- Unusual status: Amber notice for holiday change -->
                 <div class="holiday-alert-pill">
                   <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd" /></svg>
-                  <span>Moved 1 day from Thu 24 Sep · Public Holiday</span>
+                  <span>Moved 1 day for public holiday</span>
                 </div>
               </div>
 
-              <!-- Due Bins Visual -->
+              <!-- Due Bins Row (Soft light-grey filled items) -->
               <div class="preview-bins-row">
-                <div class="bin-card-item">
+                <div class="bin-tile-item">
                   <div class="mini-bin-render bin-red" title="General Waste bin (Red lid)">
                     <div class="mb-lid"></div>
                     <div class="mb-body"></div>
                   </div>
                   <div class="bin-details">
-                    <strong>General Waste</strong>
+                    <strong>General waste</strong>
                     <span>Red lid · Weekly</span>
                   </div>
                 </div>
 
-                <div class="bin-card-item">
+                <div class="bin-tile-item">
                   <div class="mini-bin-render bin-yellow" title="Recycling bin (Yellow lid)">
                     <div class="mb-lid"></div>
                     <div class="mb-body"></div>
@@ -159,21 +164,21 @@
               </div>
             </div>
 
-            <!-- Cutoff notice & Instant Actions -->
+            <!-- Cutoff notice & Clean Actions -->
             <div class="preview-card-footer">
               <div class="cutoff-notice">
                 <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd" /></svg>
-                <span>Kerbside placement cut-off: <strong>6:00 AM Friday</strong></span>
+                <span>Put bins out by 6:00 am</span>
               </div>
               
               <div class="preview-card-buttons">
-                <button type="button" class="btn-card-action" id="heroDownloadIcsBtn">
+                <button type="button" class="btn-soft" id="heroDownloadIcsBtn">
                   <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"/></svg>
-                  <span>Export to iCal (.ics)</span>
+                  <span>Export to calendar</span>
                 </button>
-                <button type="button" class="btn-card-action secondary" id="heroViewFullScheduleBtn">
-                  <span>View Full Month</span>
-                  <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/></svg>
+                <button type="button" class="btn-soft with-arrow" id="heroViewFullScheduleBtn">
+                  <span>View full month</span>
+                  <span class="btn-arrow">›</span>
                 </button>
               </div>
             </div>
@@ -184,46 +189,73 @@
       </div>
     </section>
 
-    <!-- METRICS STRIP (Square-Style Hairlines) -->
+    <!-- METRICS STRIP (Soft Filled Tiles, Big Numbers, Sentence Case) -->
     <section class="metrics-bar" aria-label="Key Performance Indicators">
       <div class="container">
         <div class="metrics-grid">
           <div class="metric-block">
             <span class="metric-number">40+</span>
-            <span class="metric-label">Council Kerbside Zones</span>
-            <span class="metric-caption">Automated gazetted route feeds</span>
+            <span class="metric-label">Council collection zones</span>
           </div>
           <div class="metric-block">
             <span class="metric-number">99.4%</span>
-            <span class="metric-label">On-Time Reminder Delivery</span>
-            <span class="metric-caption">SMS, push & calendar sync rate</span>
+            <span class="metric-label">On-time reminder alerts</span>
           </div>
           <div class="metric-block">
             <span class="metric-number">42%</span>
-            <span class="metric-label">Contamination Reduction</span>
-            <span class="metric-caption">Average drop across pilot zones</span>
+            <span class="metric-label">Less bin contamination</span>
           </div>
           <div class="metric-block">
-            <span class="metric-number">0s</span>
-            <span class="metric-label">Sign-up Friction</span>
-            <span class="metric-caption">Instant lookup, 100% free for residents</span>
+            <span class="metric-number">Free</span>
+            <span class="metric-label">For all Riverton households</span>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- INTERACTIVE "WHAT GOES WHERE?" WASTE DIRECTORY -->
-    <section class="section-wrapper bg-canvas" id="waste-guide">
+    <!-- Collection journey: visual demonstration only, separate from the live address lookup above. -->
+    <section class="collection-story" id="collection-story" aria-labelledby="story-title">
+      <div class="container story-layout">
+        <div class="story-intro">
+          <span class="section-label">One clear routine</span>
+          <h2 id="story-title">From your street to the right bin.</h2>
+          <p>The real address lookup above stays ready to use. This is a quick preview of how EcoTrack turns council data into an easy weekly ritual.</p>
+          <div class="story-progress" aria-hidden="true"><span></span></div>
+        </div>
+        <div class="story-stage" aria-live="polite">
+          <span class="story-kicker">Collection flow <b id="storyStepNumber">01</b> / 04</span>
+          <div class="story-card active" data-story-step="0">
+            <span class="story-icon">⌖</span><p class="story-eyebrow">Start with a street</p><h3>Enter your address</h3><p>We match it to the council route serving your kerb.</p>
+          </div>
+          <div class="story-card" data-story-step="1">
+            <span class="story-icon">↗</span><p class="story-eyebrow">Official route data</p><h3>See what is due</h3><p>Your next collection and holiday changes appear in one place.</p>
+          </div>
+          <div class="story-card" data-story-step="2">
+            <span class="story-icon">●</span><p class="story-eyebrow">Night-before nudge</p><h3>Activate a reminder</h3><p>A quiet prompt arrives while there is still time to wheel bins out.</p>
+          </div>
+          <div class="story-card" data-story-step="3">
+            <span class="story-icon">✓</span><p class="story-eyebrow">Kerbside confidence</p><h3>Put out the right bins</h3><p>Clear lid colours make tomorrow morning effortless.</p>
+          </div>
+          <div class="story-bins" aria-hidden="true"><span class="story-bin red"></span><span class="story-bin yellow"></span><span class="story-bin green"></span></div>
+        </div>
+        <ol class="story-steps" aria-label="Collection journey steps">
+          <li class="active"><span>01</span> Address</li><li><span>02</span> Schedule</li><li><span>03</span> Reminder</li><li><span>04</span> Ready</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- INTERACTIVE "WHICH BIN DOES IT GO IN?" WASTE DIRECTORY -->
+    <section class="section-wrapper bg-creamy" id="waste-guide">
       <div class="container">
         <div class="section-header-center">
-          <span class="section-eyebrow">Zero Contamination Directory</span>
-          <h2 class="section-title">Know which bin to use in two seconds.</h2>
-          <p class="section-subtitle">Search common household items to prevent bin contamination and avoid council collection rejections.</p>
+          <span class="section-label">Bin guide</span>
+          <h2 class="section-title">Which bin does it go in?</h2>
+          <p class="section-subtitle">Search common household items to keep recyclable materials clean and avoid collection rejections.</p>
         </div>
 
         <div class="waste-guide-tool">
           <div class="wg-controls">
-            <!-- Search Input -->
+            <!-- Soft Search Input -->
             <div class="wg-search-bar">
               <svg class="wg-search-icon" viewBox="0 0 20 20" fill="currentColor">
                 <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" />
@@ -232,72 +264,127 @@
                 type="text" 
                 id="wasteSearchInput" 
                 class="wg-search-input" 
-                placeholder="Search any item: pizza box, soft plastics, batteries, coffee cup, aerosol..." 
+                placeholder="Search pizza box, batteries, coffee cup, foil..." 
               />
             </div>
 
-            <!-- Filter Pills -->
-            <div class="wg-filter-pills" id="wasteFilterPills" role="tablist">
-              <button type="button" class="wg-pill active" data-category="all">All Items</button>
-              <button type="button" class="wg-pill" data-category="yellow">🟡 Recycling (Yellow)</button>
-              <button type="button" class="wg-pill" data-category="green">🟢 Organics & FOGO (Green)</button>
-              <button type="button" class="wg-pill" data-category="red">🔴 General Waste (Red)</button>
-              <button type="button" class="wg-pill" data-category="depot">⚡ Dedicated Depot (Drop-off)</button>
+            <!-- Segmented Control Filters (iPhone Segmented Switch Style) -->
+            <div class="segmented-control" id="wasteFilterPills" role="tablist">
+              <button type="button" class="wg-pill active" data-category="all">All items</button>
+              <button type="button" class="wg-pill" data-category="yellow">Recycling</button>
+              <button type="button" class="wg-pill" data-category="green">Organics</button>
+              <button type="button" class="wg-pill" data-category="red">General waste</button>
+              <button type="button" class="wg-pill" data-category="depot">Drop-off</button>
             </div>
           </div>
 
-          <!-- Dynamic Waste Item Grid -->
-          <div class="waste-cards-grid" id="wasteCardsGrid">
-            <!-- Populated via JavaScript dynamically with rich items -->
+          <!-- Dynamic Waste Item List (Sleek Square / Apple style list with thin dividers) -->
+          <div class="waste-list-wrapper" id="wasteCardsGrid">
+            <!-- Populated via JavaScript dynamically -->
           </div>
         </div>
       </div>
     </section>
 
-    <!-- HOW IT WORKS (1-2-3 Architectural Steps) -->
+    <!-- Monthly Kerbside Schedule Side Panel (Stays right on landing page) -->
+    <div class="side-panel-backdrop" id="monthScheduleBackdrop" style="display: none;">
+      <div class="side-panel-drawer" id="monthScheduleDrawer">
+        <div class="spd-header">
+          <span class="spd-category-label">Full month schedule</span>
+          <button type="button" class="spd-close-btn" id="monthScheduleCloseBtn" aria-label="Close">✕</button>
+        </div>
+        <div class="spd-content">
+          <h2 class="spd-title" id="monthDrawerAddress" style="margin-bottom: 6px;">12 Greenview Ave, Riverton</h2>
+          <span class="label-tiny" id="monthDrawerZone" style="margin-bottom: 20px;">Riverton City Council · Zone 4B</span>
+
+          <div class="month-weeks-list" id="monthWeeksList">
+            <!-- Populated via JavaScript dynamically -->
+          </div>
+
+          <div class="spd-actions" style="margin-top: 24px;">
+            <button type="button" class="btn-solid" id="monthDownloadIcsBtn" style="width: 100%;">
+              <svg viewBox="0 0 20 20" fill="currentColor" style="width: 16px; height: 16px; margin-right: 6px;"><path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"/></svg>
+              <span>Export month to calendar (.ics)</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Waste Item Detail Side Panel (Rule 12: Side panel for viewing one thing, close with one X) -->
+    <div class="side-panel-backdrop" id="wastePanelBackdrop" style="display: none;">
+      <div class="side-panel-drawer" id="wasteSideDrawer">
+        <div class="spd-header">
+          <span class="spd-category-label">Disposal instructions</span>
+          <button type="button" class="spd-close-btn" id="wasteSideCloseBtn" aria-label="Close">✕</button>
+        </div>
+        <div class="spd-content">
+          <div class="spd-badge-wrap">
+            <span class="spd-stream-badge" id="spdStreamBadge">Recycling</span>
+          </div>
+          <h2 class="spd-title" id="spdTitle">Pizza box</h2>
+          
+          <div class="spd-block">
+            <span class="spd-block-label">Which bin</span>
+            <p class="spd-block-body" id="spdRule"></p>
+          </div>
+
+          <div class="spd-block">
+            <span class="spd-block-label">Council tip</span>
+            <p class="spd-tip-body" id="spdTip"></p>
+          </div>
+
+          <div class="spd-actions">
+            <button type="button" class="btn-solid" id="spdDoneBtn" style="width: 100%;">Got it</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- HOW IT WORKS (3 Simple Soft Steps) -->
     <section class="section-wrapper" id="how-it-works">
       <div class="container">
         <div class="section-header-center">
-          <span class="section-eyebrow">Seamless Resident Workflow</span>
-          <h2 class="section-title">How EcoTrack works for your home.</h2>
-          <p class="section-subtitle">Three steps to ensure your kerbside bins are always out on time with zero contamination.</p>
+          <span class="section-label">Simple steps</span>
+          <h2 class="section-title">How EcoTrack works</h2>
+          <p class="section-subtitle">Three steps to keep your bins on schedule with zero guesswork.</p>
         </div>
 
         <div class="steps-grid">
           <div class="step-card">
-            <span class="step-number-pill">STEP 01</span>
-            <h3 class="step-title">Pinpoint your address</h3>
+            <span class="step-index">1</span>
+            <h3 class="step-title">Enter your address</h3>
             <p class="step-desc">
-              Enter your street number and name. EcoTrack instantly matches your residence to official council collection zones, accounting for public holiday schedule shifts.
+              We match your street to official council routes and automatically account for public holiday delays.
             </p>
           </div>
 
           <div class="step-card">
-            <span class="step-number-pill">STEP 02</span>
-            <h3 class="step-title">Set proactive alerts</h3>
+            <span class="step-index">2</span>
+            <h3 class="step-title">Set your reminder</h3>
             <p class="step-desc">
-              Choose night-before reminders at 7:00 PM or morning-of alerts at 6:00 AM. Export to Apple Calendar or Google Calendar with a single click.
+              Get an alert the evening before collection so your bins are ready by the kerb before 6:00 am.
             </p>
           </div>
 
           <div class="step-card">
-            <span class="step-number-pill">STEP 03</span>
-            <h3 class="step-title">Wheel out with confidence</h3>
+            <span class="step-index">3</span>
+            <h3 class="step-title">Wheel out the right bins</h3>
             <p class="step-desc">
-              Know exactly which bins are due each week — General Waste, Recycling, or FOGO. Use our two-second item directory to eliminate contamination.
+              Check which bins are due and use the quick item guide to place every material in the right stream.
             </p>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- PLATFORM CAPABILITIES (Square-Style Crisp 4-Grid) -->
-    <section class="section-wrapper bg-canvas" id="platform-features">
+    <!-- PLATFORM CAPABILITIES (Soft Filled 4-Tile Grid) -->
+    <section class="section-wrapper bg-creamy" id="platform-features">
       <div class="container">
         <div class="section-header-center">
-          <span class="section-eyebrow">Enterprise-Grade Reliability</span>
-          <h2 class="section-title">Built for households, trusted by councils.</h2>
-          <p class="section-subtitle">Engineered with precision architecture to eliminate confusion on kerbside collection mornings.</p>
+          <span class="section-label">Features</span>
+          <h2 class="section-title">Built for households and councils</h2>
+          <p class="section-subtitle">Everything you need for clean, reliable kerbside collections.</p>
         </div>
 
         <div class="features-grid-square">
@@ -305,128 +392,107 @@
             <div class="fb-icon-wrap">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
             </div>
-            <h3 class="fb-title">Dynamic Holiday Rescheduling</h3>
+            <h3 class="fb-title">Holiday schedule shifts</h3>
             <p class="fb-desc">
-              Public holidays like Christmas, Good Friday, and Australia Day disrupt normal collection days. EcoTrack automatically detects shifts and sends timely delay notices.
+              Public holidays disrupt normal collection days. EcoTrack automatically detects shifts and sends timely delay notices.
             </p>
-            <div class="fb-tags">
-              <span class="fb-tag">Automatic Sync</span>
-              <span class="fb-tag">Holiday Exception Banners</span>
-            </div>
           </div>
 
           <div class="feature-box">
             <div class="fb-icon-wrap">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
             </div>
-            <h3 class="fb-title">Multi-Stream Bin Compatibility</h3>
+            <h3 class="fb-title">2, 3, and 4-bin systems</h3>
             <p class="fb-desc">
-              Supports 2-bin, 3-bin (FOGO garden & food organics), and 4-bin (separated glass) municipal systems with lid colors matching your local council specifications.
+              Configured for your council's lid colours, including food and garden organics (FOGO) and separated glass.
             </p>
-            <div class="fb-tags">
-              <span class="fb-tag">FOGO Ready</span>
-              <span class="fb-tag">Australian Standard Lids</span>
-            </div>
           </div>
 
           <div class="feature-box">
             <div class="fb-icon-wrap">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
             </div>
-            <h3 class="fb-title">Native RFC 5545 Calendar Sync</h3>
+            <h3 class="fb-title">Calendar sync</h3>
             <p class="fb-desc">
-              One-click standard `.ics` generation. Import your entire annual schedule directly into Apple Calendar, Google Calendar, or Microsoft Outlook with zero app installation.
+              One tap adds your collection schedule to Apple Calendar, Google Calendar, or Microsoft Outlook.
             </p>
-            <div class="fb-tags">
-              <span class="fb-tag">Offline Capable</span>
-              <span class="fb-tag">Universal .ICS Export</span>
-            </div>
           </div>
 
           <div class="feature-box">
             <div class="fb-icon-wrap">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
             </div>
-            <h3 class="fb-title">One-Tap Municipal Service Requests</h3>
+            <h3 class="fb-title">Quick council requests</h3>
             <p class="fb-desc">
-              Report missed bin collections, order replacement lids, or schedule annual bulky waste pick-ups in under 30 seconds directly from your resident portal.
+              Report a missed collection or order a replacement lid directly to council dispatch in under a minute.
             </p>
-            <div class="fb-tags">
-              <span class="fb-tag">Council Direct</span>
-              <span class="fb-tag">Instant Ticket Dispatch</span>
-            </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- RESIDENT APP SHOWCASE (High-Impact Dark Canvas) -->
+    <!-- RESIDENT APP SHOWCASE (Calm, Premium, Creamy Aesthetic) -->
     <section class="section-wrapper" id="app-demo">
       <div class="container">
         <div class="app-showcase-box">
           <div class="app-showcase-grid">
             <div class="as-content">
-              <span class="section-eyebrow">Interactive Prototype Demo</span>
-              <h2 class="as-headline">Experience the resident portal interface.</h2>
+              <span class="section-label">Resident portal</span>
+              <h2 class="as-headline">Experience the resident app</h2>
               <p class="as-desc">
-                Step through the end-to-end user journey designed for residents: from address setup and wheelie bin assignment to personalized dashboard alerts and monthly collection calendars.
+                Step through the resident journey: check upcoming collections, view the monthly calendar, and search recycling rules.
               </p>
 
               <div class="as-bullets">
                 <div class="as-bullet">
-                  <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
-                  <span>Real-time holiday rescheduling banner</span>
+                  <span class="bullet-check">✓</span>
+                  <span>Holiday rescheduling notices</span>
                 </div>
                 <div class="as-bullet">
-                  <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
-                  <span>Upcoming vs Month grid calendar switcher</span>
+                  <span class="bullet-check">✓</span>
+                  <span>Full month calendar view</span>
                 </div>
                 <div class="as-bullet">
-                  <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
-                  <span>Integrated recycling rules & instant search</span>
+                  <span class="bullet-check">✓</span>
+                  <span>Two-second recycling search</span>
                 </div>
               </div>
 
-              <button type="button" class="btn-showcase-cta" id="showcaseLaunchBtn">
-                <span>Launch Resident App Demo</span>
-                <svg viewBox="0 0 20 20" fill="currentColor" style="width: 18px; height: 18px;"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>
+              <button type="button" class="btn-solid" id="showcaseLaunchBtn">
+                <span>Open resident dashboard</span>
+                <span class="btn-arrow">›</span>
               </button>
             </div>
 
-            <!-- Visual Mockup Container -->
+            <!-- Visual Mockup Container (Soft creamy filled card) -->
             <div class="as-visual-card">
               <div class="asv-header">
-                <div class="asv-dots">
-                  <span class="asv-dot"></span>
-                  <span class="asv-dot"></span>
-                  <span class="asv-dot"></span>
-                </div>
-                <span class="asv-title">EcoTrack Resident Dashboard</span>
-                <span style="width: 40px;"></span>
+                <span class="asv-title">Resident dashboard</span>
+                <span class="status-live-dot"></span>
               </div>
 
               <div class="asv-item">
                 <div class="asv-item-left">
                   <strong>Good afternoon, John</strong>
-                  <span>12 Greenview Ave · Riverton</span>
+                  <span>12 Greenview Ave, Riverton</span>
                 </div>
-                <span class="asv-badge-green">Zone 4B Active</span>
+                <span class="asv-tag">Zone 4B</span>
               </div>
 
-              <div class="asv-item" style="border-left: 3px solid #EAB308;">
+              <div class="asv-item notice-amber">
                 <div class="asv-item-left">
-                  <strong>Next Kerbside: Fri 25 Sept</strong>
-                  <span>General Waste (Red) + Recycling (Yellow)</span>
+                  <strong>Next collection: Fri 25 Sep</strong>
+                  <span>General waste + Recycling</span>
                 </div>
-                <span style="font-size: 11px; color: #FCD34D; font-weight: 600;">+1 Day Holiday Shift</span>
+                <span class="asv-amber-tag">Moved 1 day</span>
               </div>
 
               <div class="asv-item">
                 <div class="asv-item-left">
-                  <strong>Automated Reminder</strong>
-                  <span>Alert set for Thursday 7:00 PM</span>
+                  <strong>Automated reminder</strong>
+                  <span>Alert set for Thursday 7:00 pm</span>
                 </div>
-                <span style="font-size: 12px; color: #4ADE80; font-weight: 600;">Enabled</span>
+                <span class="asv-green-tag">Active</span>
               </div>
             </div>
           </div>
@@ -435,56 +501,57 @@
     </section>
 
     <!-- COUNCIL NETWORK & MUNICIPAL SOLUTIONS -->
-    <section class="section-wrapper bg-canvas" id="council-network">
+    <section class="section-wrapper bg-creamy" id="council-network">
       <div class="container">
         <div class="councils-card">
           <div class="councils-grid">
             <div class="cg-text">
-              <span class="section-eyebrow">Municipal Government Solutions</span>
-              <h2 class="section-title">Cut contaminated loads. Reduce call centre surges.</h2>
+              <span class="section-label">Council solutions</span>
+              <h2 class="section-title">Cut contaminated loads. Reduce missed bin calls.</h2>
               <p class="section-subtitle">
-                During holiday weeks, local councils experience hundreds of missed bin inquiries. EcoTrack synchronizes directly with municipal waste contracts to automate communications.
+                During holiday weeks, councils receive hundreds of missed bin calls. EcoTrack keeps residents informed before they call.
               </p>
 
               <div class="cg-bullets">
                 <div class="cg-bullet-item">
-                  <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                  <span class="bullet-check">✓</span>
                   <div>
-                    <strong>68% Reduction in Support Tickets</strong>
-                    <span>Residents receive automated holiday shift notifications before picking up the phone.</span>
+                    <strong>Fewer support calls</strong>
+                    <span>Residents receive automated holiday delay notifications.</span>
                   </div>
                 </div>
 
                 <div class="cg-bullet-item">
-                  <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                  <span class="bullet-check">✓</span>
                   <div>
-                    <strong>FOGO & Glass Rollout Support</strong>
-                    <span>Seamlessly guides households through new 3-bin and 4-bin transitions with localized rules.</span>
+                    <strong>Cleaner recycling streams</strong>
+                    <span>Simple localized guidelines reduce truck contamination.</span>
                   </div>
                 </div>
               </div>
 
-              <button type="button" class="btn-primary-hero" id="councilInquiryBtn">
-                Contact Municipal Solutions
+              <button type="button" class="btn-soft" id="councilInquiryBtn">
+                <span>Contact council team</span>
+                <span class="btn-arrow">›</span>
               </button>
             </div>
 
             <div class="council-stat-boxes">
               <div class="cs-box">
                 <div class="cs-num">68%</div>
-                <div class="cs-lbl">Fewer Holiday Enquiries</div>
+                <div class="cs-lbl">Fewer holiday calls</div>
               </div>
               <div class="cs-box">
                 <div class="cs-num">42%</div>
-                <div class="cs-lbl">Lower Kerbside Contamination</div>
+                <div class="cs-lbl">Less contamination</div>
               </div>
               <div class="cs-box">
                 <div class="cs-num">100%</div>
-                <div class="cs-lbl">Real-time Schedule Accuracy</div>
+                <div class="cs-lbl">Schedule accuracy</div>
               </div>
               <div class="cs-box">
                 <div class="cs-num">&lt; 30s</div>
-                <div class="cs-lbl">Resident Issue Report Time</div>
+                <div class="cs-lbl">Report time</div>
               </div>
             </div>
           </div>
@@ -492,13 +559,13 @@
       </div>
     </section>
 
-    <!-- FREQUENTLY ASKED QUESTIONS (Accordion) -->
+    <!-- FREQUENTLY ASKED QUESTIONS (Clean List with Thin Dividers) -->
     <section class="section-wrapper" id="faq">
       <div class="container">
         <div class="section-header-center">
-          <span class="section-eyebrow">Clear Answers</span>
-          <h2 class="section-title">Frequently asked questions.</h2>
-          <p class="section-subtitle">Everything you need to know about council collection schedules and recycling guidelines.</p>
+          <span class="section-label">Answers</span>
+          <h2 class="section-title">Frequently asked questions</h2>
+          <p class="section-subtitle">Quick answers about collection days and recycling rules.</p>
         </div>
 
         <div class="faq-list" id="faqList">
@@ -509,7 +576,7 @@
             </button>
             <div class="faq-answer">
               <p>
-                When a public holiday (such as Christmas, Good Friday, or Easter Monday) shifts kerbside collections, EcoTrack recalculates your pickup day automatically. You receive an alert noting the changed day (e.g. "Collection moved from Thursday to Friday").
+                When a public holiday shifts kerbside collections, EcoTrack recalculates your pickup day automatically. You receive an alert noting the changed day (for example, "Collection moved from Thursday to Friday").
               </p>
             </div>
           </div>
@@ -521,7 +588,7 @@
             </button>
             <div class="faq-answer">
               <p>
-                EcoTrack fully supports 3-bin systems (General Waste Red, Mixed Recycling Yellow, and Food Organics/Garden Organics Green). In step 3 of setup, your bin types are automatically configured according to your council’s gazetted roll-out.
+                EcoTrack fully supports 3-bin systems (general waste, recycling, and food/garden organics). In step 3 of setup, your bin types are automatically configured according to your council’s service.
               </p>
             </div>
           </div>
@@ -533,7 +600,7 @@
             </button>
             <div class="faq-answer">
               <p>
-                Yes! Clicking "Export to iCal (.ics)" generates a standard RFC 5545 calendar file. It syncs with Apple Calendar, Google Calendar, and Microsoft Outlook, complete with automatic night-before alert alarms.
+                Yes. Tapping "Export to calendar" downloads a standard calendar file that syncs with Apple Calendar, Google Calendar, and Microsoft Outlook, complete with reminders.
               </p>
             </div>
           </div>
@@ -545,7 +612,7 @@
             </button>
             <div class="faq-answer">
               <p>
-                Inside the EcoTrack Resident Home dashboard, tap the top-right flag button to log a missed collection report directly to council dispatch. You can also report damaged bin lids or book hard rubbish pick-ups.
+                Inside the resident portal, tap the flag button in the top bar to report a missed collection directly to council dispatch. You can also report damaged lids or book hard rubbish pick-ups.
               </p>
             </div>
           </div>
@@ -557,7 +624,7 @@
             </button>
             <div class="faq-answer">
               <p>
-                EcoTrack is 100% free for all residents living within participating council areas. There are no subscriptions, ads, or hidden charges.
+                Yes. EcoTrack is completely free for all residents living within participating council areas. There are no subscriptions, ads, or hidden charges.
               </p>
             </div>
           </div>
@@ -565,30 +632,30 @@
       </div>
     </section>
 
-    <!-- BIG CLOSING CTA BANNER (Square & Uber High-Contrast Signature) -->
+    <!-- BIG CLOSING CTA BANNER (Calm, Confident Solid Tile) -->
     <section class="cta-banner-section">
       <div class="container">
         <div class="cta-banner-box">
-          <div class="cta-banner-tag">EcoTrack Municipal System</div>
-          <h2 class="cta-banner-heading">Never wake up to the sound of the bin truck again.</h2>
+          <span class="cta-banner-tag">Riverton kerbside collection</span>
+          <h2 class="cta-banner-heading">Never miss bin day again.</h2>
           <p class="cta-banner-sub">
-            Join households across the Riverton Council area with accurate collection schedules, smart reminders, and zero missed collections.
+            Join households across Riverton with accurate collection schedules and timely night-before reminders.
           </p>
 
           <div class="cta-banner-buttons">
             <button type="button" class="btn-cta-big-primary" id="ctaLaunchPortalBtn">
-              <span>Launch Resident Portal</span>
-              <svg viewBox="0 0 20 20" fill="currentColor" style="width: 18px; height: 18px;"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>
+              <span>Open resident dashboard</span>
+              <span class="btn-arrow">›</span>
             </button>
             <button type="button" class="btn-cta-big-secondary" id="ctaCheckAddressBtn">
-              <span>Check Street Schedule</span>
+              <span>Check street schedule</span>
             </button>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- SEMANTIC FOOTER -->
+    <!-- SEMANTIC FOOTER (Clean Creamy Base) -->
     <footer class="site-footer">
       <div class="container">
         <div class="footer-grid">
@@ -604,54 +671,52 @@
               <span class="brand-text">EcoTrack</span>
             </a>
             <p class="footer-desc">
-              Next-generation municipal kerbside waste management and resident recycling intelligence platform.
+              Municipal kerbside waste management and resident recycling system.
             </p>
             <div class="footer-status-pill">
               <span class="status-dot-green"></span>
-              <span>All Council Feeds Operational</span>
+              <span>Council feeds active</span>
             </div>
           </div>
 
           <div class="footer-col">
             <h4 class="footer-col-title">Platform</h4>
             <ul class="footer-links">
-              <li><a href="#schedule-lookup">Kerbside Lookup</a></li>
-              <li><a href="#how-it-works">How It Works</a></li>
-              <li><a href="#waste-guide">What Goes Where</a></li>
-              <li><a href="#platform-features">Holiday Rescheduling</a></li>
-              <li><a href="#faq">Frequently Asked Questions</a></li>
+              <li><a href="#schedule-lookup">Street schedule</a></li>
+              <li><a href="#waste-guide">Bin guide</a></li>
+              <li><a href="#how-it-works">How it works</a></li>
+              <li><a href="#platform-features">Features</a></li>
+              <li><a href="#faq">FAQ</a></li>
             </ul>
           </div>
 
           <div class="footer-col">
-            <h4 class="footer-col-title">Waste Streams</h4>
+            <h4 class="footer-col-title">Bin streams</h4>
             <ul class="footer-links">
-              <li><a href="#waste-guide">General Waste (Red Lid)</a></li>
-              <li><a href="#waste-guide">Mixed Recycling (Yellow Lid)</a></li>
-              <li><a href="#waste-guide">Food & Garden Organics (Green)</a></li>
-              <li><a href="#waste-guide">Hazardous Depot & E-Waste</a></li>
-              <li><a href="#app-demo">Bulky Hard Rubbish Booking</a></li>
+              <li><a href="#waste-guide">General waste (Red)</a></li>
+              <li><a href="#waste-guide">Recycling (Yellow)</a></li>
+              <li><a href="#waste-guide">Food &amp; organics (Green)</a></li>
+              <li><a href="#waste-guide">Drop-off depot</a></li>
             </ul>
           </div>
 
           <div class="footer-col">
-            <h4 class="footer-col-title">Project & Governance</h4>
+            <h4 class="footer-col-title">Project</h4>
             <div class="footer-credits">
-              <p><strong>EcoTrack Capstone Project</strong></p>
+              <p><strong>EcoTrack System</strong></p>
               <p>Parash Kumar Bhandari &amp; Suparth Sitaula</p>
-              <p style="margin-top: 8px;">Sprint 2 Production Prototype</p>
-              <p style="margin-top: 4px;">Zero framework runtime · Pure HTML5, CSS3 &amp; JS</p>
+              <p style="margin-top: 6px;">Sprint 2 prototype</p>
             </div>
           </div>
 
         </div>
 
         <div class="footer-bottom">
-          <span>&copy; 2026 EcoTrack Waste &amp; Recycling Management System. All rights reserved.</span>
+          <span>&copy; 2026 EcoTrack Waste &amp; Recycling Management System</span>
           <div class="footer-bottom-links">
             <a href="#schedule-lookup">Privacy</a>
-            <a href="#schedule-lookup">Terms of Service</a>
-            <a href="#council-network">Council Portal</a>
+            <a href="#schedule-lookup">Terms</a>
+            <a href="#council-network">Council portal</a>
           </div>
         </div>
       </div>
@@ -943,18 +1008,14 @@
 
           <!-- Desktop Nav Links -->
           <nav class="desktop-nav-items" aria-label="Main Navigation">
-            <button type="button" class="d-link active" id="homeNavHomeBtn">Home</button>
-            <button type="button" class="d-link" id="homeNavScheduleBtn">Schedule</button>
-            <button type="button" class="d-link" id="homeNavRecycleBtn">Recycle</button>
-            <button type="button" class="d-link" id="homeNavOverviewBtn">Website</button>
+            <button type="button" class="d-link" data-nav="home">Home</button>
+            <button type="button" class="d-link" data-nav="schedule">Schedule</button>
+            <button type="button" class="d-link" data-nav="recycle">Recycle</button>
           </nav>
 
-          <!-- Top-right Red Flag Icon (Image 3) -->
-          <button class="header-flag-btn" id="homeReportFlagBtn" aria-label="Report issue">
-            <svg viewBox="0 0 20 20" fill="currentColor">
-              <path fill-rule="evenodd" d="M3 3a1 1 0 011-1h12a1 1 0 01.8 1.6L14.25 7l2.55 3.4A1 1 0 0116 12H4v5a1 1 0 11-2 0V3z" clip-rule="evenodd" />
-            </svg>
-          </button>
+          <div class="rsn-user-group">
+            <button type="button" class="user-avatar-badge" title="John Smith · Resident Profile" aria-label="Resident profile"><span>JS</span></button>
+          </div>
         </div>
       </header>
 
@@ -1149,16 +1210,14 @@
           </a>
 
           <nav class="desktop-nav-items" aria-label="Main Navigation">
-            <button class="d-link" id="scheduleNavHomeBtn">Home</button>
-            <button class="d-link active" id="scheduleNavScheduleBtn">Schedule</button>
-            <button type="button" class="d-link" id="scheduleNavRecycleBtn">Recycle</button>
-            <button type="button" class="d-link" id="scheduleNavOverviewBtn">Website</button>
+            <button type="button" class="d-link" data-nav="home">Home</button>
+            <button type="button" class="d-link" data-nav="schedule">Schedule</button>
+            <button type="button" class="d-link" data-nav="recycle">Recycle</button>
           </nav>
 
-          <button class="back-link-btn" id="scheduleBackToHomeBtn" aria-label="Back to home">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg>
-            <span>Back to Home</span>
-          </button>
+          <div class="rsn-user-group">
+            <button type="button" class="user-avatar-badge" title="John Smith · Resident Profile" aria-label="Resident profile"><span>JS</span></button>
+          </div>
         </div>
       </header>
 
@@ -1307,15 +1366,13 @@
   </section>
 
   <!-- ========================================================= -->
-  <!-- SCREEN: RECYCLE GUIDE -->
+  <!-- SCREEN: ACCOUNT                                            -->
   <!-- ========================================================= -->
-    <section class="screen-view" id="screenRecycle" style="display: none;">
-    <div class="recycle-app-wrapper">
-      <div class="recycle-web-container">
-
-        <!-- Top Web Navigation & Brand Bar (Responsive for Desktop & Tablet) -->
-        <header class="recycle-subview-nav">
-          <a href="#" class="brand-link" id="recycleBrandLink">
+  <section class="screen-view" id="screenAccount" style="display: none;">
+    <div class="schedule-wrapper">
+      <header class="site-header">
+        <div class="container header-flex">
+          <a href="#" class="brand-link" id="accountBrandLink">
             <span class="brand-circle">
               <svg viewBox="0 0 24 24" fill="currentColor">
                 <circle cx="12" cy="12" r="10" />
@@ -1324,10 +1381,110 @@
             </span>
             <span class="brand-text">EcoTrack</span>
           </a>
-          <div style="display: flex; align-items: center; gap: 12px;">
-            <button type="button" class="nav-back-clean-btn" id="recycleNavHomeBtn" title="Back to Resident Home">
-              <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd"/></svg>
-              <span>Resident Home</span>
+          <nav class="desktop-nav-items" aria-label="Main Navigation">
+            <button type="button" class="d-link" data-nav="home">Home</button>
+            <button type="button" class="d-link" data-nav="schedule">Schedule</button>
+            <button type="button" class="d-link" data-nav="recycle">Recycle</button>
+          </nav>
+          <div class="rsn-user-group">
+            <button type="button" class="user-avatar-badge" title="John Smith · Resident Profile" aria-label="Resident profile"><span>JS</span></button>
+          </div>
+        </div>
+      </header>
+
+      <main class="schedule-main">
+        <div class="acct-container">
+          <h1 class="schedule-exact-title">Account</h1>
+
+          <section class="acct-card acct-profile">
+            <div class="user-avatar-badge acct-avatar"><span>JS</span></div>
+            <div class="acct-profile-text">
+              <strong>John Smith</strong>
+              <span id="accountAddressText">12 Greenview Ave, Riverton</span>
+            </div>
+            <button type="button" class="btn-soft-sm" id="accountChangeAddrBtn">Change address</button>
+          </section>
+
+          <section class="acct-card">
+            <h2 class="acct-heading">Collection</h2>
+            <div class="acct-row"><span>Council</span><strong>Riverton City Council</strong></div>
+            <div class="acct-row"><span>Zone</span><strong>4B</strong></div>
+            <div class="acct-row"><span>Bins</span><strong>General (red) · Recycling (yellow) · Organics (green)</strong></div>
+          </section>
+
+          <section class="acct-card">
+            <h2 class="acct-heading">Reminders</h2>
+            <label class="acct-row acct-toggle">
+              <span>Remind me before collection</span>
+              <input type="checkbox" id="accountReminderToggle" checked />
+            </label>
+            <div class="acct-row">
+              <span>When</span>
+              <select id="accountReminderTime" class="acct-select">
+                <option value="night">Night before · 7:00 pm</option>
+                <option value="morning">Morning of · 6:00 am</option>
+              </select>
+            </div>
+          </section>
+
+          <button type="button" class="acct-signout" id="accountSignOutBtn">Sign out</button>
+        </div>
+      </main>
+
+      <nav class="bottom-tab-bar" aria-label="Mobile Navigation">
+        <div class="tab-button" id="accountBottomTabHome">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" /></svg>
+          <span>Home</span>
+        </div>
+        <div class="tab-button" id="accountBottomTabSchedule">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2" /><line x1="16" y1="2" x2="16" y2="6" /><line x1="8" y1="2" x2="8" y2="6" /><line x1="3" y1="10" x2="21" y2="10" /></svg>
+          <span>Schedule</span>
+        </div>
+        <div class="tab-button" id="accountBottomTabRecycle">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 19H4.8a1.8 1.8 0 0 1-1.6-.9 1.8 1.8 0 0 1 0-1.8L7.2 9.5" /><path d="M11 19h8.2a1.8 1.8 0 0 0 1.6-.9 1.8 1.8 0 0 0 0-1.8L17.5 11" /><path d="m14 4.5 4.5 7.5" /><path d="m5 16 2.5 3L10 16" /><path d="m17 7-3-4.5L11 7" /><path d="M9 13.5 6.5 9H12" /></svg>
+          <span>Recycle</span>
+        </div>
+        <div class="tab-button active" id="accountBottomTabAccount">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" /></svg>
+          <span>Account</span>
+        </div>
+      </nav>
+    </div>
+  </section>
+
+  <!-- ========================================================= -->
+  <!-- SCREEN: RECYCLE GUIDE (Responsive Desktop & Mobile Minimalism) -->
+  <!-- ========================================================= -->
+
+  <section class="screen-view" id="screenRecycle" style="display: none;">
+    <div class="recycle-app-wrapper">
+      <div class="recycle-web-container">
+
+        <!-- Top Web Navigation & Brand Bar (Responsive for Desktop & Mobile) -->
+        <header class="recycle-site-nav">
+          <div class="rsn-brand-group">
+            <a href="#" class="brand-link" id="recycleBrandLink">
+              <span class="brand-circle">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                  <circle cx="12" cy="12" r="10" />
+                  <path d="M7 17L17 7" stroke="#FFF" stroke-width="2.5" stroke-linecap="round" />
+                </svg>
+              </span>
+              <span class="brand-text">EcoTrack</span>
+            </a>
+          </div>
+
+          <!-- Desktop Navigation Bar (Visible on Desktop / Tablet) -->
+          <nav class="recycle-desktop-nav" aria-label="Recycle Desktop Navigation">
+            <button type="button" class="d-link" data-nav="home">Home</button>
+            <button type="button" class="d-link" data-nav="schedule">Schedule</button>
+            <button type="button" class="d-link" data-nav="recycle">Recycle</button>
+          </nav>
+
+          <!-- Resident User Avatar (John Smith) -->
+          <div class="rsn-user-group">
+            <button type="button" class="user-avatar-badge" id="recycleUserAvatarBtn" title="John Smith · Resident Profile" aria-label="Resident profile">
+              <span>JS</span>
             </button>
           </div>
         </header>
@@ -1339,84 +1496,82 @@
           <!-- Hero Title & Subtitle -->
           <div class="rh-hero-header">
             <h1 class="rh-hero-title">Recycle</h1>
-            <p class="rh-hero-subtitle">Find the right bin and how to prepare everyday items.</p>
+            <p class="rh-hero-subtitle">Find out what to do with your household items.</p>
           </div>
 
-          <div class="rh-search-area">
-            <label class="rh-search-label" for="recycleHubSearchInput">Search for an item</label>
+          <!-- Top Action Row: Search Bar with Camera Icon + Scan an Item Banner -->
+          <div class="rh-top-action-row">
             <div class="rh-search-container">
               <div class="rh-search-box">
                 <svg class="rh-search-icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                   <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" />
                 </svg>
-                <input type="search" id="recycleHubSearchInput" placeholder="Search an item, e.g. plastic bottle" autocomplete="off" aria-controls="rhSearchDropdown" aria-expanded="false" />
+                <input type="search" id="recycleHubSearchInput" placeholder="Search an item, e.g. pizza box" autocomplete="off" aria-controls="rhSearchDropdown" aria-expanded="false" />
+                <button type="button" class="rh-camera-btn" id="rhSearchCameraBtn" title="Scan item with camera" aria-label="Scan item with camera">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+                    <circle cx="12" cy="13" r="4"/>
+                  </svg>
+                </button>
                 <button type="button" class="rh-clear-search" id="rhClearSearchBtn" aria-label="Clear search" hidden>
                   <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
                 </button>
               </div>
               <div class="rh-search-dropdown" id="rhSearchDropdown" role="region" aria-label="Search results" aria-live="polite" hidden></div>
             </div>
+
+            <!-- Scan an Item Banner (Reference Screenshot 1 Card) -->
+            <button type="button" class="rh-scan-banner" id="rhScanItemBanner">
+              <div class="scan-banner-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+                  <circle cx="12" cy="13" r="4"/>
+                </svg>
+              </div>
+              <div class="scan-banner-text">
+                <strong>Scan an item</strong>
+                <span>Take a photo to find out how to dispose of it.</span>
+              </div>
+              <svg class="chevron-right" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/></svg>
+            </button>
           </div>
 
           <!-- Know your bins Section (Responsive 3-column cards with HD SVGs) -->
           <section class="rh-section-block rh-bin-guide-section">
             <div class="rh-section-header">
               <h2 class="rh-section-title">Know your bins</h2>
+              <button type="button" class="rh-link-action" id="rhViewAllBinsBtn">View all &rarr;</button>
             </div>
-            <p class="rh-guidance-note">General guidance only. Accepted items, especially food and garden waste, vary by council. Check your local council’s current rules.</p>
             <div class="rh-bins-responsive-grid" id="rhBinsGuideGrid">
               <!-- Recycling Card (Yellow) -->
               <button type="button" class="rh-bin-card-web bin-yellow-card" data-bin="recycling">
                 <svg class="hd-wheelie-bin" viewBox="0 0 120 160" aria-label="Yellow lid recycling bin" role="img">
-  <defs>
-    <linearGradient id="bGrad_hub_yel" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#2D3748"/>
-      <stop offset="25%" stop-color="#3A475A"/>
-      <stop offset="75%" stop-color="#3A475A"/>
-      <stop offset="100%" stop-color="#1F2937"/>
-    </linearGradient>
-    <linearGradient id="lGrad_hub_yel" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#FDE047"/>
-      <stop offset="50%" stop-color="#EAB308"/>
-      <stop offset="100%" stop-color="#CA8A04"/>
-    </linearGradient>
-  </defs>
-  <!-- Floor Shadow -->
-  <ellipse cx="60" cy="154" rx="46" ry="6" fill="#000" opacity="0.16"/>
-  <!-- Left Wheel -->
-  <circle cx="26" cy="142" r="13" fill="#1E293B"/>
-  <circle cx="26" cy="142" r="8" fill="#64748B"/>
-  <circle cx="26" cy="142" r="3" fill="#0F172A"/>
-  <!-- Right Wheel -->
-  <circle cx="94" cy="142" r="13" fill="#1E293B"/>
-  <circle cx="94" cy="142" r="8" fill="#64748B"/>
-  <circle cx="94" cy="142" r="3" fill="#0F172A"/>
-  <!-- Axle -->
-  <rect x="26" y="140" width="68" height="4" fill="#334155"/>
-  <!-- Bin Body -->
-  <path d="M 28 38 L 92 38 L 84 140 C 84 144 80 146 76 146 L 44 146 C 40 146 36 144 36 140 Z" fill="url(#bGrad_hub_yel)"/>
-  <!-- Realistic Moulding Ribs -->
-  <line x1="33" y1="54" x2="87" y2="54" stroke="#1F2937" stroke-width="1.5" opacity="0.55"/>
-  <line x1="35" y1="80" x2="85" y2="80" stroke="#1F2937" stroke-width="1.5" opacity="0.55"/>
-  <line x1="37" y1="110" x2="83" y2="110" stroke="#1F2937" stroke-width="1.5" opacity="0.55"/>
-  <!-- Lift Pocket -->
-  <rect x="42" y="44" width="36" height="5" rx="2" fill="#1A202C"/>
-  
-        <!-- Mobius Loop Recycling Emblem -->
-        <g fill="#E2E8F0" opacity="0.85">
-          <path d="M60 75 L66 85 H54 Z"/>
-          <path d="M50 97 L56 87 L46 87 Z"/>
-          <path d="M70 97 L75 87 L65 87 Z"/>
-          <circle cx="60" cy="93" r="8" fill="none" stroke="#E2E8F0" stroke-width="2.5" stroke-dasharray="8 4" opacity="0.9"/>
-        </g>
-        
-  <!-- Collar Rim -->
-  <rect x="24" y="32" width="72" height="7" rx="2" fill="#1F2937"/>
-  <!-- Colored Hinged Lid -->
-  <path d="M 18 24 L 102 24 C 104 24 105 26 104 28 L 100 34 C 99 35 98 35 96 35 L 24 35 C 22 35 21 35 20 34 L 16 28 C 15 26 16 24 18 24 Z" fill="url(#lGrad_hub_yel)"/>
-  <path d="M 22 24 C 22 17 36 15 60 15 C 84 15 98 17 98 24 Z" fill="url(#lGrad_hub_yel)"/>
-  <rect x="44" y="13" width="32" height="4" rx="2" fill="#A16207"/>
-</svg>
+                  <defs>
+                    <linearGradient id="bGrad_hub_yel" x1="0%" y1="0%" x2="100%" y2="0%">
+                      <stop offset="0%" stop-color="#2D3748"/><stop offset="25%" stop-color="#3A475A"/><stop offset="75%" stop-color="#3A475A"/><stop offset="100%" stop-color="#1F2937"/>
+                    </linearGradient>
+                    <linearGradient id="lGrad_hub_yel" x1="0%" y1="0%" x2="100%" y2="0%">
+                      <stop offset="0%" stop-color="#FDE047"/><stop offset="50%" stop-color="#EAB308"/><stop offset="100%" stop-color="#CA8A04"/>
+                    </linearGradient>
+                  </defs>
+                  <ellipse cx="60" cy="154" rx="46" ry="6" fill="#000" opacity="0.16"/>
+                  <circle cx="26" cy="142" r="13" fill="#1E293B"/><circle cx="26" cy="142" r="8" fill="#64748B"/><circle cx="26" cy="142" r="3" fill="#0F172A"/>
+                  <circle cx="94" cy="142" r="13" fill="#1E293B"/><circle cx="94" cy="142" r="8" fill="#64748B"/><circle cx="94" cy="142" r="3" fill="#0F172A"/>
+                  <rect x="26" y="140" width="68" height="4" fill="#334155"/>
+                  <path d="M 28 38 L 92 38 L 84 140 C 84 144 80 146 76 146 L 44 146 C 40 146 36 144 36 140 Z" fill="url(#bGrad_hub_yel)"/>
+                  <line x1="33" y1="54" x2="87" y2="54" stroke="#1F2937" stroke-width="1.5" opacity="0.55"/>
+                  <line x1="35" y1="80" x2="85" y2="80" stroke="#1F2937" stroke-width="1.5" opacity="0.55"/>
+                  <line x1="37" y1="110" x2="83" y2="110" stroke="#1F2937" stroke-width="1.5" opacity="0.55"/>
+                  <rect x="42" y="44" width="36" height="5" rx="2" fill="#1A202C"/>
+                  <g fill="#E2E8F0" opacity="0.85">
+                    <path d="M60 75 L66 85 H54 Z"/><path d="M50 97 L56 87 L46 87 Z"/><path d="M70 97 L75 87 L65 87 Z"/>
+                    <circle cx="60" cy="93" r="8" fill="none" stroke="#E2E8F0" stroke-width="2.5" stroke-dasharray="8 4" opacity="0.9"/>
+                  </g>
+                  <rect x="24" y="32" width="72" height="7" rx="2" fill="#1F2937"/>
+                  <path d="M 18 24 L 102 24 C 104 24 105 26 104 28 L 100 34 C 99 35 98 35 96 35 L 24 35 C 22 35 21 35 20 34 L 16 28 C 15 26 16 24 18 24 Z" fill="url(#lGrad_hub_yel)"/>
+                  <path d="M 22 24 C 22 17 36 15 60 15 C 84 15 98 17 98 24 Z" fill="url(#lGrad_hub_yel)"/>
+                  <rect x="44" y="13" width="32" height="4" rx="2" fill="#A16207"/>
+                </svg>
                 <strong class="rh-bin-name">Recycling</strong>
                 <span class="rh-bin-pill pill-yellow">Yellow lid</span>
               </button>
@@ -1424,53 +1579,32 @@
               <!-- Organics Card (Green) -->
               <button type="button" class="rh-bin-card-web bin-green-card" data-bin="organics">
                 <svg class="hd-wheelie-bin" viewBox="0 0 120 160" aria-label="Green lid organics bin" role="img">
-  <defs>
-    <linearGradient id="bGrad_hub_grn" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#2D3748"/>
-      <stop offset="25%" stop-color="#3A475A"/>
-      <stop offset="75%" stop-color="#3A475A"/>
-      <stop offset="100%" stop-color="#1F2937"/>
-    </linearGradient>
-    <linearGradient id="lGrad_hub_grn" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#4ADE80"/>
-      <stop offset="50%" stop-color="#16A34A"/>
-      <stop offset="100%" stop-color="#15803D"/>
-    </linearGradient>
-  </defs>
-  <!-- Floor Shadow -->
-  <ellipse cx="60" cy="154" rx="46" ry="6" fill="#000" opacity="0.16"/>
-  <!-- Left Wheel -->
-  <circle cx="26" cy="142" r="13" fill="#1E293B"/>
-  <circle cx="26" cy="142" r="8" fill="#64748B"/>
-  <circle cx="26" cy="142" r="3" fill="#0F172A"/>
-  <!-- Right Wheel -->
-  <circle cx="94" cy="142" r="13" fill="#1E293B"/>
-  <circle cx="94" cy="142" r="8" fill="#64748B"/>
-  <circle cx="94" cy="142" r="3" fill="#0F172A"/>
-  <!-- Axle -->
-  <rect x="26" y="140" width="68" height="4" fill="#334155"/>
-  <!-- Bin Body -->
-  <path d="M 28 38 L 92 38 L 84 140 C 84 144 80 146 76 146 L 44 146 C 40 146 36 144 36 140 Z" fill="url(#bGrad_hub_grn)"/>
-  <!-- Realistic Moulding Ribs -->
-  <line x1="33" y1="54" x2="87" y2="54" stroke="#1F2937" stroke-width="1.5" opacity="0.55"/>
-  <line x1="35" y1="80" x2="85" y2="80" stroke="#1F2937" stroke-width="1.5" opacity="0.55"/>
-  <line x1="37" y1="110" x2="83" y2="110" stroke="#1F2937" stroke-width="1.5" opacity="0.55"/>
-  <!-- Lift Pocket -->
-  <rect x="42" y="44" width="36" height="5" rx="2" fill="#1A202C"/>
-  
-        <!-- Organics Leaf Emblem -->
-        <g fill="#86EFAC" opacity="0.9">
-          <path d="M60 83 C52 83 48 91 48 99 C56 99 68 97 70 87 C70 83 66 83 60 83 Z"/>
-          <path d="M50 99 C56 93 62 89 70 87" stroke="#14532D" stroke-width="2" stroke-linecap="round"/>
-        </g>
-        
-  <!-- Collar Rim -->
-  <rect x="24" y="32" width="72" height="7" rx="2" fill="#1F2937"/>
-  <!-- Colored Hinged Lid -->
-  <path d="M 18 24 L 102 24 C 104 24 105 26 104 28 L 100 34 C 99 35 98 35 96 35 L 24 35 C 22 35 21 35 20 34 L 16 28 C 15 26 16 24 18 24 Z" fill="url(#lGrad_hub_grn)"/>
-  <path d="M 22 24 C 22 17 36 15 60 15 C 84 15 98 17 98 24 Z" fill="url(#lGrad_hub_grn)"/>
-  <rect x="44" y="13" width="32" height="4" rx="2" fill="#14532D"/>
-</svg>
+                  <defs>
+                    <linearGradient id="bGrad_hub_grn" x1="0%" y1="0%" x2="100%" y2="0%">
+                      <stop offset="0%" stop-color="#2D3748"/><stop offset="25%" stop-color="#3A475A"/><stop offset="75%" stop-color="#3A475A"/><stop offset="100%" stop-color="#1F2937"/>
+                    </linearGradient>
+                    <linearGradient id="lGrad_hub_grn" x1="0%" y1="0%" x2="100%" y2="0%">
+                      <stop offset="0%" stop-color="#4ADE80"/><stop offset="50%" stop-color="#16A34A"/><stop offset="100%" stop-color="#15803D"/>
+                    </linearGradient>
+                  </defs>
+                  <ellipse cx="60" cy="154" rx="46" ry="6" fill="#000" opacity="0.16"/>
+                  <circle cx="26" cy="142" r="13" fill="#1E293B"/><circle cx="26" cy="142" r="8" fill="#64748B"/><circle cx="26" cy="142" r="3" fill="#0F172A"/>
+                  <circle cx="94" cy="142" r="13" fill="#1E293B"/><circle cx="94" cy="142" r="8" fill="#64748B"/><circle cx="94" cy="142" r="3" fill="#0F172A"/>
+                  <rect x="26" y="140" width="68" height="4" fill="#334155"/>
+                  <path d="M 28 38 L 92 38 L 84 140 C 84 144 80 146 76 146 L 44 146 C 40 146 36 144 36 140 Z" fill="url(#bGrad_hub_grn)"/>
+                  <line x1="33" y1="54" x2="87" y2="54" stroke="#1F2937" stroke-width="1.5" opacity="0.55"/>
+                  <line x1="35" y1="80" x2="85" y2="80" stroke="#1F2937" stroke-width="1.5" opacity="0.55"/>
+                  <line x1="37" y1="110" x2="83" y2="110" stroke="#1F2937" stroke-width="1.5" opacity="0.55"/>
+                  <rect x="42" y="44" width="36" height="5" rx="2" fill="#1A202C"/>
+                  <g fill="#86EFAC" opacity="0.9">
+                    <path d="M60 83 C52 83 48 91 48 99 C56 99 68 97 70 87 C70 83 66 83 60 83 Z"/>
+                    <path d="M50 99 C56 93 62 89 70 87" stroke="#14532D" stroke-width="2" stroke-linecap="round"/>
+                  </g>
+                  <rect x="24" y="32" width="72" height="7" rx="2" fill="#1F2937"/>
+                  <path d="M 18 24 L 102 24 C 104 24 105 26 104 28 L 100 34 C 99 35 98 35 96 35 L 24 35 C 22 35 21 35 20 34 L 16 28 C 15 26 16 24 18 24 Z" fill="url(#lGrad_hub_grn)"/>
+                  <path d="M 22 24 C 22 17 36 15 60 15 C 84 15 98 17 98 24 Z" fill="url(#lGrad_hub_grn)"/>
+                  <rect x="44" y="13" width="32" height="4" rx="2" fill="#14532D"/>
+                </svg>
                 <strong class="rh-bin-name">Organics</strong>
                 <span class="rh-bin-pill pill-green">Green lid</span>
               </button>
@@ -1478,60 +1612,39 @@
               <!-- General Waste Card (Red) -->
               <button type="button" class="rh-bin-card-web bin-red-card" data-bin="general">
                 <svg class="hd-wheelie-bin" viewBox="0 0 120 160" aria-label="Red lid general waste bin" role="img">
-  <defs>
-    <linearGradient id="bGrad_hub_red" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#2D3748"/>
-      <stop offset="25%" stop-color="#3A475A"/>
-      <stop offset="75%" stop-color="#3A475A"/>
-      <stop offset="100%" stop-color="#1F2937"/>
-    </linearGradient>
-    <linearGradient id="lGrad_hub_red" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#F87171"/>
-      <stop offset="50%" stop-color="#DC2626"/>
-      <stop offset="100%" stop-color="#B91C1C"/>
-    </linearGradient>
-  </defs>
-  <!-- Floor Shadow -->
-  <ellipse cx="60" cy="154" rx="46" ry="6" fill="#000" opacity="0.16"/>
-  <!-- Left Wheel -->
-  <circle cx="26" cy="142" r="13" fill="#1E293B"/>
-  <circle cx="26" cy="142" r="8" fill="#64748B"/>
-  <circle cx="26" cy="142" r="3" fill="#0F172A"/>
-  <!-- Right Wheel -->
-  <circle cx="94" cy="142" r="13" fill="#1E293B"/>
-  <circle cx="94" cy="142" r="8" fill="#64748B"/>
-  <circle cx="94" cy="142" r="3" fill="#0F172A"/>
-  <!-- Axle -->
-  <rect x="26" y="140" width="68" height="4" fill="#334155"/>
-  <!-- Bin Body -->
-  <path d="M 28 38 L 92 38 L 84 140 C 84 144 80 146 76 146 L 44 146 C 40 146 36 144 36 140 Z" fill="url(#bGrad_hub_red)"/>
-  <!-- Realistic Moulding Ribs -->
-  <line x1="33" y1="54" x2="87" y2="54" stroke="#1F2937" stroke-width="1.5" opacity="0.55"/>
-  <line x1="35" y1="80" x2="85" y2="80" stroke="#1F2937" stroke-width="1.5" opacity="0.55"/>
-  <line x1="37" y1="110" x2="83" y2="110" stroke="#1F2937" stroke-width="1.5" opacity="0.55"/>
-  <!-- Lift Pocket -->
-  <rect x="42" y="44" width="36" height="5" rx="2" fill="#1A202C"/>
-  
-        <!-- General Waste Emblem -->
-        <g opacity="0.85">
-          <circle cx="60" cy="93" r="9" fill="none" stroke="#FCA5A5" stroke-width="2.5"/>
-          <line x1="53" y1="86" x2="67" y2="100" stroke="#FCA5A5" stroke-width="2.5" stroke-linecap="round"/>
-        </g>
-        
-  <!-- Collar Rim -->
-  <rect x="24" y="32" width="72" height="7" rx="2" fill="#1F2937"/>
-  <!-- Colored Hinged Lid -->
-  <path d="M 18 24 L 102 24 C 104 24 105 26 104 28 L 100 34 C 99 35 98 35 96 35 L 24 35 C 22 35 21 35 20 34 L 16 28 C 15 26 16 24 18 24 Z" fill="url(#lGrad_hub_red)"/>
-  <path d="M 22 24 C 22 17 36 15 60 15 C 84 15 98 17 98 24 Z" fill="url(#lGrad_hub_red)"/>
-  <rect x="44" y="13" width="32" height="4" rx="2" fill="#7F1D1D"/>
-</svg>
+                  <defs>
+                    <linearGradient id="bGrad_hub_red" x1="0%" y1="0%" x2="100%" y2="0%">
+                      <stop offset="0%" stop-color="#2D3748"/><stop offset="25%" stop-color="#3A475A"/><stop offset="75%" stop-color="#3A475A"/><stop offset="100%" stop-color="#1F2937"/>
+                    </linearGradient>
+                    <linearGradient id="lGrad_hub_red" x1="0%" y1="0%" x2="100%" y2="0%">
+                      <stop offset="0%" stop-color="#F87171"/><stop offset="50%" stop-color="#DC2626"/><stop offset="100%" stop-color="#B91C1C"/>
+                    </linearGradient>
+                  </defs>
+                  <ellipse cx="60" cy="154" rx="46" ry="6" fill="#000" opacity="0.16"/>
+                  <circle cx="26" cy="142" r="13" fill="#1E293B"/><circle cx="26" cy="142" r="8" fill="#64748B"/><circle cx="26" cy="142" r="3" fill="#0F172A"/>
+                  <circle cx="94" cy="142" r="13" fill="#1E293B"/><circle cx="94" cy="142" r="8" fill="#64748B"/><circle cx="94" cy="142" r="3" fill="#0F172A"/>
+                  <rect x="26" y="140" width="68" height="4" fill="#334155"/>
+                  <path d="M 28 38 L 92 38 L 84 140 C 84 144 80 146 76 146 L 44 146 C 40 146 36 144 36 140 Z" fill="url(#bGrad_hub_red)"/>
+                  <line x1="33" y1="54" x2="87" y2="54" stroke="#1F2937" stroke-width="1.5" opacity="0.55"/>
+                  <line x1="35" y1="80" x2="85" y2="80" stroke="#1F2937" stroke-width="1.5" opacity="0.55"/>
+                  <line x1="37" y1="110" x2="83" y2="110" stroke="#1F2937" stroke-width="1.5" opacity="0.55"/>
+                  <rect x="42" y="44" width="36" height="5" rx="2" fill="#1A202C"/>
+                  <g opacity="0.85">
+                    <circle cx="60" cy="93" r="9" fill="none" stroke="#FCA5A5" stroke-width="2.5"/>
+                    <line x1="53" y1="86" x2="67" y2="100" stroke="#FCA5A5" stroke-width="2.5" stroke-linecap="round"/>
+                  </g>
+                  <rect x="24" y="32" width="72" height="7" rx="2" fill="#1F2937"/>
+                  <path d="M 18 24 L 102 24 C 104 24 105 26 104 28 L 100 34 C 99 35 98 35 96 35 L 24 35 C 22 35 21 35 20 34 L 16 28 C 15 26 16 24 18 24 Z" fill="url(#lGrad_hub_red)"/>
+                  <path d="M 22 24 C 22 17 36 15 60 15 C 84 15 98 17 98 24 Z" fill="url(#lGrad_hub_red)"/>
+                  <rect x="44" y="13" width="32" height="4" rx="2" fill="#7F1D1D"/>
+                </svg>
                 <strong class="rh-bin-name">General waste</strong>
                 <span class="rh-bin-pill pill-red">Red lid</span>
               </button>
             </div>
           </section>
 
-          <!-- Common searches Chips -->
+          <!-- Common Searches Chips -->
           <section class="rh-section-block rh-common-searches">
             <div class="rh-section-header">
               <h2 class="rh-section-title">Common searches</h2>
@@ -1564,20 +1677,53 @@
             </div>
           </section>
 
-          <section class="rh-section-block rh-tips-section">
-            <h2 class="rh-section-title">A few useful tips</h2>
-            <details class="rh-tip">
-              <summary>Keep recyclables loose, clean and empty</summary>
-              <p>Empty containers, remove food residue and place items directly in the bin, not inside a bag.</p>
-            </details>
-            <details class="rh-tip">
-              <summary>Separate clean and greasy packaging</summary>
-              <p>For pizza boxes, the existing item guide says to separate clean cardboard from the food-soiled base.</p>
-            </details>
-            <details class="rh-tip">
-              <summary>Keep batteries out of household bins</summary>
-              <p>The item guide directs household batteries to a dedicated battery drop-off. Check local drop-off options before travelling.</p>
-            </details>
+          <!-- Learn with Short Videos Section -->
+          <section class="rh-section-block rh-videos-section">
+            <div class="rh-section-header">
+              <h2 class="rh-section-title">Learn with short videos</h2>
+              <button type="button" class="rh-link-action" id="rhSeeAllVideosBtn">See all &rarr;</button>
+            </div>
+            <div class="rh-videos-grid rh-videos-grid-3">
+              <!-- Video 1: Kids Academy -->
+              <div class="rh-video-card-web" data-video-id="kids-recycle">
+                <div class="rh-video-thumb-web" style="background-image: url('https://i.ytimg.com/vi/6jQ7y_qQYUA/hqdefault.jpg');">
+                  <div class="video-play-btn-circle">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="6 4 20 12 6 20 6 4"/></svg>
+                  </div>
+                  <span class="rh-video-duration-pill">3:45</span>
+                </div>
+                <div class="rh-video-meta-web">
+                  <strong>Recycling Plastic, Glass & Paper</strong>
+                  <span>Kids Academy · Master sorting rules</span>
+                </div>
+              </div>
+              <!-- Video 2: Beyond the Bin -->
+              <div class="rh-video-card-web" data-video-id="beyond-the-bin">
+                <div class="rh-video-thumb-web" style="background-image: url('https://i.ytimg.com/vi/jc8Cy1RbcW4/hqdefault.jpg');">
+                  <div class="video-play-btn-circle">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="6 4 20 12 6 20 6 4"/></svg>
+                  </div>
+                  <span class="rh-video-duration-pill">4:12</span>
+                </div>
+                <div class="rh-video-meta-web">
+                  <strong>Beyond the Bin: Where Recycling Goes</strong>
+                  <span>Follow the journey from kerbside collection</span>
+                </div>
+              </div>
+              <!-- Video 3: Let's Sort Trash -->
+              <div class="rh-video-card-web" data-video-id="sort-trash">
+                <div class="rh-video-thumb-web" style="background-image: url('https://i.ytimg.com/vi/AyF37F4AMZw/hqdefault.jpg');">
+                  <div class="video-play-btn-circle">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="6 4 20 12 6 20 6 4"/></svg>
+                  </div>
+                  <span class="rh-video-duration-pill">3:20</span>
+                </div>
+                <div class="rh-video-meta-web">
+                  <strong>Let's Sort Trash! Bin Sorting Guide</strong>
+                  <span>Which bin to choose for household waste</span>
+                </div>
+              </div>
+            </div>
           </section>
         </div>
 
@@ -1620,58 +1766,7 @@
 
               <!-- Target Bin Box -->
               <div class="target-bin-box-web" id="itemTargetBinBox">
-                <div class="tb-bin-graphic" id="itemTargetBinGraphic">
-                  <svg class="hd-wheelie-bin" viewBox="0 0 120 160" aria-label="Yellow lid recycling bin" role="img">
-  <defs>
-    <linearGradient id="bGrad_id_yel" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#2D3748"/>
-      <stop offset="25%" stop-color="#3A475A"/>
-      <stop offset="75%" stop-color="#3A475A"/>
-      <stop offset="100%" stop-color="#1F2937"/>
-    </linearGradient>
-    <linearGradient id="lGrad_id_yel" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#FDE047"/>
-      <stop offset="50%" stop-color="#EAB308"/>
-      <stop offset="100%" stop-color="#CA8A04"/>
-    </linearGradient>
-  </defs>
-  <!-- Floor Shadow -->
-  <ellipse cx="60" cy="154" rx="46" ry="6" fill="#000" opacity="0.16"/>
-  <!-- Left Wheel -->
-  <circle cx="26" cy="142" r="13" fill="#1E293B"/>
-  <circle cx="26" cy="142" r="8" fill="#64748B"/>
-  <circle cx="26" cy="142" r="3" fill="#0F172A"/>
-  <!-- Right Wheel -->
-  <circle cx="94" cy="142" r="13" fill="#1E293B"/>
-  <circle cx="94" cy="142" r="8" fill="#64748B"/>
-  <circle cx="94" cy="142" r="3" fill="#0F172A"/>
-  <!-- Axle -->
-  <rect x="26" y="140" width="68" height="4" fill="#334155"/>
-  <!-- Bin Body -->
-  <path d="M 28 38 L 92 38 L 84 140 C 84 144 80 146 76 146 L 44 146 C 40 146 36 144 36 140 Z" fill="url(#bGrad_id_yel)"/>
-  <!-- Realistic Moulding Ribs -->
-  <line x1="33" y1="54" x2="87" y2="54" stroke="#1F2937" stroke-width="1.5" opacity="0.55"/>
-  <line x1="35" y1="80" x2="85" y2="80" stroke="#1F2937" stroke-width="1.5" opacity="0.55"/>
-  <line x1="37" y1="110" x2="83" y2="110" stroke="#1F2937" stroke-width="1.5" opacity="0.55"/>
-  <!-- Lift Pocket -->
-  <rect x="42" y="44" width="36" height="5" rx="2" fill="#1A202C"/>
-  
-        <!-- Mobius Loop Recycling Emblem -->
-        <g fill="#E2E8F0" opacity="0.85">
-          <path d="M60 75 L66 85 H54 Z"/>
-          <path d="M50 97 L56 87 L46 87 Z"/>
-          <path d="M70 97 L75 87 L65 87 Z"/>
-          <circle cx="60" cy="93" r="8" fill="none" stroke="#E2E8F0" stroke-width="2.5" stroke-dasharray="8 4" opacity="0.9"/>
-        </g>
-        
-  <!-- Collar Rim -->
-  <rect x="24" y="32" width="72" height="7" rx="2" fill="#1F2937"/>
-  <!-- Colored Hinged Lid -->
-  <path d="M 18 24 L 102 24 C 104 24 105 26 104 28 L 100 34 C 99 35 98 35 96 35 L 24 35 C 22 35 21 35 20 34 L 16 28 C 15 26 16 24 18 24 Z" fill="url(#lGrad_id_yel)"/>
-  <path d="M 22 24 C 22 17 36 15 60 15 C 84 15 98 17 98 24 Z" fill="url(#lGrad_id_yel)"/>
-  <rect x="44" y="13" width="32" height="4" rx="2" fill="#A16207"/>
-</svg>
-                </div>
+                <div class="tb-bin-graphic" id="itemTargetBinGraphic"></div>
                 <div style="flex: 1;">
                   <span class="tb-tag" id="itemTargetBinTag" style="background: #FEF08A; color: #854D0E; padding: 4px 10px; border-radius: 9999px; font-size: 11.5px; font-weight: 800;">PUT IN</span>
                   <h3 id="itemTargetBinTitle" style="font-size: 1.25rem; font-weight: 800; color: #0A0D12; margin: 6px 0 4px;">Yellow-lid bin</h3>
@@ -1713,7 +1808,24 @@
                 </div>
               </div>
 
-              <!-- Similar Items Row -->
+              <!-- Watch a Short Guide Video Card (Screenshot 2) -->
+              <div class="rh-section-block">
+                <h3 class="rh-section-title" style="font-size: 1.15rem;">Watch a short guide</h3>
+                <div class="rh-video-card-web" id="itemDetailVideoCard" data-video-id="importance-of-recycling" style="max-width: 440px;">
+                  <div class="rh-video-thumb-web" style="background-image: url('https://i.ytimg.com/vi/xpAnLXc_bIU/hqdefault.jpg'); height: 140px;">
+                    <div class="video-play-btn-circle">
+                      <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="6 4 20 12 6 20 6 4"/></svg>
+                    </div>
+                    <span class="rh-video-duration-pill" id="itemDetailVideoDur">2:50</span>
+                  </div>
+                  <div class="rh-video-meta-web">
+                    <strong id="itemDetailVideoTitle">Importance of Recycling & Sorting Clean</strong>
+                    <span>Why clean recycling matters for our community</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Similar Items Row (Screenshot 2) -->
               <div class="rh-section-block">
                 <div class="rh-section-header">
                   <h3 class="rh-section-title">Similar items</h3>
@@ -1764,55 +1876,32 @@
               <!-- 1. Recycling Bin -->
               <button type="button" class="all-bin-card-web" data-bin="recycling">
                 <svg class="hd-wheelie-bin" viewBox="0 0 120 160" aria-label="Yellow lid recycling bin" role="img">
-  <defs>
-    <linearGradient id="bGrad_ab_yel" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#2D3748"/>
-      <stop offset="25%" stop-color="#3A475A"/>
-      <stop offset="75%" stop-color="#3A475A"/>
-      <stop offset="100%" stop-color="#1F2937"/>
-    </linearGradient>
-    <linearGradient id="lGrad_ab_yel" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#FDE047"/>
-      <stop offset="50%" stop-color="#EAB308"/>
-      <stop offset="100%" stop-color="#CA8A04"/>
-    </linearGradient>
-  </defs>
-  <!-- Floor Shadow -->
-  <ellipse cx="60" cy="154" rx="46" ry="6" fill="#000" opacity="0.16"/>
-  <!-- Left Wheel -->
-  <circle cx="26" cy="142" r="13" fill="#1E293B"/>
-  <circle cx="26" cy="142" r="8" fill="#64748B"/>
-  <circle cx="26" cy="142" r="3" fill="#0F172A"/>
-  <!-- Right Wheel -->
-  <circle cx="94" cy="142" r="13" fill="#1E293B"/>
-  <circle cx="94" cy="142" r="8" fill="#64748B"/>
-  <circle cx="94" cy="142" r="3" fill="#0F172A"/>
-  <!-- Axle -->
-  <rect x="26" y="140" width="68" height="4" fill="#334155"/>
-  <!-- Bin Body -->
-  <path d="M 28 38 L 92 38 L 84 140 C 84 144 80 146 76 146 L 44 146 C 40 146 36 144 36 140 Z" fill="url(#bGrad_ab_yel)"/>
-  <!-- Realistic Moulding Ribs -->
-  <line x1="33" y1="54" x2="87" y2="54" stroke="#1F2937" stroke-width="1.5" opacity="0.55"/>
-  <line x1="35" y1="80" x2="85" y2="80" stroke="#1F2937" stroke-width="1.5" opacity="0.55"/>
-  <line x1="37" y1="110" x2="83" y2="110" stroke="#1F2937" stroke-width="1.5" opacity="0.55"/>
-  <!-- Lift Pocket -->
-  <rect x="42" y="44" width="36" height="5" rx="2" fill="#1A202C"/>
-  
-        <!-- Mobius Loop Recycling Emblem -->
-        <g fill="#E2E8F0" opacity="0.85">
-          <path d="M60 75 L66 85 H54 Z"/>
-          <path d="M50 97 L56 87 L46 87 Z"/>
-          <path d="M70 97 L75 87 L65 87 Z"/>
-          <circle cx="60" cy="93" r="8" fill="none" stroke="#E2E8F0" stroke-width="2.5" stroke-dasharray="8 4" opacity="0.9"/>
-        </g>
-        
-  <!-- Collar Rim -->
-  <rect x="24" y="32" width="72" height="7" rx="2" fill="#1F2937"/>
-  <!-- Colored Hinged Lid -->
-  <path d="M 18 24 L 102 24 C 104 24 105 26 104 28 L 100 34 C 99 35 98 35 96 35 L 24 35 C 22 35 21 35 20 34 L 16 28 C 15 26 16 24 18 24 Z" fill="url(#lGrad_ab_yel)"/>
-  <path d="M 22 24 C 22 17 36 15 60 15 C 84 15 98 17 98 24 Z" fill="url(#lGrad_ab_yel)"/>
-  <rect x="44" y="13" width="32" height="4" rx="2" fill="#A16207"/>
-</svg>
+                  <defs>
+                    <linearGradient id="bGrad_ab_yel" x1="0%" y1="0%" x2="100%" y2="0%">
+                      <stop offset="0%" stop-color="#2D3748"/><stop offset="25%" stop-color="#3A475A"/><stop offset="75%" stop-color="#3A475A"/><stop offset="100%" stop-color="#1F2937"/>
+                    </linearGradient>
+                    <linearGradient id="lGrad_ab_yel" x1="0%" y1="0%" x2="100%" y2="0%">
+                      <stop offset="0%" stop-color="#FDE047"/><stop offset="50%" stop-color="#EAB308"/><stop offset="100%" stop-color="#CA8A04"/>
+                    </linearGradient>
+                  </defs>
+                  <ellipse cx="60" cy="154" rx="46" ry="6" fill="#000" opacity="0.16"/>
+                  <circle cx="26" cy="142" r="13" fill="#1E293B"/><circle cx="26" cy="142" r="8" fill="#64748B"/><circle cx="26" cy="142" r="3" fill="#0F172A"/>
+                  <circle cx="94" cy="142" r="13" fill="#1E293B"/><circle cx="94" cy="142" r="8" fill="#64748B"/><circle cx="94" cy="142" r="3" fill="#0F172A"/>
+                  <rect x="26" y="140" width="68" height="4" fill="#334155"/>
+                  <path d="M 28 38 L 92 38 L 84 140 C 84 144 80 146 76 146 L 44 146 C 40 146 36 144 36 140 Z" fill="url(#bGrad_ab_yel)"/>
+                  <line x1="33" y1="54" x2="87" y2="54" stroke="#1F2937" stroke-width="1.5" opacity="0.55"/>
+                  <line x1="35" y1="80" x2="85" y2="80" stroke="#1F2937" stroke-width="1.5" opacity="0.55"/>
+                  <line x1="37" y1="110" x2="83" y2="110" stroke="#1F2937" stroke-width="1.5" opacity="0.55"/>
+                  <rect x="42" y="44" width="36" height="5" rx="2" fill="#1A202C"/>
+                  <g fill="#E2E8F0" opacity="0.85">
+                    <path d="M60 75 L66 85 H54 Z"/><path d="M50 97 L56 87 L46 87 Z"/><path d="M70 97 L75 87 L65 87 Z"/>
+                    <circle cx="60" cy="93" r="8" fill="none" stroke="#E2E8F0" stroke-width="2.5" stroke-dasharray="8 4" opacity="0.9"/>
+                  </g>
+                  <rect x="24" y="32" width="72" height="7" rx="2" fill="#1F2937"/>
+                  <path d="M 18 24 L 102 24 C 104 24 105 26 104 28 L 100 34 C 99 35 98 35 96 35 L 24 35 C 22 35 21 35 20 34 L 16 28 C 15 26 16 24 18 24 Z" fill="url(#lGrad_ab_yel)"/>
+                  <path d="M 22 24 C 22 17 36 15 60 15 C 84 15 98 17 98 24 Z" fill="url(#lGrad_ab_yel)"/>
+                  <rect x="44" y="13" width="32" height="4" rx="2" fill="#A16207"/>
+                </svg>
                 <div style="flex: 1;">
                   <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
                     <h3 style="font-size: 1.25rem; font-weight: 800; color: #0A0D12; margin: 0;">Recycling bin</h3>
@@ -1826,53 +1915,32 @@
               <!-- 2. Organics Bin -->
               <button type="button" class="all-bin-card-web" data-bin="organics">
                 <svg class="hd-wheelie-bin" viewBox="0 0 120 160" aria-label="Green lid organics bin" role="img">
-  <defs>
-    <linearGradient id="bGrad_ab_grn" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#2D3748"/>
-      <stop offset="25%" stop-color="#3A475A"/>
-      <stop offset="75%" stop-color="#3A475A"/>
-      <stop offset="100%" stop-color="#1F2937"/>
-    </linearGradient>
-    <linearGradient id="lGrad_ab_grn" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#4ADE80"/>
-      <stop offset="50%" stop-color="#16A34A"/>
-      <stop offset="100%" stop-color="#15803D"/>
-    </linearGradient>
-  </defs>
-  <!-- Floor Shadow -->
-  <ellipse cx="60" cy="154" rx="46" ry="6" fill="#000" opacity="0.16"/>
-  <!-- Left Wheel -->
-  <circle cx="26" cy="142" r="13" fill="#1E293B"/>
-  <circle cx="26" cy="142" r="8" fill="#64748B"/>
-  <circle cx="26" cy="142" r="3" fill="#0F172A"/>
-  <!-- Right Wheel -->
-  <circle cx="94" cy="142" r="13" fill="#1E293B"/>
-  <circle cx="94" cy="142" r="8" fill="#64748B"/>
-  <circle cx="94" cy="142" r="3" fill="#0F172A"/>
-  <!-- Axle -->
-  <rect x="26" y="140" width="68" height="4" fill="#334155"/>
-  <!-- Bin Body -->
-  <path d="M 28 38 L 92 38 L 84 140 C 84 144 80 146 76 146 L 44 146 C 40 146 36 144 36 140 Z" fill="url(#bGrad_ab_grn)"/>
-  <!-- Realistic Moulding Ribs -->
-  <line x1="33" y1="54" x2="87" y2="54" stroke="#1F2937" stroke-width="1.5" opacity="0.55"/>
-  <line x1="35" y1="80" x2="85" y2="80" stroke="#1F2937" stroke-width="1.5" opacity="0.55"/>
-  <line x1="37" y1="110" x2="83" y2="110" stroke="#1F2937" stroke-width="1.5" opacity="0.55"/>
-  <!-- Lift Pocket -->
-  <rect x="42" y="44" width="36" height="5" rx="2" fill="#1A202C"/>
-  
-        <!-- Organics Leaf Emblem -->
-        <g fill="#86EFAC" opacity="0.9">
-          <path d="M60 83 C52 83 48 91 48 99 C56 99 68 97 70 87 C70 83 66 83 60 83 Z"/>
-          <path d="M50 99 C56 93 62 89 70 87" stroke="#14532D" stroke-width="2" stroke-linecap="round"/>
-        </g>
-        
-  <!-- Collar Rim -->
-  <rect x="24" y="32" width="72" height="7" rx="2" fill="#1F2937"/>
-  <!-- Colored Hinged Lid -->
-  <path d="M 18 24 L 102 24 C 104 24 105 26 104 28 L 100 34 C 99 35 98 35 96 35 L 24 35 C 22 35 21 35 20 34 L 16 28 C 15 26 16 24 18 24 Z" fill="url(#lGrad_ab_grn)"/>
-  <path d="M 22 24 C 22 17 36 15 60 15 C 84 15 98 17 98 24 Z" fill="url(#lGrad_ab_grn)"/>
-  <rect x="44" y="13" width="32" height="4" rx="2" fill="#14532D"/>
-</svg>
+                  <defs>
+                    <linearGradient id="bGrad_ab_grn" x1="0%" y1="0%" x2="100%" y2="0%">
+                      <stop offset="0%" stop-color="#2D3748"/><stop offset="25%" stop-color="#3A475A"/><stop offset="75%" stop-color="#3A475A"/><stop offset="100%" stop-color="#1F2937"/>
+                    </linearGradient>
+                    <linearGradient id="lGrad_ab_grn" x1="0%" y1="0%" x2="100%" y2="0%">
+                      <stop offset="0%" stop-color="#4ADE80"/><stop offset="50%" stop-color="#16A34A"/><stop offset="100%" stop-color="#15803D"/>
+                    </linearGradient>
+                  </defs>
+                  <ellipse cx="60" cy="154" rx="46" ry="6" fill="#000" opacity="0.16"/>
+                  <circle cx="26" cy="142" r="13" fill="#1E293B"/><circle cx="26" cy="142" r="8" fill="#64748B"/><circle cx="26" cy="142" r="3" fill="#0F172A"/>
+                  <circle cx="94" cy="142" r="13" fill="#1E293B"/><circle cx="94" cy="142" r="8" fill="#64748B"/><circle cx="94" cy="142" r="3" fill="#0F172A"/>
+                  <rect x="26" y="140" width="68" height="4" fill="#334155"/>
+                  <path d="M 28 38 L 92 38 L 84 140 C 84 144 80 146 76 146 L 44 146 C 40 146 36 144 36 140 Z" fill="url(#bGrad_ab_grn)"/>
+                  <line x1="33" y1="54" x2="87" y2="54" stroke="#1F2937" stroke-width="1.5" opacity="0.55"/>
+                  <line x1="35" y1="80" x2="85" y2="80" stroke="#1F2937" stroke-width="1.5" opacity="0.55"/>
+                  <line x1="37" y1="110" x2="83" y2="110" stroke="#1F2937" stroke-width="1.5" opacity="0.55"/>
+                  <rect x="42" y="44" width="36" height="5" rx="2" fill="#1A202C"/>
+                  <g fill="#86EFAC" opacity="0.9">
+                    <path d="M60 83 C52 83 48 91 48 99 C56 99 68 97 70 87 C70 83 66 83 60 83 Z"/>
+                    <path d="M50 99 C56 93 62 89 70 87" stroke="#14532D" stroke-width="2" stroke-linecap="round"/>
+                  </g>
+                  <rect x="24" y="32" width="72" height="7" rx="2" fill="#1F2937"/>
+                  <path d="M 18 24 L 102 24 C 104 24 105 26 104 28 L 100 34 C 99 35 98 35 96 35 L 24 35 C 22 35 21 35 20 34 L 16 28 C 15 26 16 24 18 24 Z" fill="url(#lGrad_ab_grn)"/>
+                  <path d="M 22 24 C 22 17 36 15 60 15 C 84 15 98 17 98 24 Z" fill="url(#lGrad_ab_grn)"/>
+                  <rect x="44" y="13" width="32" height="4" rx="2" fill="#14532D"/>
+                </svg>
                 <div style="flex: 1;">
                   <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
                     <h3 style="font-size: 1.25rem; font-weight: 800; color: #0A0D12; margin: 0;">Organics bin</h3>
@@ -1886,53 +1954,32 @@
               <!-- 3. General Waste Bin -->
               <button type="button" class="all-bin-card-web" data-bin="general">
                 <svg class="hd-wheelie-bin" viewBox="0 0 120 160" aria-label="Red lid general waste bin" role="img">
-  <defs>
-    <linearGradient id="bGrad_ab_red" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#2D3748"/>
-      <stop offset="25%" stop-color="#3A475A"/>
-      <stop offset="75%" stop-color="#3A475A"/>
-      <stop offset="100%" stop-color="#1F2937"/>
-    </linearGradient>
-    <linearGradient id="lGrad_ab_red" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#F87171"/>
-      <stop offset="50%" stop-color="#DC2626"/>
-      <stop offset="100%" stop-color="#B91C1C"/>
-    </linearGradient>
-  </defs>
-  <!-- Floor Shadow -->
-  <ellipse cx="60" cy="154" rx="46" ry="6" fill="#000" opacity="0.16"/>
-  <!-- Left Wheel -->
-  <circle cx="26" cy="142" r="13" fill="#1E293B"/>
-  <circle cx="26" cy="142" r="8" fill="#64748B"/>
-  <circle cx="26" cy="142" r="3" fill="#0F172A"/>
-  <!-- Right Wheel -->
-  <circle cx="94" cy="142" r="13" fill="#1E293B"/>
-  <circle cx="94" cy="142" r="8" fill="#64748B"/>
-  <circle cx="94" cy="142" r="3" fill="#0F172A"/>
-  <!-- Axle -->
-  <rect x="26" y="140" width="68" height="4" fill="#334155"/>
-  <!-- Bin Body -->
-  <path d="M 28 38 L 92 38 L 84 140 C 84 144 80 146 76 146 L 44 146 C 40 146 36 144 36 140 Z" fill="url(#bGrad_ab_red)"/>
-  <!-- Realistic Moulding Ribs -->
-  <line x1="33" y1="54" x2="87" y2="54" stroke="#1F2937" stroke-width="1.5" opacity="0.55"/>
-  <line x1="35" y1="80" x2="85" y2="80" stroke="#1F2937" stroke-width="1.5" opacity="0.55"/>
-  <line x1="37" y1="110" x2="83" y2="110" stroke="#1F2937" stroke-width="1.5" opacity="0.55"/>
-  <!-- Lift Pocket -->
-  <rect x="42" y="44" width="36" height="5" rx="2" fill="#1A202C"/>
-  
-        <!-- General Waste Emblem -->
-        <g opacity="0.85">
-          <circle cx="60" cy="93" r="9" fill="none" stroke="#FCA5A5" stroke-width="2.5"/>
-          <line x1="53" y1="86" x2="67" y2="100" stroke="#FCA5A5" stroke-width="2.5" stroke-linecap="round"/>
-        </g>
-        
-  <!-- Collar Rim -->
-  <rect x="24" y="32" width="72" height="7" rx="2" fill="#1F2937"/>
-  <!-- Colored Hinged Lid -->
-  <path d="M 18 24 L 102 24 C 104 24 105 26 104 28 L 100 34 C 99 35 98 35 96 35 L 24 35 C 22 35 21 35 20 34 L 16 28 C 15 26 16 24 18 24 Z" fill="url(#lGrad_ab_red)"/>
-  <path d="M 22 24 C 22 17 36 15 60 15 C 84 15 98 17 98 24 Z" fill="url(#lGrad_ab_red)"/>
-  <rect x="44" y="13" width="32" height="4" rx="2" fill="#7F1D1D"/>
-</svg>
+                  <defs>
+                    <linearGradient id="bGrad_ab_red" x1="0%" y1="0%" x2="100%" y2="0%">
+                      <stop offset="0%" stop-color="#2D3748"/><stop offset="25%" stop-color="#3A475A"/><stop offset="75%" stop-color="#3A475A"/><stop offset="100%" stop-color="#1F2937"/>
+                    </linearGradient>
+                    <linearGradient id="lGrad_ab_red" x1="0%" y1="0%" x2="100%" y2="0%">
+                      <stop offset="0%" stop-color="#F87171"/><stop offset="50%" stop-color="#DC2626"/><stop offset="100%" stop-color="#B91C1C"/>
+                    </linearGradient>
+                  </defs>
+                  <ellipse cx="60" cy="154" rx="46" ry="6" fill="#000" opacity="0.16"/>
+                  <circle cx="26" cy="142" r="13" fill="#1E293B"/><circle cx="26" cy="142" r="8" fill="#64748B"/><circle cx="26" cy="142" r="3" fill="#0F172A"/>
+                  <circle cx="94" cy="142" r="13" fill="#1E293B"/><circle cx="94" cy="142" r="8" fill="#64748B"/><circle cx="94" cy="142" r="3" fill="#0F172A"/>
+                  <rect x="26" y="140" width="68" height="4" fill="#334155"/>
+                  <path d="M 28 38 L 92 38 L 84 140 C 84 144 80 146 76 146 L 44 146 C 40 146 36 144 36 140 Z" fill="url(#bGrad_ab_red)"/>
+                  <line x1="33" y1="54" x2="87" y2="54" stroke="#1F2937" stroke-width="1.5" opacity="0.55"/>
+                  <line x1="35" y1="80" x2="85" y2="80" stroke="#1F2937" stroke-width="1.5" opacity="0.55"/>
+                  <line x1="37" y1="110" x2="83" y2="110" stroke="#1F2937" stroke-width="1.5" opacity="0.55"/>
+                  <rect x="42" y="44" width="36" height="5" rx="2" fill="#1A202C"/>
+                  <g opacity="0.85">
+                    <circle cx="60" cy="93" r="9" fill="none" stroke="#FCA5A5" stroke-width="2.5"/>
+                    <line x1="53" y1="86" x2="67" y2="100" stroke="#FCA5A5" stroke-width="2.5" stroke-linecap="round"/>
+                  </g>
+                  <rect x="24" y="32" width="72" height="7" rx="2" fill="#1F2937"/>
+                  <path d="M 18 24 L 102 24 C 104 24 105 26 104 28 L 100 34 C 99 35 98 35 96 35 L 24 35 C 22 35 21 35 20 34 L 16 28 C 15 26 16 24 18 24 Z" fill="url(#lGrad_ab_red)"/>
+                  <path d="M 22 24 C 22 17 36 15 60 15 C 84 15 98 17 98 24 Z" fill="url(#lGrad_ab_red)"/>
+                  <rect x="44" y="13" width="32" height="4" rx="2" fill="#7F1D1D"/>
+                </svg>
                 <div style="flex: 1;">
                   <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
                     <h3 style="font-size: 1.25rem; font-weight: 800; color: #0A0D12; margin: 0;">General waste bin</h3>
@@ -1946,53 +1993,32 @@
               <!-- 4. Drop-off & Special Items -->
               <button type="button" class="all-bin-card-web" data-bin="dropoff">
                 <svg class="hd-wheelie-bin" viewBox="0 0 120 160" aria-label="Drop-off special items bin" role="img">
-  <defs>
-    <linearGradient id="bGrad_ab_gry" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#2D3748"/>
-      <stop offset="25%" stop-color="#3A475A"/>
-      <stop offset="75%" stop-color="#3A475A"/>
-      <stop offset="100%" stop-color="#1F2937"/>
-    </linearGradient>
-    <linearGradient id="lGrad_ab_gry" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#94A3B8"/>
-      <stop offset="50%" stop-color="#475569"/>
-      <stop offset="100%" stop-color="#334155"/>
-    </linearGradient>
-  </defs>
-  <!-- Floor Shadow -->
-  <ellipse cx="60" cy="154" rx="46" ry="6" fill="#000" opacity="0.16"/>
-  <!-- Left Wheel -->
-  <circle cx="26" cy="142" r="13" fill="#1E293B"/>
-  <circle cx="26" cy="142" r="8" fill="#64748B"/>
-  <circle cx="26" cy="142" r="3" fill="#0F172A"/>
-  <!-- Right Wheel -->
-  <circle cx="94" cy="142" r="13" fill="#1E293B"/>
-  <circle cx="94" cy="142" r="8" fill="#64748B"/>
-  <circle cx="94" cy="142" r="3" fill="#0F172A"/>
-  <!-- Axle -->
-  <rect x="26" y="140" width="68" height="4" fill="#334155"/>
-  <!-- Bin Body -->
-  <path d="M 28 38 L 92 38 L 84 140 C 84 144 80 146 76 146 L 44 146 C 40 146 36 144 36 140 Z" fill="url(#bGrad_ab_gry)"/>
-  <!-- Realistic Moulding Ribs -->
-  <line x1="33" y1="54" x2="87" y2="54" stroke="#1F2937" stroke-width="1.5" opacity="0.55"/>
-  <line x1="35" y1="80" x2="85" y2="80" stroke="#1F2937" stroke-width="1.5" opacity="0.55"/>
-  <line x1="37" y1="110" x2="83" y2="110" stroke="#1F2937" stroke-width="1.5" opacity="0.55"/>
-  <!-- Lift Pocket -->
-  <rect x="42" y="44" width="36" height="5" rx="2" fill="#1A202C"/>
-  
-        <!-- Local Drop-off Pin Emblem -->
-        <g>
-          <path d="M60 81 C55 81 51 85 51 90 C51 96 60 104 60 104 C60 104 69 96 69 90 C69 85 65 81 60 81 Z" fill="#60A5FA"/>
-          <circle cx="60" cy="89" r="2.8" fill="#1E3A8A"/>
-        </g>
-        
-  <!-- Collar Rim -->
-  <rect x="24" y="32" width="72" height="7" rx="2" fill="#1F2937"/>
-  <!-- Colored Hinged Lid -->
-  <path d="M 18 24 L 102 24 C 104 24 105 26 104 28 L 100 34 C 99 35 98 35 96 35 L 24 35 C 22 35 21 35 20 34 L 16 28 C 15 26 16 24 18 24 Z" fill="url(#lGrad_ab_gry)"/>
-  <path d="M 22 24 C 22 17 36 15 60 15 C 84 15 98 17 98 24 Z" fill="url(#lGrad_ab_gry)"/>
-  <rect x="44" y="13" width="32" height="4" rx="2" fill="#1E293B"/>
-</svg>
+                  <defs>
+                    <linearGradient id="bGrad_ab_gry" x1="0%" y1="0%" x2="100%" y2="0%">
+                      <stop offset="0%" stop-color="#2D3748"/><stop offset="25%" stop-color="#3A475A"/><stop offset="75%" stop-color="#3A475A"/><stop offset="100%" stop-color="#1F2937"/>
+                    </linearGradient>
+                    <linearGradient id="lGrad_ab_gry" x1="0%" y1="0%" x2="100%" y2="0%">
+                      <stop offset="0%" stop-color="#94A3B8"/><stop offset="50%" stop-color="#475569"/><stop offset="100%" stop-color="#334155"/>
+                    </linearGradient>
+                  </defs>
+                  <ellipse cx="60" cy="154" rx="46" ry="6" fill="#000" opacity="0.16"/>
+                  <circle cx="26" cy="142" r="13" fill="#1E293B"/><circle cx="26" cy="142" r="8" fill="#64748B"/><circle cx="26" cy="142" r="3" fill="#0F172A"/>
+                  <circle cx="94" cy="142" r="13" fill="#1E293B"/><circle cx="94" cy="142" r="8" fill="#64748B"/><circle cx="94" cy="142" r="3" fill="#0F172A"/>
+                  <rect x="26" y="140" width="68" height="4" fill="#334155"/>
+                  <path d="M 28 38 L 92 38 L 84 140 C 84 144 80 146 76 146 L 44 146 C 40 146 36 144 36 140 Z" fill="url(#bGrad_ab_gry)"/>
+                  <line x1="33" y1="54" x2="87" y2="54" stroke="#1F2937" stroke-width="1.5" opacity="0.55"/>
+                  <line x1="35" y1="80" x2="85" y2="80" stroke="#1F2937" stroke-width="1.5" opacity="0.55"/>
+                  <line x1="37" y1="110" x2="83" y2="110" stroke="#1F2937" stroke-width="1.5" opacity="0.55"/>
+                  <rect x="42" y="44" width="36" height="5" rx="2" fill="#1A202C"/>
+                  <g>
+                    <path d="M60 81 C55 81 51 85 51 90 C51 96 60 104 60 104 C60 104 69 96 69 90 C69 85 65 81 60 81 Z" fill="#60A5FA"/>
+                    <circle cx="60" cy="89" r="2.8" fill="#1E3A8A"/>
+                  </g>
+                  <rect x="24" y="32" width="72" height="7" rx="2" fill="#1F2937"/>
+                  <path d="M 18 24 L 102 24 C 104 24 105 26 104 28 L 100 34 C 99 35 98 35 96 35 L 24 35 C 22 35 21 35 20 34 L 16 28 C 15 26 16 24 18 24 Z" fill="url(#lGrad_ab_gry)"/>
+                  <path d="M 22 24 C 22 17 36 15 60 15 C 84 15 98 17 98 24 Z" fill="url(#lGrad_ab_gry)"/>
+                  <rect x="44" y="13" width="32" height="4" rx="2" fill="#1E293B"/>
+                </svg>
                 <div style="flex: 1;">
                   <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
                     <h3 style="font-size: 1.25rem; font-weight: 800; color: #0A0D12; margin: 0;">Drop-off &amp; special items</h3>
@@ -2010,8 +2036,8 @@
                 <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/>
               </svg>
               <div>
-                <strong style="display: block; color: #1E3A8A; font-size: 14px; font-weight: 700;">Rules vary by council area</strong>
-                <span style="font-size: 13px; color: #1E40AF;">These guidelines match your council's waste contract. Check specific items before disposal.</span>
+                <strong style="display: block; color: #1E3A8A; font-size: 14px; font-weight: 700;">Rules vary by council</strong>
+                <span style="font-size: 13px; color: #1E40AF;">These guidelines match your council contract. Check individual items for more details.</span>
               </div>
             </div>
           </main>
@@ -2036,64 +2062,13 @@
             <!-- Left Column: Bin Hero Graphic, Collection Day, Blue Tip -->
             <div class="bd-left-col">
               <div class="bd-hero-card-web">
-                <div id="bdHeroGraphic">
-                  <svg class="hd-wheelie-bin" viewBox="0 0 120 160" aria-label="Yellow lid recycling bin" role="img">
-  <defs>
-    <linearGradient id="bGrad_bd_yel" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#2D3748"/>
-      <stop offset="25%" stop-color="#3A475A"/>
-      <stop offset="75%" stop-color="#3A475A"/>
-      <stop offset="100%" stop-color="#1F2937"/>
-    </linearGradient>
-    <linearGradient id="lGrad_bd_yel" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#FDE047"/>
-      <stop offset="50%" stop-color="#EAB308"/>
-      <stop offset="100%" stop-color="#CA8A04"/>
-    </linearGradient>
-  </defs>
-  <!-- Floor Shadow -->
-  <ellipse cx="60" cy="154" rx="46" ry="6" fill="#000" opacity="0.16"/>
-  <!-- Left Wheel -->
-  <circle cx="26" cy="142" r="13" fill="#1E293B"/>
-  <circle cx="26" cy="142" r="8" fill="#64748B"/>
-  <circle cx="26" cy="142" r="3" fill="#0F172A"/>
-  <!-- Right Wheel -->
-  <circle cx="94" cy="142" r="13" fill="#1E293B"/>
-  <circle cx="94" cy="142" r="8" fill="#64748B"/>
-  <circle cx="94" cy="142" r="3" fill="#0F172A"/>
-  <!-- Axle -->
-  <rect x="26" y="140" width="68" height="4" fill="#334155"/>
-  <!-- Bin Body -->
-  <path d="M 28 38 L 92 38 L 84 140 C 84 144 80 146 76 146 L 44 146 C 40 146 36 144 36 140 Z" fill="url(#bGrad_bd_yel)"/>
-  <!-- Realistic Moulding Ribs -->
-  <line x1="33" y1="54" x2="87" y2="54" stroke="#1F2937" stroke-width="1.5" opacity="0.55"/>
-  <line x1="35" y1="80" x2="85" y2="80" stroke="#1F2937" stroke-width="1.5" opacity="0.55"/>
-  <line x1="37" y1="110" x2="83" y2="110" stroke="#1F2937" stroke-width="1.5" opacity="0.55"/>
-  <!-- Lift Pocket -->
-  <rect x="42" y="44" width="36" height="5" rx="2" fill="#1A202C"/>
-  
-        <!-- Mobius Loop Recycling Emblem -->
-        <g fill="#E2E8F0" opacity="0.85">
-          <path d="M60 75 L66 85 H54 Z"/>
-          <path d="M50 97 L56 87 L46 87 Z"/>
-          <path d="M70 97 L75 87 L65 87 Z"/>
-          <circle cx="60" cy="93" r="8" fill="none" stroke="#E2E8F0" stroke-width="2.5" stroke-dasharray="8 4" opacity="0.9"/>
-        </g>
-        
-  <!-- Collar Rim -->
-  <rect x="24" y="32" width="72" height="7" rx="2" fill="#1F2937"/>
-  <!-- Colored Hinged Lid -->
-  <path d="M 18 24 L 102 24 C 104 24 105 26 104 28 L 100 34 C 99 35 98 35 96 35 L 24 35 C 22 35 21 35 20 34 L 16 28 C 15 26 16 24 18 24 Z" fill="url(#lGrad_bd_yel)"/>
-  <path d="M 22 24 C 22 17 36 15 60 15 C 84 15 98 17 98 24 Z" fill="url(#lGrad_bd_yel)"/>
-  <rect x="44" y="13" width="32" height="4" rx="2" fill="#A16207"/>
-</svg>
-                </div>
+                <div id="bdHeroGraphic"></div>
                 <h1 id="bdHeroTitle">Recycling bin</h1>
                 <span class="rh-bin-pill pill-yellow" id="bdHeroTag">Yellow lid</span>
                 <p id="bdHeroDesc">Clean and empty recyclable packaging, paper, glass, metals and more.</p>
               </div>
 
-              <!-- Collection Day Card -->
+              <!-- Collection Day Card (Screenshot 2: Links to Schedule) -->
               <div class="collection-day-card" id="bdCollectionDayCard" style="background: #FFFFFF; border: 1px solid var(--border); border-radius: 16px; padding: 18px 20px; display: flex; align-items: center; gap: 16px; cursor: pointer;">
                 <div class="cdc-icon" style="width: 44px; height: 44px; border-radius: 10px; background: #FEF08A; display: flex; align-items: center; justify-content: center; color: #854D0E;">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 22px; height: 22px;">
@@ -2127,43 +2102,7 @@
                   <button type="button" class="rh-link-action" id="bdViewAllWhatGoesInBtn">View full list &rarr;</button>
                 </div>
                 <div class="what-goes-grid-web" id="bdWhatGoesInGrid">
-                  <!-- 6 items -->
-                  <button type="button" class="wg-tile-web" data-item="plastic-bottle">
-                    <div class="wg-tile-icon">
-                      <svg viewBox="0 0 36 36" fill="none"><path d="M14 6h8v4h-8z" fill="#3B82F6"/><path d="M12 11h12l1 18H11z" fill="#93C5FD"/></svg>
-                    </div>
-                    <span>Plastic packaging</span>
-                  </button>
-                  <button type="button" class="wg-tile-web" data-item="paper-cardboard">
-                    <div class="wg-tile-icon">
-                      <svg viewBox="0 0 36 36" fill="none"><path d="M8 12h20v14H8z" fill="#FDE047"/><path d="M6 16h24v12H6z" fill="#FACC15"/></svg>
-                    </div>
-                    <span>Paper &amp; cardboard</span>
-                  </button>
-                  <button type="button" class="wg-tile-web" data-item="glass-bottles">
-                    <div class="wg-tile-icon">
-                      <svg viewBox="0 0 36 36" fill="none"><path d="M15 6h6v5h-6z" fill="#15803D"/><path d="M12 12h12l1 18H11z" fill="#86EFAC"/></svg>
-                    </div>
-                    <span>Glass bottles &amp; jars</span>
-                  </button>
-                  <button type="button" class="wg-tile-web" data-item="aluminium-cans">
-                    <div class="wg-tile-icon">
-                      <svg viewBox="0 0 36 36" fill="none"><rect x="11" y="8" width="14" height="20" rx="3" fill="#94A3B8"/></svg>
-                    </div>
-                    <span>Metal cans &amp; tins</span>
-                  </button>
-                  <button type="button" class="wg-tile-web" data-item="cartons">
-                    <div class="wg-tile-icon">
-                      <svg viewBox="0 0 36 36" fill="none"><path d="M10 12l8-5 8 5v17H10z" fill="#E2E8F0"/></svg>
-                    </div>
-                    <span>Cartons</span>
-                  </button>
-                  <button type="button" class="wg-tile-web" data-item="clean-foil">
-                    <div class="wg-tile-icon">
-                      <svg viewBox="0 0 36 36" fill="none"><rect x="8" y="14" width="20" height="12" rx="2" fill="#CBD5E1"/></svg>
-                    </div>
-                    <span>Clean aluminium trays</span>
-                  </button>
+                  <!-- items populated via JS -->
                 </div>
               </section>
 
@@ -2190,6 +2129,13 @@
                     <span>Nappies</span>
                   </div>
                 </div>
+              </section>
+
+              <section class="rh-section-block">
+                <div class="rh-section-header">
+                  <h3 class="rh-section-title">Watch a short guide</h3>
+                </div>
+                <div id="bdVideoSlot"></div>
               </section>
             </div>
           </main>
@@ -2226,7 +2172,7 @@
         </div>
 
         <!-- ======================================================= -->
-        <!-- SUBVIEW 6: LEARN (Educational Hub)                      -->
+        <!-- SUBVIEW 6: LEARN (Educational Hub - Screenshot 3)       -->
         <!-- ======================================================= -->
         <div class="recycle-subview" id="viewLearn" style="display: none;">
           <header class="recycle-subview-nav">
@@ -2235,28 +2181,28 @@
               <span>Back to Recycle Hub</span>
             </button>
             <span class="subview-header-title">Learn</span>
-            <span aria-hidden="true" style="width: 40px;">
-              <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" /></svg>
+            <span aria-hidden="true" style="width: 40px; display: flex; justify-content: flex-end; color: #4B5563;">
+              <svg viewBox="0 0 20 20" fill="currentColor" style="width: 20px; height: 20px;"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" /></svg>
             </span>
           </header>
 
           <main style="display: flex; flex-direction: column; gap: 28px;">
             <div class="rh-hero-header">
               <h1 class="rh-hero-title">Learn</h1>
-              <p class="rh-hero-subtitle">Discover how to recycle better, reduce household waste, and preserve resources.</p>
+              <p class="rh-hero-subtitle">Discover how to recycle better and reduce waste.</p>
             </div>
 
-            <!-- Hero Learning Banner -->
+            <!-- Hero Learning Banner (Screenshot 3) -->
             <div class="learn-hero-banner" style="background: linear-gradient(135deg, #15803D 0%, #166534 100%); border-radius: 18px; padding: 32px 28px; color: #FFFFFF; display: flex; flex-direction: column; align-items: flex-start; gap: 12px; box-shadow: 0 10px 25px -5px rgba(21, 128, 61, 0.3);">
               <span class="lh-tag" style="background: rgba(255, 255, 255, 0.2); font-size: 11px; font-weight: 800; letter-spacing: 0.08em; padding: 4px 10px; border-radius: 9999px;">&#9654; START HERE</span>
               <h2 style="font-size: 1.75rem; font-weight: 800; margin: 0; letter-spacing: -0.02em;">Recycling made simple</h2>
-              <p style="font-size: 15px; color: #DCFCE7; max-width: 600px; margin: 0; line-height: 1.5;">A beginner-friendly interactive curriculum covering kerbside essentials, council rules, and clean sorting.</p>
+              <p style="font-size: 15px; color: #DCFCE7; max-width: 600px; margin: 0; line-height: 1.5;">A beginner-friendly series covering kerbside essentials, council rules, and clean sorting.</p>
               <button type="button" class="btn-learn-start" id="learnStartBtn" style="margin-top: 8px; background: #FFFFFF; color: #15803D; border: none; font-weight: 700; padding: 12px 22px; border-radius: 10px; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; font-family: inherit;">
-                <span>Browse bin guidance &rarr;</span>
+                <span>Start learning &rarr;</span>
               </button>
             </div>
 
-            <!-- Browse Topics 4-Grid -->
+            <!-- Browse Topics 4-Grid (Screenshot 3) -->
             <section class="rh-section-block">
               <h3 class="rh-section-title">Browse topics</h3>
               <div class="learn-topics-grid-web">
@@ -2265,7 +2211,7 @@
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
                   </div>
                   <strong>Recycling basics</strong>
-                  <span>Bins, materials and common mistakes</span>
+                  <span>Bins, materials and common mistakes &rsaquo;</span>
                 </button>
 
                 <button type="button" class="topic-box-web" data-topic="materials">
@@ -2273,7 +2219,7 @@
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
                   </div>
                   <strong>Materials explained</strong>
-                  <span>Plastic, glass, paper and metals</span>
+                  <span>Plastic, glass, paper and metals &rsaquo;</span>
                 </button>
 
                 <button type="button" class="topic-box-web" data-topic="tricky">
@@ -2281,7 +2227,7 @@
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="15" rx="2" ry="2"></rect><polyline points="17 2 12 7 7 2"></polyline></svg>
                   </div>
                   <strong>Tricky items</strong>
-                  <span>Batteries, electronics and hazardous waste</span>
+                  <span>Batteries, electronics and special waste &rsaquo;</span>
                 </button>
 
                 <button type="button" class="topic-box-web" data-topic="reduce">
@@ -2289,24 +2235,118 @@
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm1 14.5v-9l6 4.5-6 4.5z"/></svg>
                   </div>
                   <strong>Reduce waste</strong>
-                  <span>Composting, reuse and sustainable habits</span>
+                  <span>Composting, reuse and sustainable living &rsaquo;</span>
                 </button>
               </div>
             </section>
 
-            <section class="rh-section-block rh-tips-section">
-              <h3 class="rh-section-title">Useful tips</h3>
-              <details class="rh-tip">
-                <summary>Keep recyclables loose, clean and empty</summary>
-                <p>Empty containers, remove food residue and place items directly in the bin, not inside a bag.</p>
-              </details>
-              <details class="rh-tip">
-                <summary>Check local composting rules</summary>
-                <p>Food scraps, garden waste and accepted caddy liners vary by council. Check your collection service before adding them to organics.</p>
-              </details>
+            <!-- Featured Videos (Screenshot 3) -->
+            <section class="rh-section-block">
+              <div class="rh-section-header">
+                <h3 class="rh-section-title">Featured videos</h3>
+                <button type="button" class="rh-link-action" id="learnSeeAllFeaturedBtn">See all &rarr;</button>
+              </div>
+              <div class="rh-videos-grid rh-videos-grid-3">
+                <div class="rh-video-card-web" data-video-id="recycling-center">
+                  <div class="rh-video-thumb-web" style="background-image: url('https://i.ytimg.com/vi/-0ijMPvIy-U/hqdefault.jpg');">
+                    <div class="video-play-btn-circle">
+                      <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="6 4 20 12 6 20 6 4"/></svg>
+                    </div>
+                    <span class="rh-video-duration-pill">4:40</span>
+                  </div>
+                  <div class="rh-video-meta-web">
+                    <strong>Touring a Materials Recovery Facility</strong>
+                    <span>Sesame Street: Optical sorting and baling</span>
+                  </div>
+                </div>
+                <div class="rh-video-card-web" data-video-id="curious-george">
+                  <div class="rh-video-thumb-web" style="background-image: url('https://i.ytimg.com/vi/pXQBk-LaTb8/hqdefault.jpg');">
+                    <div class="video-play-btn-circle">
+                      <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="6 4 20 12 6 20 6 4"/></svg>
+                    </div>
+                    <span class="rh-video-duration-pill">3:30</span>
+                  </div>
+                  <div class="rh-video-meta-web">
+                    <strong>Curious George: Reuse and Recycle</strong>
+                    <span>Everyday habits to reduce single-use waste</span>
+                  </div>
+                </div>
+                <div class="rh-video-card-web" data-video-id="garbage-trucks">
+                  <div class="rh-video-thumb-web" style="background-image: url('https://i.ytimg.com/vi/n5BpGyXTArw/hqdefault.jpg');">
+                    <div class="video-play-btn-circle">
+                      <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="6 4 20 12 6 20 6 4"/></svg>
+                    </div>
+                    <span class="rh-video-duration-pill">5:05</span>
+                  </div>
+                  <div class="rh-video-meta-web">
+                    <strong>Waste Recycling and Disposal Trucks</strong>
+                    <span>A day at work: kerbside collection in action</span>
+                  </div>
+                </div>
+              </div>
             </section>
           </main>
         </div>
+
+        <!-- ======================================================= -->
+        <!-- CAMERA SCANNER MODAL (Interactive Photo Disposal AI)    -->
+        <!-- ======================================================= -->
+        <div class="app-modal-overlay" id="recycleScannerModal" style="display: none;">
+          <div class="modal-content-card">
+            <div class="modal-header-bar">
+              <h3>Scan an item</h3>
+              <button type="button" class="modal-close-icon-btn" id="closeScannerModalBtn" aria-label="Close scanner">&times;</button>
+            </div>
+            <div class="scanner-camera-viewport">
+              <div class="scanner-reticle-box">
+                <div class="scanner-laser-line"></div>
+              </div>
+              <div class="scanner-detected-badge" id="scannerDetectionBadge">
+                <span class="dot"></span>
+                <span id="scannerStatusLabel">Point camera at packaging...</span>
+              </div>
+            </div>
+            <div class="modal-body-pad">
+              <p style="font-size: 13px; color: #4B5563; margin: 0; line-height: 1.4;">
+                Take a quick photo or test our computer vision detection with sample items:
+              </p>
+              <div class="scanner-sim-buttons">
+                <button type="button" class="btn-sim-chip" id="testScanBottleBtn">Plastic Bottle</button>
+                <button type="button" class="btn-sim-chip" id="testScanPizzaBtn">Pizza Box</button>
+                <button type="button" class="btn-sim-chip" id="testScanCoffeeBtn">Coffee Cup</button>
+                <button type="button" class="btn-sim-chip" id="testScanBatteryBtn">Batteries</button>
+                <button type="button" class="btn-sim-chip" id="testScanCartonBtn">Milk Carton</button>
+                <button type="button" class="btn-sim-chip" id="testScanNappiesBtn">Nappies</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ======================================================= -->
+        <!-- VIDEO PLAYER MODAL (Interactive Short Guides)          -->
+        <!-- ======================================================= -->
+        <!-- VIDEO PLAYER MODAL (Interactive YouTube Player)         -->
+        <!-- ======================================================= -->
+        <div class="app-modal-overlay" id="recycleVideoModal" style="display: none;">
+          <div class="modal-content-card video-player-modal-card">
+            <div class="modal-header-bar">
+              <h3 id="videoModalTitle">EcoTrack Video Guide</h3>
+              <button type="button" class="modal-close-icon-btn" id="closeVideoModalBtn" aria-label="Close video">&times;</button>
+            </div>
+            <div class="video-iframe-responsive-container">
+              <iframe id="videoModalIframe" src="" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            </div>
+            <div class="modal-body-pad">
+              <h4 id="videoModalHeading" style="font-size: 16px; font-weight: 800; color: #111827; margin: 0;"></h4>
+              <p id="videoModalSummary" style="font-size: 13.5px; color: #4B5563; margin: 0; line-height: 1.5;"></p>
+              <button type="button" class="btn-green" id="videoModalGotItBtn" style="padding: 10px 20px; border-radius: 9px; font-weight: 700; font-size: 14px; margin-top: 6px; cursor: pointer; border: none; background: var(--primary-green); color: #fff;">Close video &rarr;</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ======================================================= -->
+        <!-- RESIDENT ACCOUNT PROFILE MODAL                          -->
+        <!-- ======================================================= -->
 
         <!-- Mobile Bottom Tab Bar (shown only on mobile screens via CSS media query) -->
         <nav class="bottom-tab-bar" aria-label="Mobile Navigation">
@@ -2336,6 +2376,6 @@
     </div>
   </section>
 
-  <script src="script.js?v=recycle-guide-3"></script>
+  <script src="script.js?v=premium-upgrade-1"></script>
 </body>
 </html>

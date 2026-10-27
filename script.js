@@ -11,66 +11,243 @@ const screens = {
   reminders: document.getElementById("screenReminders"),
   home: document.getElementById("screenHome"),
   schedule: document.getElementById("screenSchedule"),
-  recycle: document.getElementById("screenRecycle")
+  recycle: document.getElementById("screenRecycle"),
+  account: document.getElementById("screenAccount")
 };
 
+// Gated screens need onboarding (address -> bins -> reminders) first.
+const gatedScreens = ["home", "schedule", "recycle", "account"];
+const isOnboarded = () => localStorage.getItem("ecotrack_onboarded") === "1";
+
 function showScreen(screenKey) {
+  if (gatedScreens.includes(screenKey) && !isOnboarded()) screenKey = "address";
   Object.keys(screens).forEach(key => {
     if (screens[key]) {
       screens[key].style.display = key === screenKey ? "block" : "none";
     }
   });
   window.scrollTo({ top: 0, behavior: "smooth" });
+  updateNav();
 }
+
+// One shared top nav (data-nav) on Home, Schedule and Recycle
+function currentNavKey() {
+  if (screens.home.style.display === "block") return "home";
+  if (screens.schedule.style.display === "block") return "schedule";
+  if (screens.account.style.display === "block") return null;
+  if (screens.recycle.style.display !== "block") return null;
+  return "recycle";
+}
+
+function updateNav() {
+  const key = currentNavKey();
+  document.querySelectorAll("[data-nav]").forEach(b => b.classList.toggle("active", b.dataset.nav === key));
+}
+
+document.addEventListener("click", e => {
+  const b = e.target.closest("[data-nav]");
+  if (!b) return;
+  const k = b.dataset.nav;
+  if (k === "home") showScreen("home");
+  else if (k === "schedule") showScreen("schedule");
+  else {
+    showScreen("recycle");
+    switchRecycleSubview("viewRecycleHub");
+  }
+});
 
 // ==========================================================
 // SCREEN 01: Welcome -> 02 Address
 // ==========================================================
 const welcomeStartBtn = document.getElementById("welcomeStartBtn");
 if (welcomeStartBtn) {
-  welcomeStartBtn.addEventListener("click", () => showScreen("address"));
+  welcomeStartBtn.addEventListener("click", () => {
+    window.location.hash = "recycle";
+    showScreen("recycle");
+  });
+}
+
+const navRecycleLink = document.getElementById("navRecycleLink");
+if (navRecycleLink) {
+  navRecycleLink.addEventListener("click", (e) => {
+    e.preventDefault();
+    window.location.hash = "recycle";
+    showScreen("recycle");
+  });
 }
 
 const navResidentPortalBtn = document.getElementById("navResidentPortalBtn");
 if (navResidentPortalBtn) {
-  navResidentPortalBtn.addEventListener("click", () => showScreen("home"));
+  navResidentPortalBtn.addEventListener("click", () => {
+    window.location.hash = "dashboard";
+    showScreen("home");
+  });
+}
+
+const navDashboardLink = document.getElementById("navDashboardLink");
+if (navDashboardLink) {
+  navDashboardLink.addEventListener("click", (e) => {
+    e.preventDefault();
+    window.location.hash = "dashboard";
+    showScreen("home");
+  });
 }
 
 const navCheckScheduleBtn = document.getElementById("navCheckScheduleBtn");
 if (navCheckScheduleBtn) {
   navCheckScheduleBtn.addEventListener("click", () => {
+    const heroSection = document.getElementById("schedule-lookup");
+    if (heroSection) heroSection.scrollIntoView({ behavior: "smooth" });
     const heroInput = document.getElementById("heroAddressInput");
     if (heroInput) heroInput.focus();
   });
 }
 
+// Landing Page Schedules Data (Self-contained, stays on landing page)
+const landingSchedules = {
+  "12 Greenview Ave, Riverton": {
+    council: "Riverton City Council · Zone 4B",
+    nextDate: "Friday 25 Sep 2026",
+    holidayShift: "Moved 1 day for public holiday",
+    bins: [
+      { name: "General waste", sub: "Red lid · Weekly", color: "bin-red" },
+      { name: "Recycling", sub: "Yellow lid · Fortnightly", color: "bin-yellow" }
+    ],
+    weeks: [
+      { date: "Fri 25 Sep", bins: "General waste (Red) + Recycling (Yellow)", isHoliday: true },
+      { date: "Fri 02 Oct", bins: "General waste (Red) + Organics FOGO (Green)", isHoliday: false },
+      { date: "Fri 09 Oct", bins: "General waste (Red) + Recycling (Yellow)", isHoliday: false },
+      { date: "Fri 16 Oct", bins: "General waste (Red) + Organics FOGO (Green)", isHoliday: false }
+    ]
+  },
+  "12 Greenway St, Riverton": {
+    council: "Riverton City Council · Zone 2A",
+    nextDate: "Wednesday 23 Sep 2026",
+    holidayShift: null,
+    bins: [
+      { name: "General waste", sub: "Red lid · Weekly", color: "bin-red" },
+      { name: "Organics (FOGO)", sub: "Green lid · Fortnightly", color: "bin-green" }
+    ],
+    weeks: [
+      { date: "Wed 23 Sep", bins: "General waste (Red) + Organics FOGO (Green)", isHoliday: false },
+      { date: "Wed 30 Sep", bins: "General waste (Red) + Recycling (Yellow)", isHoliday: false },
+      { date: "Wed 07 Oct", bins: "General waste (Red) + Organics FOGO (Green)", isHoliday: false },
+      { date: "Wed 14 Oct", bins: "General waste (Red) + Recycling (Yellow)", isHoliday: false }
+    ]
+  },
+  "120 Greenview Ave, Riverton": {
+    council: "Riverton City Council · Zone 4B",
+    nextDate: "Friday 25 Sep 2026",
+    holidayShift: "Moved 1 day for public holiday",
+    bins: [
+      { name: "General waste", sub: "Red lid · Weekly", color: "bin-red" },
+      { name: "Recycling", sub: "Yellow lid · Fortnightly", color: "bin-yellow" }
+    ],
+    weeks: [
+      { date: "Fri 25 Sep", bins: "General waste (Red) + Recycling (Yellow)", isHoliday: true },
+      { date: "Fri 02 Oct", bins: "General waste (Red) + Organics FOGO (Green)", isHoliday: false },
+      { date: "Fri 09 Oct", bins: "General waste (Red) + Recycling (Yellow)", isHoliday: false },
+      { date: "Fri 16 Oct", bins: "General waste (Red) + Organics FOGO (Green)", isHoliday: false }
+    ]
+  }
+};
+
+function updateLandingSchedule(address) {
+  const data = landingSchedules[address] || landingSchedules["12 Greenview Ave, Riverton"];
+  
+  const previewAddr = document.getElementById("previewAddressText");
+  if (previewAddr) previewAddr.textContent = address;
+
+  const councilLabel = document.getElementById("previewCouncilName");
+  if (councilLabel) councilLabel.textContent = data.council;
+
+  const nextDate = document.getElementById("previewNextDate");
+  if (nextDate) nextDate.textContent = data.nextDate;
+
+  const holidayPill = document.querySelector("#heroPreviewCard .holiday-alert-pill");
+  if (holidayPill) {
+    if (data.holidayShift) {
+      holidayPill.style.display = "inline-flex";
+      const span = holidayPill.querySelector("span");
+      if (span) span.textContent = data.holidayShift;
+    } else {
+      holidayPill.style.display = "none";
+    }
+  }
+
+  const binsRow = document.querySelector("#heroPreviewCard .preview-bins-row");
+  if (binsRow) {
+    binsRow.innerHTML = data.bins.map(b => `
+      <div class="bin-tile-item">
+        <div class="mini-bin-render ${b.color}">
+          <div class="mb-lid"></div>
+          <div class="mb-body"></div>
+        </div>
+        <div class="bin-details">
+          <strong>${b.name}</strong>
+          <span>${b.sub}</span>
+        </div>
+      </div>
+    `).join("");
+  }
+
+  // Smooth highlight pulse on preview card
+  const card = document.getElementById("heroPreviewCard");
+  if (card) {
+    card.classList.add("card-highlight");
+    setTimeout(() => card.classList.remove("card-highlight"), 600);
+  }
+}
+
+// Find schedule button: updates right on the landing page!
 const heroSearchBtn = document.getElementById("heroSearchBtn");
 if (heroSearchBtn) {
   heroSearchBtn.addEventListener("click", () => {
-    showScreen("schedule");
+    const heroInput = document.getElementById("heroAddressInput");
+    const val = heroInput ? heroInput.value.trim() : "";
+    if (val) {
+      updateLandingSchedule(val);
+    }
+  });
+}
+
+// Enter key on hero input also searches on landing page
+const heroAddressInput = document.getElementById("heroAddressInput");
+if (heroAddressInput) {
+  heroAddressInput.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      const val = heroAddressInput.value.trim();
+      if (val) updateLandingSchedule(val);
+    }
   });
 }
 
 const showcaseLaunchBtn = document.getElementById("showcaseLaunchBtn");
 if (showcaseLaunchBtn) {
-  showcaseLaunchBtn.addEventListener("click", () => showScreen("home"));
+  showcaseLaunchBtn.addEventListener("click", () => {
+    window.location.hash = "dashboard";
+    showScreen("home");
+  });
 }
 
 const ctaLaunchPortalBtn = document.getElementById("ctaLaunchPortalBtn");
 if (ctaLaunchPortalBtn) {
-  ctaLaunchPortalBtn.addEventListener("click", () => showScreen("home"));
+  ctaLaunchPortalBtn.addEventListener("click", () => {
+    window.location.hash = "dashboard";
+    showScreen("home");
+  });
 }
 
 const ctaCheckAddressBtn = document.getElementById("ctaCheckAddressBtn");
 if (ctaCheckAddressBtn) {
   ctaCheckAddressBtn.addEventListener("click", () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-    const heroInput = document.getElementById("heroAddressInput");
-    if (heroInput) heroInput.focus();
+    window.location.hash = "recycle";
+    showScreen("recycle");
   });
 }
 
-// Hero suggestion chips
+// Hero suggestion chips: updates live on landing page
 document.querySelectorAll(".hero-chip").forEach(chip => {
   chip.addEventListener("click", () => {
     document.querySelectorAll(".hero-chip").forEach(c => c.classList.remove("active"));
@@ -78,8 +255,7 @@ document.querySelectorAll(".hero-chip").forEach(chip => {
     const addr = chip.getAttribute("data-address");
     const heroInput = document.getElementById("heroAddressInput");
     if (heroInput) heroInput.value = addr;
-    const previewAddr = document.getElementById("previewAddressText");
-    if (previewAddr) previewAddr.textContent = addr;
+    updateLandingSchedule(addr);
   });
 });
 
@@ -125,9 +301,74 @@ if (heroDownloadIcsBtn) {
   });
 }
 
+// Full Month Schedule Drawer
+function openMonthScheduleDrawer() {
+  const backdrop = document.getElementById("monthScheduleBackdrop");
+  const addr = document.getElementById("previewAddressText")?.textContent || "12 Greenview Ave, Riverton";
+  const data = landingSchedules[addr] || landingSchedules["12 Greenview Ave, Riverton"];
+
+  const drawerAddr = document.getElementById("monthDrawerAddress");
+  if (drawerAddr) drawerAddr.textContent = addr;
+
+  const drawerZone = document.getElementById("monthDrawerZone");
+  if (drawerZone) drawerZone.textContent = data.council;
+
+  const list = document.getElementById("monthWeeksList");
+  if (list) {
+    list.innerHTML = data.weeks.map(w => `
+      <div class="month-week-row">
+        <div class="mwr-date">
+          <strong>${w.date}</strong>
+          ${w.isHoliday ? '<span class="mwr-holiday-pill">Holiday shift</span>' : ''}
+        </div>
+        <div class="mwr-bins">
+          <span>${w.bins}</span>
+        </div>
+      </div>
+    `).join("");
+  }
+
+  if (backdrop) {
+    backdrop.style.display = "flex";
+    backdrop.offsetHeight;
+    backdrop.classList.add("open");
+  }
+}
+
+function closeMonthScheduleDrawer() {
+  const backdrop = document.getElementById("monthScheduleBackdrop");
+  if (!backdrop) return;
+  backdrop.classList.remove("open");
+  setTimeout(() => {
+    backdrop.style.display = "none";
+  }, 220);
+}
+
 const heroViewFullScheduleBtn = document.getElementById("heroViewFullScheduleBtn");
 if (heroViewFullScheduleBtn) {
-  heroViewFullScheduleBtn.addEventListener("click", () => showScreen("schedule"));
+  heroViewFullScheduleBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    openMonthScheduleDrawer();
+  });
+}
+
+const monthScheduleCloseBtn = document.getElementById("monthScheduleCloseBtn");
+if (monthScheduleCloseBtn) {
+  monthScheduleCloseBtn.addEventListener("click", closeMonthScheduleDrawer);
+}
+
+const monthScheduleBackdrop = document.getElementById("monthScheduleBackdrop");
+if (monthScheduleBackdrop) {
+  monthScheduleBackdrop.addEventListener("click", (e) => {
+    if (e.target === monthScheduleBackdrop) closeMonthScheduleDrawer();
+  });
+}
+
+const monthDownloadIcsBtn = document.getElementById("monthDownloadIcsBtn");
+if (monthDownloadIcsBtn) {
+  monthDownloadIcsBtn.addEventListener("click", () => {
+    downloadCalendarIcs("Kerbside Collection: Full Month Schedule", "EcoTrack kerbside monthly schedule.");
+  });
 }
 
 const downloadIcsBtn = document.getElementById("downloadIcsBtn");
@@ -137,35 +378,136 @@ if (downloadIcsBtn) {
   });
 }
 
-// Waste Guide directory on landing page
+// Waste Item Detail Side Panel
+function openWasteSidePanel(item) {
+  const backdrop = document.getElementById("wastePanelBackdrop");
+  if (!backdrop) return;
+
+  const badge = document.getElementById("spdStreamBadge");
+  if (badge) {
+    badge.textContent = item.badge;
+    badge.className = `spd-stream-badge stream-${item.cat}`;
+  }
+
+  const title = document.getElementById("spdTitle");
+  if (title) title.textContent = item.name;
+
+  const rule = document.getElementById("spdRule");
+  if (rule) rule.textContent = item.rule;
+
+  const tip = document.getElementById("spdTip");
+  if (tip) tip.textContent = item.tip;
+
+  backdrop.style.display = "flex";
+  backdrop.offsetHeight;
+  backdrop.classList.add("open");
+}
+
+function closeWasteSidePanel() {
+  const backdrop = document.getElementById("wastePanelBackdrop");
+  if (!backdrop) return;
+  backdrop.classList.remove("open");
+  setTimeout(() => {
+    backdrop.style.display = "none";
+  }, 220);
+}
+
+const wasteSideCloseBtn = document.getElementById("wasteSideCloseBtn");
+if (wasteSideCloseBtn) {
+  wasteSideCloseBtn.addEventListener("click", closeWasteSidePanel);
+}
+
+const spdDoneBtn = document.getElementById("spdDoneBtn");
+if (spdDoneBtn) {
+  spdDoneBtn.addEventListener("click", closeWasteSidePanel);
+}
+
+const wastePanelBackdrop = document.getElementById("wastePanelBackdrop");
+if (wastePanelBackdrop) {
+  wastePanelBackdrop.addEventListener("click", (e) => {
+    if (e.target === wastePanelBackdrop) closeWasteSidePanel();
+  });
+}
+
+// Waste Guide directory items
 const landingWasteItems = [
-  { name: "Pizza box", cat: "yellow", badge: "Recycling (Yellow)", badgeClass: "badge-yellow", rule: "Clean lid in Yellow bin. Greasy or food-soaked base belongs in Green FOGO or Red bin.", tip: "Remove crusts and greaseproof paper liner." },
-  { name: "Plastic bottles & jugs", cat: "yellow", badge: "Recycling (Yellow)", badgeClass: "badge-yellow", rule: "Empty liquids, quick rinse. Keep plastic caps screwed on.", tip: "Eligible for 10c refund through Return and Earn." },
-  { name: "Cardboard boxes", cat: "yellow", badge: "Recycling (Yellow)", badgeClass: "badge-yellow", rule: "Flatten completely to save truck space. Remove excessive plastic tape.", tip: "Keep dry before collection morning." },
-  { name: "Glass jars & drink bottles", cat: "yellow", badge: "Recycling (Yellow)", badgeClass: "badge-yellow", rule: "Empty and rinse. Metal jar lids can stay on or go in loose.", tip: "Broken glassware goes in Red bin, wrapped safely." },
-  { name: "Aluminium cans & foil", cat: "yellow", badge: "Recycling (Yellow)", badgeClass: "badge-yellow", rule: "Empty cans completely. Scrunch clean foil into a golf ball size.", tip: "Small foil shreds fall through sorting screens." },
-  { name: "Food scraps & fruit peels", cat: "green", badge: "Organics & FOGO (Green)", badgeClass: "badge-green", rule: "All fruit, vegetable, meat and cooked scraps go into your green organics bin.", tip: "Use certified compostable caddy liners only." },
-  { name: "Garden clippings & leaves", cat: "green", badge: "Organics & FOGO (Green)", badgeClass: "badge-green", rule: "Place loose in green bin: lawn clippings, branches up to 10cm diameter.", tip: "No plastic pots or treated building timber." },
-  { name: "Soft plastics & plastic bags", cat: "red", badge: "General Waste (Red)", badgeClass: "badge-red", rule: "Bread bags, frozen food bags and cling wrap belong in Red lid bin.", tip: "Never put soft plastics in yellow bin — they jam sorting machines." },
-  { name: "Household batteries", cat: "depot", badge: "Special Depot Drop-off", badgeClass: "badge-depot", rule: "NEVER put batteries in household bins. Major fire risk in trucks.", tip: "Drop off free at B-cycle bins at Coles, Woolworths, or Aldi." },
-  { name: "Disposable coffee cups", cat: "red", badge: "Separation Required", badgeClass: "badge-red", rule: "Plastic lid in Yellow bin. Paper cup with polyethylene lining in Red bin.", tip: "Bring a reusable keep-cup to save landfill." },
-  { name: "Aerosol spray cans", cat: "yellow", badge: "Recycling (Yellow)", badgeClass: "badge-yellow", rule: "Must be completely empty of pressure and propellant.", tip: "Partially full cans belong at hazardous chemical drop-off." },
-  { name: "Nappies & sanitary items", cat: "red", badge: "General Waste (Red)", badgeClass: "badge-red", rule: "Wrap securely and place into red-lid general waste.", tip: "Never in recycling or green bins." }
+  { name: "Pizza box", cat: "yellow", badge: "Recycling · Yellow lid", rule: "Clean lid goes in recycling. Greasy or food-soaked cardboard base goes in organics or general waste.", tip: "Remove crusts and oil paper liners." },
+  { name: "Plastic bottles & jugs", cat: "yellow", badge: "Recycling · Yellow lid", rule: "Empty liquids and give a quick rinse. Caps can stay screwed on.", tip: "Eligible for 10c refund at Return and Earn." },
+  { name: "Cardboard boxes", cat: "yellow", badge: "Recycling · Yellow lid", rule: "Flatten completely so trucks have space. Remove thick packing tape.", tip: "Keep dry before collection day." },
+  { name: "Glass jars & drink bottles", cat: "yellow", badge: "Recycling · Yellow lid", rule: "Empty and rinse. Metal lids can stay on or go in loose.", tip: "Broken glassware goes in general waste, wrapped safely." },
+  { name: "Aluminium cans & foil", cat: "yellow", badge: "Recycling · Yellow lid", rule: "Empty cans completely. Scrunch clean foil into a golf ball size.", tip: "Loose foil shreds fall through sorting screens." },
+  { name: "Food scraps & fruit peels", cat: "green", badge: "Organics · Green lid", rule: "All fruit, vegetable, meat and cooked food scraps go in organics.", tip: "Use certified compostable caddy liners only." },
+  { name: "Garden clippings & leaves", cat: "green", badge: "Organics · Green lid", rule: "Place loose in green bin: lawn clippings and branches under 10cm wide.", tip: "No plastic pots or treated timber." },
+  { name: "Soft plastics & plastic bags", cat: "red", badge: "General waste · Red lid", rule: "Bread bags, chip packets and cling wrap belong in general waste.", tip: "Never put soft plastics in yellow bins as they tangle machines." },
+  { name: "Household batteries", cat: "depot", badge: "Drop-off depot", rule: "Never place in household bins due to truck fire risks.", tip: "Drop off free at B-cycle collection bins in supermarkets." },
+  { name: "Disposable coffee cups", cat: "red", badge: "General waste · Red lid", rule: "Plastic lid in yellow bin. Plastic-lined paper cup in red bin.", tip: "Bring a reusable keep-cup to prevent landfill." },
+  { name: "Aerosol spray cans", cat: "yellow", badge: "Recycling · Yellow lid", rule: "Must be completely empty of gas and contents.", tip: "Partially full spray cans go to hazardous depot." },
+  { name: "Nappies & sanitary items", cat: "red", badge: "General waste · Red lid", rule: "Wrap securely and place in red-lid general waste.", tip: "Never in recycling or green bins." }
 ];
+
+const WASTE_COLLAPSED_COUNT = 6;
+let wasteListExpanded = false;
 
 function renderLandingWasteGrid(items) {
   const grid = document.getElementById("wasteCardsGrid");
   if (!grid) return;
-  grid.innerHTML = items.map(i => `
-    <div class="waste-item-card">
-      <div class="wic-top">
-        <span class="wic-badge ${i.badgeClass}">${i.badge}</span>
+
+  if (items.length === 0) {
+    grid.innerHTML = `
+      <div class="waste-empty-state">
+        <p class="empty-line">No items found matching your search</p>
+        <button type="button" class="btn-soft-sm" id="clearWasteFilterBtn">Show all items</button>
       </div>
-      <h3 class="wic-name">${i.name}</h3>
-      <p class="wic-rule">${i.rule}</p>
-      <div class="wic-tip"><strong>Tip:</strong> ${i.tip}</div>
+    `;
+    const clearBtn = document.getElementById("clearWasteFilterBtn");
+    if (clearBtn) {
+      clearBtn.addEventListener("click", () => {
+        const searchInput = document.getElementById("wasteSearchInput");
+        if (searchInput) searchInput.value = "";
+        document.querySelectorAll("#wasteFilterPills .wg-pill").forEach(p => p.classList.remove("active"));
+        const allPill = document.querySelector('#wasteFilterPills .wg-pill[data-category="all"]');
+        if (allPill) allPill.classList.add("active");
+        renderLandingWasteGrid(landingWasteItems);
+      });
+    }
+    return;
+  }
+
+  // Collapsed by default: 6 items, expand with the button. Search/filter always shows every match.
+  const searching = (document.getElementById("wasteSearchInput")?.value.trim() ||
+    document.querySelector("#wasteFilterPills .wg-pill.active")?.dataset.category !== "all");
+  const limit = wasteListExpanded || searching ? items.length : WASTE_COLLAPSED_COUNT;
+
+  grid.innerHTML = `
+    <div class="waste-list-container">
+      ${items.slice(0, limit).map((item, idx) => `
+        <div class="waste-row-item" data-index="${idx}">
+          <div class="wri-left">
+            <div class="wri-text">
+              <span class="wri-name"><span class="wri-dot dot-${item.cat}"></span>${item.name}</span>
+              <span class="wri-rule">${item.rule}</span>
+            </div>
+          </div>
+          <div class="wri-right">
+            <span class="wri-stream stream-${item.cat}">${item.badge.split(" · ")[0] || item.badge}</span>
+            <span class="wri-arrow">›</span>
+          </div>
+        </div>
+      `).join("")}
     </div>
-  `).join("");
+    ${limit < items.length ? `<button type="button" class="waste-show-more" id="wasteShowMoreBtn">Show all ${items.length} items</button>` : ""}
+  `;
+
+  const showMore = document.getElementById("wasteShowMoreBtn");
+  if (showMore) showMore.addEventListener("click", () => { wasteListExpanded = true; renderLandingWasteGrid(items); });
+
+  grid.querySelectorAll(".waste-row-item").forEach(row => {
+    row.addEventListener("click", () => {
+      const idx = row.getAttribute("data-index");
+      const item = items[idx];
+      if (item) openWasteSidePanel(item);
+    });
+  });
 }
 renderLandingWasteGrid(landingWasteItems);
 
@@ -196,17 +538,156 @@ document.querySelectorAll("#wasteFilterPills .wg-pill").forEach(pill => {
   });
 });
 
-// FAQ Accordion
+// FAQ Accordion with aria-expanded
 document.querySelectorAll(".faq-question").forEach(btn => {
+  btn.setAttribute("aria-expanded", btn.closest(".faq-item").classList.contains("active") ? "true" : "false");
   btn.addEventListener("click", () => {
     const item = btn.closest(".faq-item");
     const wasActive = item.classList.contains("active");
-    document.querySelectorAll(".faq-item").forEach(i => i.classList.remove("active"));
+    document.querySelectorAll(".faq-item").forEach(i => {
+      i.classList.remove("active");
+      const q = i.querySelector(".faq-question");
+      if (q) q.setAttribute("aria-expanded", "false");
+    });
     if (!wasActive) {
       item.classList.add("active");
+      btn.setAttribute("aria-expanded", "true");
     }
   });
 });
+
+// ==========================================================
+// SCROLL ANIMATIONS & METRIC COUNTERS SYSTEM
+// ==========================================================
+(function initScrollAnimations() {
+  if (typeof window === "undefined") return;
+
+  // 1. Sticky Navigation Scroll State
+  const siteHeader = document.querySelector(".site-header");
+  if (siteHeader) {
+    const handleNavScroll = () => {
+      if (window.scrollY > 20) {
+        siteHeader.classList.add("scrolled");
+      } else {
+        siteHeader.classList.remove("scrolled");
+      }
+    };
+    window.addEventListener("scroll", handleNavScroll, { passive: true });
+    handleNavScroll();
+  }
+
+  // If reduced motion is requested, stop animation observer
+  if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    return;
+  }
+
+  // 2. Hero Load Entrance Sequence
+  const heroContent = document.querySelector(".hero-content");
+  const heroPreview = document.querySelector(".hero-preview-col");
+  if (heroContent && heroPreview) {
+    heroContent.classList.add("hero-anim-init");
+    heroPreview.classList.add("hero-anim-init");
+    requestAnimationFrame(() => {
+      setTimeout(() => heroContent.classList.add("hero-anim-in"), 60);
+      setTimeout(() => heroPreview.classList.add("hero-anim-in"), 180);
+    });
+  }
+
+  if (!("IntersectionObserver" in window)) return;
+
+  // 3. Section and Component Scroll Entrance Reveal
+  const scrollObserver = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("is-revealed");
+        observer.unobserve(entry.target);
+      }
+    });
+  }, {
+    threshold: 0.12,
+    rootMargin: "0px 0px -40px 0px"
+  });
+
+  const targets = document.querySelectorAll(
+    ".section-header-center, .metrics-bar, .waste-guide-tool, .steps-grid, .features-grid-square, .app-showcase-box, .councils-card, .faq-list, .cta-banner-box"
+  );
+  targets.forEach(el => {
+    el.classList.add("scroll-reveal");
+    scrollObserver.observe(el);
+  });
+
+  // 4. One-time Statistics Number Counter Animation
+  const statNumbers = document.querySelectorAll(".metric-number, .cs-num");
+  const numObserver = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        animateStatValue(entry.target);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.3 });
+
+  statNumbers.forEach(el => numObserver.observe(el));
+
+  function animateStatValue(el) {
+    const raw = el.textContent.trim();
+    // Pattern matches "< 30s", "99.4%", "40+", "42%", "68%", "100%"
+    const match = raw.match(/^([<>\s]*)(\d+(?:\.\d+)?)(.*)$/);
+    if (!match) return; // e.g. "Free" remains unchanged
+
+    const prefix = match[1];
+    const targetVal = parseFloat(match[2]);
+    const suffix = match[3];
+    const isDecimal = match[2].includes(".");
+    const duration = 1100;
+    const startTime = performance.now();
+
+    function updateCounter(now) {
+      const elapsed = now - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      const ease = 1 - Math.pow(1 - progress, 3); // easeOutCubic
+      const current = targetVal * ease;
+      el.textContent = `${prefix}${isDecimal ? current.toFixed(1) : Math.round(current)}${suffix}`;
+      if (progress < 1) {
+        requestAnimationFrame(updateCounter);
+      } else {
+        el.textContent = raw; // guarantee exact original value
+      }
+    }
+    requestAnimationFrame(updateCounter);
+  }
+})();
+
+// Landing page collection story: a lightweight scroll-linked demonstration.
+// It is deliberately separate from the real schedule lookup and disabled for reduced motion.
+(function initCollectionStory() {
+  const story = document.getElementById("collection-story");
+  if (!story || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+  const cards = [...story.querySelectorAll(".story-card")];
+  const steps = [...story.querySelectorAll(".story-steps li")];
+  const progress = story.querySelector(".story-progress span");
+  const number = document.getElementById("storyStepNumber");
+  let frame;
+
+  function updateStory() {
+    frame = undefined;
+    const rect = story.getBoundingClientRect();
+    const available = Math.max(1, story.offsetHeight - window.innerHeight * 0.55);
+    const progressValue = Math.max(0, Math.min(0.999, -rect.top / available));
+    const index = Math.min(cards.length - 1, Math.floor(progressValue * cards.length));
+    cards.forEach((card, i) => card.classList.toggle("active", i === index));
+    steps.forEach((step, i) => step.classList.toggle("active", i === index));
+    if (progress) progress.style.transform = `scaleX(${progressValue})`;
+    if (number) number.textContent = String(index + 1).padStart(2, "0");
+  }
+
+  window.addEventListener("scroll", () => {
+    if (!frame) frame = requestAnimationFrame(updateStory);
+  }, { passive: true });
+  window.addEventListener("resize", updateStory, { passive: true });
+  updateStory();
+})();
 
 // ==========================================================
 // SCREEN NAVIGATION & BOTTOM TABS
@@ -269,12 +750,6 @@ if (homeBottomTabRecycle) {
     switchRecycleSubview("viewRecycleHub");
   });
 }
-const homeBottomTabAccount = document.getElementById("homeBottomTabAccount");
-if (homeBottomTabAccount) {
-  homeBottomTabAccount.addEventListener("click", () => {
-    alert("EcoTrack Account: Logged in as John Smith (12 Greenview Ave).");
-  });
-}
 
 // Schedule Screen Tabs
 const scheduleNavRecycleBtn = document.getElementById("scheduleNavRecycleBtn");
@@ -294,12 +769,6 @@ if (scheduleBottomTabRecycle) {
   scheduleBottomTabRecycle.addEventListener("click", () => {
     showScreen("recycle");
     switchRecycleSubview("viewRecycleHub");
-  });
-}
-const scheduleBottomTabAccount = document.getElementById("scheduleBottomTabAccount");
-if (scheduleBottomTabAccount) {
-  scheduleBottomTabAccount.addEventListener("click", () => {
-    alert("EcoTrack Account: Logged in as John Smith (12 Greenview Ave).");
   });
 }
 
@@ -396,7 +865,11 @@ if (optNightBefore && optMorningOf) {
 
 const finishSetupBtn = document.getElementById("finishSetupBtn");
 if (finishSetupBtn) {
-  finishSetupBtn.addEventListener("click", () => showScreen("home"));
+  finishSetupBtn.addEventListener("click", () => {
+    localStorage.setItem("ecotrack_onboarded", "1");
+    window.location.hash = "dashboard";
+    showScreen("home");
+  });
 }
 
 // Change address button in resident home
@@ -476,7 +949,7 @@ function switchRecycleSubview(viewId, pushHistory = true) {
     const el = recycleSubviews[key];
     if (el) {
       if (el.id === viewId) {
-        el.style.display = "flex";
+        el.style.display = ""; // let CSS pick flex, or the desktop grid on the hub
         el.classList.add("active");
       } else {
         el.style.display = "none";
@@ -489,6 +962,7 @@ function switchRecycleSubview(viewId, pushHistory = true) {
     subviewHistory.push(viewId);
   }
   window.scrollTo({ top: 0, behavior: "smooth" });
+  updateNav();
 }
 
 function popRecycleSubview() {
@@ -515,12 +989,6 @@ if (recycleBottomTabRecycle) {
   recycleBottomTabRecycle.addEventListener("click", () => {
     showScreen("recycle");
     switchRecycleSubview("viewRecycleHub");
-  });
-}
-const recycleBottomTabAccount = document.getElementById("recycleBottomTabAccount");
-if (recycleBottomTabAccount) {
-  recycleBottomTabAccount.addEventListener("click", () => {
-    alert("EcoTrack Account: Logged in as John Smith (12 Greenview Ave).");
   });
 }
 
@@ -1147,6 +1615,7 @@ if (rhMoreItemsBtn) {
 // ==========================================================
 const binDetailsDB = {
   recycling: {
+    video: "kids-recycle",
     name: "Recycling bin",
     tag: "Yellow lid",
     tagClass: "abr-tag-yellow",
@@ -1170,6 +1639,7 @@ const binDetailsDB = {
     ]
   },
   organics: {
+    video: "fogo-bin",
     name: "Organics bin",
     tag: "Green lid",
     tagClass: "abr-tag-green",
@@ -1193,6 +1663,7 @@ const binDetailsDB = {
     ]
   },
   general: {
+    video: "general-waste-bin",
     name: "General waste bin",
     tag: "Red lid",
     tagClass: "abr-tag-red",
@@ -1216,6 +1687,7 @@ const binDetailsDB = {
     ]
   },
   dropoff: {
+    video: "battery-dropoff",
     name: "Drop-off & special items",
     tag: "Local centres",
     tagClass: "abr-tag-blue",
@@ -1250,65 +1722,21 @@ function escapeRecycleText(value) {
   })[character]);
 }
 
-function renderRecycleBinGuide() {
-  const grid = document.getElementById("rhBinsGuideGrid");
-  if (!grid) return;
-
-  const guideBins = [
-    { key: "recycling", type: "yellow", name: "Recycling", lid: "Yellow lid", className: "bin-yellow-card", pill: "pill-yellow" },
-    { key: "organics", type: "green", name: "Organics", lid: "Green lid", className: "bin-green-card", pill: "pill-green" },
-    { key: "general", type: "red", name: "General waste", lid: "Red lid", className: "bin-red-card", pill: "pill-red" }
-  ];
-
-  grid.innerHTML = guideBins.map(bin => {
-    const data = binDetailsDB[bin.key];
-    const acceptedItems = data.goesIn.map(item => item.name);
-    const excludedItems = data.doesntGoIn.map(item => item.name);
-    const controlId = `rh-bin-details-${bin.key}`;
-    return `
-      <article class="rh-bin-card-web ${bin.className}">
-        <div class="rh-bin-art">${getHdWheelieBinSvg(bin.type)}</div>
-        <h3 class="rh-bin-name">${bin.name}</h3>
-        <span class="rh-bin-pill ${bin.pill}">${bin.lid}</span>
-        <p class="rh-bin-examples"><strong>Examples:</strong> ${acceptedItems.slice(0, 3).map(escapeRecycleText).join(" · ")}</p>
-        <button type="button" class="rh-bin-toggle" aria-expanded="false" aria-controls="${controlId}">
-          What goes here?
-          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m7 10 5 5 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </button>
-        <div class="rh-bin-details" id="${controlId}" hidden>
-          <div class="rh-bin-detail-group">
-            <h4>Goes in</h4>
-            <ul>${acceptedItems.map(item => `<li>${escapeRecycleText(item)}</li>`).join("")}</ul>
-          </div>
-          <div class="rh-bin-detail-group">
-            <h4>Keep out</h4>
-            <ul>${excludedItems.map(item => `<li>${escapeRecycleText(item)}</li>`).join("")}</ul>
-          </div>
-          <div class="rh-bin-detail-group">
-            <h4>Before disposal</h4>
-            <p>${escapeRecycleText(data.tip)}</p>
-          </div>
-          <p class="rh-bin-caveat">General guidance only. Local council rules can differ.</p>
-        </div>
-      </article>`;
-  }).join("");
-
-  grid.addEventListener("click", event => {
-    const toggle = event.target.closest(".rh-bin-toggle");
-    if (!toggle) return;
-    const details = document.getElementById(toggle.getAttribute("aria-controls"));
-    if (!details) return;
-    const expanded = toggle.getAttribute("aria-expanded") === "true";
-    toggle.setAttribute("aria-expanded", String(!expanded));
-    details.hidden = expanded;
-  });
-
-  const searchArea = document.querySelector("#viewRecycleHub .rh-search-area");
-  const commonSearches = document.querySelector("#viewRecycleHub .rh-common-searches");
-  if (searchArea && commonSearches) searchArea.after(commonSearches);
-}
-
-renderRecycleBinGuide();
+// Tile icons: one emoji per item (replaces the placeholder shapes)
+const BIN_ITEM_EMOJI = {
+  "Asbestos (licence req)": "⚠️", "Batteries": "🔋", "Broken ceramics & glassware": "🍽️", "Building rubble": "🧱",
+  "Cartons": "🥛", "Clean foil and trays": "🥡", "Coffee grounds & tea bags": "☕", "Computers & TVs": "💻",
+  "Explosives/flares": "🧨", "Fluorescent tubes": "💡", "Food scraps": "🍎", "Fridges & washing machines": "🧺",
+  "Fruit & vegetable scraps": "🥕", "Gas bottles": "🧯", "Glass bottles and jars": "🫙", "Grass clippings & weeds": "🌱",
+  "Household batteries": "🔋", "Leaves & flowers": "🍂", "Mattresses": "🛏️", "Meat, bones & cheese": "🍖",
+  "Medical waste": "💉", "Metal cans and tins": "🥫", "Nappies & baby wipes": "🧷", "Nappies": "🧷",
+  "Paint cans & thinners": "🎨", "Paper & cardboard": "📦", "Pet waste": "🐾", "Plastic bags & wrappers": "🛍️",
+  "Plastic bags": "🛍️", "Plastic packaging": "🧴", "Polystyrene & meat trays": "🍱", "Small branches & prunings": "🌿",
+  "Takeaway coffee cups": "🥤", "Treated wood": "🪵", "Worn rags & shoes": "👟"
+};
+const binItemIcon = item => BIN_ITEM_EMOJI[item.name]
+  ? `<span class="tile-emoji" aria-hidden="true">${BIN_ITEM_EMOJI[item.name]}</span>`
+  : `<svg viewBox="0 0 36 36" fill="none">${item.svg}</svg>`;
 
 function renderBinDetailView(binKey) {
   const data = binDetailsDB[binKey] || binDetailsDB.recycling;
@@ -1347,9 +1775,7 @@ function renderBinDetailView(binKey) {
   if (whatGoesGrid) {
     whatGoesGrid.innerHTML = data.goesIn.map(item => `
       <button type="button" class="wg-tile-web" data-item="${item.key}">
-        <div class="wg-tile-icon">
-          <svg viewBox="0 0 36 36" fill="none">${item.svg}</svg>
-        </div>
+        <div class="wg-tile-icon">${binItemIcon(item)}</div>
         <span>${item.name}</span>
       </button>
     `).join("");
@@ -1372,12 +1798,28 @@ function renderBinDetailView(binKey) {
     whatNotRow.innerHTML = data.doesntGoIn.map(item => `
       <div class="wn-tile-web">
         <span class="wn-bad-badge">&times;</span>
-        <div class="wn-tile-icon">
-          <svg viewBox="0 0 32 32" fill="none">${item.svg}</svg>
-        </div>
+        <div class="wn-tile-icon">${binItemIcon(item)}</div>
         <span>${item.name}</span>
       </div>
     `).join("");
+  }
+
+  const videoSlot = document.getElementById("bdVideoSlot");
+  const video = recycleVideosDB[data.video];
+  if (videoSlot && video) {
+    videoSlot.innerHTML = `
+      <div class="rh-video-card-web" style="max-width: 440px; cursor: pointer;">
+        <div class="rh-video-thumb-web" style="background-image: url('https://i.ytimg.com/vi/${video.youtubeId}/hqdefault.jpg');">
+          <div class="video-play-btn-circle">
+            <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="6 4 20 12 6 20 6 4"/></svg>
+          </div>
+        </div>
+        <div class="rh-video-meta-web">
+          <strong>${video.title}</strong>
+          <span>${video.sub}</span>
+        </div>
+      </div>`;
+    videoSlot.firstElementChild.addEventListener("click", () => openVideoModal(data.video));
   }
 
   switchRecycleSubview("viewBinDetail");
@@ -1594,5 +2036,171 @@ if (recycleHubSearchInput && rhSearchDropdown) {
   });
 }
 
-// Initial Screen: Welcome Landing Page
-showScreen("welcome");
+// ---------------- YouTube Video Library & Modal ----------------
+const recycleVideosDB = {
+  "kids-recycle": {
+    youtubeId: "6jQ7y_qQYUA",
+    title: "Recycling Plastic, Glass & Paper",
+    sub: "Kids Academy · Master the recycling symbols and sorting rules",
+    summary: "Learn what the recycling symbols mean, how plastic, glass, and paper are sorted, and why keeping contamination out of kerbside bins is essential."
+  },
+  "beyond-the-bin": {
+    youtubeId: "jc8Cy1RbcW4",
+    title: "Beyond the Bin: Where Recycling Goes",
+    sub: "Follow the journey from kerbside collection to reprocessing",
+    summary: "Discover what happens to your recyclables after the truck picks them up. Take an inside look at optical sorters, balers, and manufacturing facilities."
+  },
+  "sort-trash": {
+    youtubeId: "AyF37F4AMZw",
+    title: "Let's Sort Trash! Bin Sorting Guide",
+    sub: "Which bin to choose for household waste",
+    summary: "A practical guide to household waste sorting: separating organic food scraps, clean recyclable containers, and general landfill waste."
+  },
+  "importance-of-recycling": {
+    youtubeId: "xpAnLXc_bIU",
+    title: "Importance of Recycling & Sorting Clean",
+    sub: "Why clean recycling matters for our community & planet",
+    summary: "Why we recycle: saving landfill space, conserving natural resources, and preventing pollution by recycling clean materials."
+  },
+  "recycling-center": {
+    youtubeId: "-0ijMPvIy-U",
+    title: "Touring a Materials Recovery Facility",
+    sub: "Sesame Street: Optical sorting, conveyors, and baling",
+    summary: "Take a complete walk through a state-of-the-art materials recovery facility to see magnets separating metals, air sorters separating paper, and compactors preparing bales."
+  },
+  "curious-george": {
+    youtubeId: "pXQBk-LaTb8",
+    title: "Curious George: Reuse and Recycle",
+    sub: "Simple everyday habits to reduce waste at home",
+    summary: "Everyday tips for reducing single-use items, reusing containers, and recycling correctly at home and school."
+  },
+  "fogo-bin": {
+    youtubeId: "h7CyuuUqDSk",
+    title: "What can go into your FOGO bin",
+    sub: "Manningham Council · Food and garden organics",
+    summary: "A council walkthrough of the food scraps and garden organics that belong in the green-lid bin."
+  },
+  "general-waste-bin": {
+    youtubeId: "w0beNWKItik",
+    title: "What goes in the General Waste Bin?",
+    sub: "Logan City Council · Red bin explained",
+    summary: "A council explainer on what belongs in the red general waste bin and what should go elsewhere."
+  },
+  "battery-dropoff": {
+    youtubeId: "4CLlo8JvGBE",
+    title: "How to prepare and recycle batteries",
+    sub: "City of Madison · Drop-off and special items",
+    summary: "How to get household batteries ready and take them to a drop-off point instead of the bin."
+  },
+  "garbage-trucks": {
+    youtubeId: "n5BpGyXTArw",
+    title: "Waste Recycling and Disposal Trucks",
+    sub: "A day at work: kerbside mechanical collection in action",
+    summary: "Watch kerbside waste trucks in action: mechanical lifting arms, split-body collection compartments, and unloading at local recycling transfer hubs."
+  }
+};
+
+const recycleVideoModal = document.getElementById("recycleVideoModal");
+const videoModalIframe = document.getElementById("videoModalIframe");
+const videoModalTitle = document.getElementById("videoModalTitle");
+const videoModalHeading = document.getElementById("videoModalHeading");
+const videoModalSummary = document.getElementById("videoModalSummary");
+const closeVideoModalBtn = document.getElementById("closeVideoModalBtn");
+const videoModalGotItBtn = document.getElementById("videoModalGotItBtn");
+
+function openVideoModal(videoId) {
+  const video = recycleVideosDB[videoId] || recycleVideosDB["kids-recycle"];
+  if (videoModalTitle) videoModalTitle.textContent = "EcoTrack Video Guide";
+  if (videoModalHeading) videoModalHeading.textContent = video.title;
+  if (videoModalSummary) videoModalSummary.textContent = video.summary;
+  if (videoModalIframe) {
+    videoModalIframe.src = `https://www.youtube.com/embed/${video.youtubeId}?autoplay=1&rel=0`;
+  }
+  if (recycleVideoModal) {
+    recycleVideoModal.style.display = "flex";
+  }
+}
+
+function closeVideoModal() {
+  if (videoModalIframe) {
+    videoModalIframe.src = "";
+  }
+  if (recycleVideoModal) {
+    recycleVideoModal.style.display = "none";
+  }
+}
+
+if (closeVideoModalBtn) closeVideoModalBtn.addEventListener("click", closeVideoModal);
+if (videoModalGotItBtn) videoModalGotItBtn.addEventListener("click", closeVideoModal);
+
+if (recycleVideoModal) {
+  recycleVideoModal.addEventListener("click", (e) => {
+    if (e.target === recycleVideoModal) {
+      closeVideoModal();
+    }
+  });
+}
+
+// Bind click event to all video cards
+document.addEventListener("click", (e) => {
+  const card = e.target.closest("[data-video-id]");
+  if (card) {
+    const videoId = card.getAttribute("data-video-id");
+    openVideoModal(videoId);
+  }
+});
+
+const rhSeeAllVideosBtn = document.getElementById("rhSeeAllVideosBtn");
+if (rhSeeAllVideosBtn) {
+  rhSeeAllVideosBtn.addEventListener("click", () => switchRecycleSubview("viewLearn"));
+}
+
+const learnSeeAllFeaturedBtn = document.getElementById("learnSeeAllFeaturedBtn");
+if (learnSeeAllFeaturedBtn) {
+  learnSeeAllFeaturedBtn.addEventListener("click", () => openVideoModal("recycling-center"));
+}
+
+// Initial Screen & Hash-based Routing
+function handleRoute() {
+  const hash = window.location.hash.toLowerCase();
+  if (hash === "#dashboard" || hash === "#home") {
+    showScreen("home");
+  } else if (hash === "#schedule" || hash === "#schedule-view") {
+    showScreen("schedule");
+  } else if (hash === "#recycle" || hash === "#recycle-view") {
+    showScreen("recycle");
+  } else if (hash === "#account") {
+    showScreen("account");
+  } else {
+    showScreen("welcome");
+  }
+}
+
+window.addEventListener("hashchange", handleRoute);
+handleRoute();
+
+// Avatar and Account tabs open the Account screen
+document.querySelectorAll(".user-avatar-badge[aria-label='Resident profile'], #recycleUserAvatarBtn, [id$='BottomTabAccount']").forEach(b =>
+  b.addEventListener("click", () => showScreen("account")));
+
+const accountChangeAddrBtn = document.getElementById("accountChangeAddrBtn");
+if (accountChangeAddrBtn) accountChangeAddrBtn.addEventListener("click", () => showScreen("address"));
+
+const accountReminderToggle = document.getElementById("accountReminderToggle");
+const accountReminderTime = document.getElementById("accountReminderTime");
+try {
+  accountReminderToggle.checked = localStorage.getItem("ecotrack_reminder_active") !== "false";
+  accountReminderTime.value = localStorage.getItem("ecotrack_reminder_time") || "night";
+} catch (e) { /* storage blocked: keep defaults */ }
+accountReminderToggle.addEventListener("change", () => localStorage.setItem("ecotrack_reminder_active", accountReminderToggle.checked));
+accountReminderTime.addEventListener("change", () => localStorage.setItem("ecotrack_reminder_time", accountReminderTime.value));
+
+// Sign out = forget onboarding so the next visit starts from the address screen
+document.getElementById("accountSignOutBtn").addEventListener("click", () => {
+  localStorage.removeItem("ecotrack_onboarded");
+  window.location.hash = "";
+  showScreen("welcome");
+});
+
+const accountBrandLink = document.getElementById("accountBrandLink");
+if (accountBrandLink) accountBrandLink.addEventListener("click", e => { e.preventDefault(); showScreen("welcome"); });
