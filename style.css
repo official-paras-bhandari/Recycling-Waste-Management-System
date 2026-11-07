@@ -6029,3 +6029,9 @@ body { background: var(--paper); color: var(--ink); }
   margin: 6px 0 0;
   font-size: 13.5px;
 }
+
+/* onboarding: bin cards are toggles */
+.bin-setup-card { cursor: pointer; }
+.bin-setup-card.off { opacity: .45; }
+.bin-setup-card.off .check-circle-green { visibility: hidden; }
+.option-time-card:focus-visible{outline:2px solid #2d6a35;outline-offset:2px}.option-time-card:focus{outline:none}

@@ -9,6 +9,7 @@ const screens = {
   address: document.getElementById("screenAddress"),
   bins: document.getElementById("screenBins"),
   reminders: document.getElementById("screenReminders"),
+  save: document.getElementById("screenSave"),
   home: document.getElementById("screenHome"),
   schedule: document.getElementById("screenSchedule"),
   recycle: document.getElementById("screenRecycle"),
@@ -795,82 +796,6 @@ function switchScheduleTab(view) {
 if (tabUpcoming) tabUpcoming.addEventListener("click", () => switchScheduleTab("upcoming"));
 if (tabMonthView) tabMonthView.addEventListener("click", () => switchScheduleTab("month"));
 
-// ==========================================================
-// SCREEN 02: Address -> 03 Bins
-// ==========================================================
-const backToWelcomeBtn = document.getElementById("backToWelcomeBtn");
-if (backToWelcomeBtn) {
-  backToWelcomeBtn.addEventListener("click", () => showScreen("welcome"));
-}
-
-const homeAddressLabel = document.getElementById("homeAddressLabel");
-const addressSearchInput = document.getElementById("addressSearchInput");
-
-document.querySelectorAll(".suggestion-card").forEach(card => {
-  card.addEventListener("click", () => {
-    const chosen = card.getAttribute("data-addr");
-    if (homeAddressLabel) homeAddressLabel.textContent = chosen.split(",")[0];
-    if (addressSearchInput) addressSearchInput.value = chosen;
-    showScreen("bins");
-  });
-});
-
-const useLocationBtn = document.getElementById("useLocationBtn");
-if (useLocationBtn) {
-  useLocationBtn.addEventListener("click", () => {
-    if (homeAddressLabel) homeAddressLabel.textContent = "12 Greenview Ave";
-    showScreen("bins");
-  });
-}
-
-// ==========================================================
-// SCREEN 03: Confirm Bins -> 04 Reminders
-// ==========================================================
-const backToAddressBtn = document.getElementById("backToAddressBtn");
-if (backToAddressBtn) {
-  backToAddressBtn.addEventListener("click", () => showScreen("address"));
-}
-
-const confirmBinsBtn = document.getElementById("confirmBinsBtn");
-if (confirmBinsBtn) {
-  confirmBinsBtn.addEventListener("click", () => showScreen("reminders"));
-}
-
-const reportMismatchBtn = document.getElementById("reportMismatchBtn");
-if (reportMismatchBtn) {
-  reportMismatchBtn.addEventListener("click", () => {
-    alert("Feedback noted: We will verify council bin assignments for your address.");
-  });
-}
-
-// ==========================================================
-// SCREEN 04: Enable Reminders -> 05 Resident Home
-// ==========================================================
-const backToBinsBtn = document.getElementById("backToBinsBtn");
-if (backToBinsBtn) {
-  backToBinsBtn.addEventListener("click", () => showScreen("bins"));
-}
-
-const optNightBefore = document.getElementById("optNightBefore");
-const optMorningOf = document.getElementById("optMorningOf");
-
-if (optNightBefore && optMorningOf) {
-  [optNightBefore, optMorningOf].forEach(opt => {
-    opt.addEventListener("click", () => {
-      [optNightBefore, optMorningOf].forEach(o => o.classList.remove("selected"));
-      opt.classList.add("selected");
-    });
-  });
-}
-
-const finishSetupBtn = document.getElementById("finishSetupBtn");
-if (finishSetupBtn) {
-  finishSetupBtn.addEventListener("click", () => {
-    localStorage.setItem("ecotrack_onboarded", "1");
-    window.location.hash = "dashboard";
-    showScreen("home");
-  });
-}
 
 // Change address button in resident home
 const homeChangeAddrBtn = document.getElementById("homeChangeAddrBtn");
@@ -882,7 +807,7 @@ const homeBrandLink = document.getElementById("homeBrandLink");
 if (homeBrandLink) {
   homeBrandLink.addEventListener("click", (e) => {
     e.preventDefault();
-    showScreen("welcome");
+    showScreen("home");
   });
 }
 
@@ -890,7 +815,7 @@ const scheduleBrandLink = document.getElementById("scheduleBrandLink");
 if (scheduleBrandLink) {
   scheduleBrandLink.addEventListener("click", (e) => {
     e.preventDefault();
-    showScreen("welcome");
+    showScreen("home");
   });
 }
 
@@ -2386,12 +2311,13 @@ accountReminderTime.addEventListener("change", () => localStorage.setItem("ecotr
 // Sign out = forget onboarding so the next visit starts from the address screen
 document.getElementById("accountSignOutBtn").addEventListener("click", () => {
   localStorage.removeItem("ecotrack_onboarded");
+  localStorage.removeItem("ecotrack_profile");
   window.location.hash = "";
   showScreen("welcome");
 });
 
 const accountBrandLink = document.getElementById("accountBrandLink");
-if (accountBrandLink) accountBrandLink.addEventListener("click", e => { e.preventDefault(); showScreen("welcome"); });
+if (accountBrandLink) accountBrandLink.addEventListener("click", e => { e.preventDefault(); showScreen("home"); });
 
 // ==========================================================
 // REPORT ISSUE MODAL & LOCAL DISPATCH SYSTEM (Section 05)

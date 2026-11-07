@@ -763,7 +763,7 @@
           <div class="input-group">
             <label class="input-label" for="addressSearchInput">Street address</label>
             <div class="input-wrap has-focus-green">
-              <input type="text" id="addressSearchInput" value="12 green" placeholder="Enter street address" />
+              <input type="text" id="addressSearchInput" value="" autocomplete="street-address" placeholder="Enter street address" />
             </div>
           </div>
 
@@ -968,21 +968,40 @@
             </div>
           </div>
 
-          <!-- Notification Method -->
-          <div class="sub-section">
-            <h3 class="sub-section-title">Notification method</h3>
-            <div class="method-pills-row">
-              <button class="method-pill active">In-app</button>
-              <button class="method-pill disabled">SMS · later</button>
-              <button class="method-pill disabled">Email · later</button>
-            </div>
-          </div>
+          <p class="flow-subtitle" id="reminderHint"></p>
 
           <div class="setup-finish-bar">
             <button class="btn-green btn-large" id="finishSetupBtn">Finish setup</button>
           </div>
         </div>
 
+      </div>
+    </main>
+  </section>
+
+  <!-- SCREEN 04b: OPTIONAL ACCOUNT -->
+  <section class="screen-view" id="screenSave" style="display: none;">
+    <header class="site-header">
+      <div class="container header-flex">
+        <button class="back-link-btn" id="backToRemindersBtn"><span>Back</span></button>
+        <span class="flow-header-title">Set up EcoTrack</span>
+        <div style="width: 60px;"></div>
+      </div>
+    </header>
+    <main class="setup-main">
+      <div class="container setup-container">
+        <div class="setup-content-card">
+          <h1 class="flow-title">Save your setup?</h1>
+          <p class="flow-subtitle">Optional. Keep your address, reminders and reports.</p>
+          <div class="sub-section" id="googleBtnWrap"><button class="btn-soft-sm" id="googleBtn" style="width:100%;padding:12px">Continue with Google</button></div>
+          <div class="sub-section">
+            <input type="email" id="saveEmailInput" class="acct-select" placeholder="Email address" autocomplete="email" style="width:100%" />
+          </div>
+          <div class="setup-finish-bar">
+            <button class="btn-green btn-large" id="createAccountBtn">Create account</button>
+            <button class="btn-soft-sm" id="continueGuestBtn">Continue as guest</button>
+          </div>
+        </div>
       </div>
     </main>
   </section>
@@ -2555,5 +2574,6 @@
   <div id="ecotrackToast" class="ecotrack-toast" style="display: none;" role="status" aria-live="polite"></div>
 
   <script src="script.js?v=premium-upgrade-1"></script>
+  <script src="onboarding.js"></script>
 </body>
 </html>
