@@ -2170,7 +2170,7 @@ const recycleItemsDB = {
     visualSvg: `<svg viewBox="0 0 64 64" fill="none"><rect x="18" y="12" width="28" height="40" rx="6" fill="#94A3B8" stroke="#475569" stroke-width="2"/><line x1="18" y1="20" x2="46" y2="20" stroke="#64748B" stroke-width="1.5"/><line x1="18" y1="44" x2="46" y2="44" stroke="#64748B" stroke-width="1.5"/></svg>`,
     similar: [
       { key: "clean-foil", name: "Aluminium foil", icon: `<svg viewBox="0 0 36 36" fill="none"><rect x="8" y="14" width="20" height="12" rx="2" fill="#CBD5E1"/></svg>` },
-      { key: "aerosol-cans", name: "Aerosol can", icon: `<img src="images/aerosol-can.png" alt="Aerosol can" class="sic-img" />` },
+      { key: "aerosol-cans", name: "Aerosol can", icon: `<img src="assets/images/aerosol-can.png" onerror="if(!this.dataset.retried){this.dataset.retried=1;this.src='images/aerosol-can.png';}" alt="Aerosol can" class="sic-img" />` },
       { key: "plastic-bottle", name: "Plastic bottle", icon: `<svg viewBox="0 0 36 36" fill="none"><path d="M14 6h8v4h-8z" fill="#3B82F6"/><path d="M12 11h12l1 18H11z" fill="#93C5FD"/></svg>` }
     ]
   },
@@ -2319,9 +2319,9 @@ const recycleItemsDB = {
     videoDur: "0:50",
     visualSvg: `<svg viewBox="0 0 64 64" fill="none"><rect x="22" y="16" width="20" height="38" rx="3" fill="#334155" stroke="#1E293B" stroke-width="2"/><rect x="27" y="10" width="10" height="6" rx="1" fill="#F59E0B"/><line x1="32" y1="24" x2="32" y2="34" stroke="#EF4444" stroke-width="2"/><line x1="27" y1="29" x2="37" y2="29" stroke="#EF4444" stroke-width="2"/></svg>`,
     similar: [
-      { key: "aerosol-cans", name: "Aerosol can", icon: `<img src="images/aerosol-can.png" alt="Aerosol can" class="sic-img" />` },
-      { key: "aluminium-cans", name: "Metal tin", icon: `<img src="images/metal-tin.png" alt="Metal tin" class="sic-img" />` },
-      { key: "plastic-bottle", name: "Chemical bottle", icon: `<img src="images/chemical-bottle.png" alt="Chemical bottle" class="sic-img" />` }
+      { key: "aerosol-cans", name: "Aerosol can", icon: `<img src="assets/images/aerosol-can.png" onerror="if(!this.dataset.retried){this.dataset.retried=1;this.src='images/aerosol-can.png';}" alt="Aerosol can" class="sic-img" />` },
+      { key: "aluminium-cans", name: "Metal tin", icon: `<img src="assets/images/metal-tin.png" onerror="if(!this.dataset.retried){this.dataset.retried=1;this.src='images/metal-tin.png';}" alt="Metal tin" class="sic-img" />` },
+      { key: "plastic-bottle", name: "Chemical bottle", icon: `<img src="assets/images/chemical-bottle.png" onerror="if(!this.dataset.retried){this.dataset.retried=1;this.src='images/chemical-bottle.png';}" alt="Chemical bottle" class="sic-img" />` }
     ]
   },
   "nappies": {
