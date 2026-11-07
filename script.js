@@ -1333,37 +1333,239 @@ if (scheduleBrandLink) {
   });
 }
 
-// Side buttons in home
+// Secondary Services Modal (Section 04.E, 04.F)
+const serviceModal = document.getElementById("serviceModal");
+const closeServiceModalBtn = document.getElementById("closeServiceModalBtn");
+const serviceModalTitle = document.getElementById("serviceModalTitle");
+const serviceModalSub = document.getElementById("serviceModalSub");
+const serviceModalBody = document.getElementById("serviceModalBody");
+
+function openServiceModal(type) {
+  if (!serviceModal) return;
+  if (type === "bulky") {
+    serviceModalTitle.textContent = "Book Bulky Pickup";
+    serviceModalSub.textContent = "City of Greenfield · Household Entitlement";
+    serviceModalBody.innerHTML = `
+      <div class="minimal-modal-body">
+        <div class="minimal-stat-pill">
+          <span class="msp-num">2</span>
+          <span class="msp-label">Free collections available for 2026</span>
+        </div>
+
+        <div class="minimal-info-grid">
+          <div class="mig-section">
+            <span class="mig-title">Accepted items</span>
+            <p class="mig-desc">Mattresses, furniture, whitegoods (doors removed), bundled timber.</p>
+          </div>
+          <div class="mig-section">
+            <span class="mig-title mig-title-alert">Prohibited</span>
+            <p class="mig-desc">Batteries, chemicals, asbestos, liquids, building rubble.</p>
+          </div>
+        </div>
+
+        <div class="minimal-meta-row">
+          <span>Next collection date:</span>
+          <strong>Thursday, 26 Nov</strong>
+        </div>
+
+        <button type="button" class="btn-minimal-primary" id="btnConfirmBulkyBooking">Request Collection Slot</button>
+      </div>
+    `;
+    const btnBook = document.getElementById("btnConfirmBulkyBooking");
+    if (btnBook) {
+      btnBook.addEventListener("click", () => {
+        closeServiceModal();
+        showToast("✓ Bulky pickup requested for Thu 26 Nov · Ref: BLK-2026-921");
+      });
+    }
+  } else if (type === "centres") {
+    serviceModalTitle.textContent = "Resource Recovery Centre";
+    serviceModalSub.textContent = "Community Drop-off Facility";
+    serviceModalBody.innerHTML = `
+      <div class="minimal-modal-body">
+        <div class="minimal-detail-list">
+          <div class="mdl-item">
+            <span class="mdl-label">Location</span>
+            <span class="mdl-val">45 Quarry Road, Greenfield</span>
+            <small class="mdl-sub">8 mins drive from your address</small>
+          </div>
+
+          <div class="mdl-item">
+            <span class="mdl-label">Hours</span>
+            <span class="mdl-val">Sat – Wed · 8:00 AM – 4:00 PM</span>
+            <small class="mdl-sub">Closed Thursdays, Fridays & Public Holidays</small>
+          </div>
+
+          <div class="mdl-item">
+            <span class="mdl-label">Free Drop-Off</span>
+            <span class="mdl-val">E-waste, paint (≤100L), motor oil, fluorescent tubes, batteries</span>
+          </div>
+        </div>
+
+        <button type="button" class="btn-minimal-secondary" id="btnDismissCentres">Done</button>
+      </div>
+    `;
+    const btnDismiss = document.getElementById("btnDismissCentres");
+    if (btnDismiss) btnDismiss.addEventListener("click", closeServiceModal);
+  }
+  serviceModal.style.display = "flex";
+  document.body.style.overflow = "hidden";
+}
+
+function closeServiceModal() {
+  if (!serviceModal) return;
+  serviceModal.style.display = "none";
+  document.body.style.overflow = "";
+}
+
+if (closeServiceModalBtn) closeServiceModalBtn.addEventListener("click", closeServiceModal);
+if (serviceModal) {
+  serviceModal.addEventListener("click", (e) => {
+    if (e.target === serviceModal) closeServiceModal();
+  });
+}
+
 const sideBulkyBtn = document.getElementById("sideBulkyBtn");
 if (sideBulkyBtn) {
-  sideBulkyBtn.addEventListener("click", () => {
-    alert("Bulky pickup booking: Subject to council availability (Riverton Area).");
-  });
+  sideBulkyBtn.addEventListener("click", () => openServiceModal("bulky"));
 }
 
 const sideCentresBtn = document.getElementById("sideCentresBtn");
 if (sideCentresBtn) {
-  sideCentresBtn.addEventListener("click", () => {
-    alert("Riverton Resource Recovery Centre: 45 Quarry Rd (Open Sat–Wed 8am–4pm).");
-  });
+  sideCentresBtn.addEventListener("click", () => openServiceModal("centres"));
+}
+
+// Toast feedback system
+let toastTimeout = null;
+function showToast(msg) {
+  const toast = document.getElementById("ecotrackToast");
+  if (!toast) return;
+  toast.textContent = msg;
+  toast.style.display = "flex";
+  clearTimeout(toastTimeout);
+  toastTimeout = setTimeout(() => {
+    toast.style.display = "none";
+  }, 3500);
 }
 
 const homeReminderToggle = document.getElementById("homeReminderToggle");
+const homeReminderTimeSelect = document.getElementById("homeReminderTimeSelect");
+
+try {
+  const isRemActive = localStorage.getItem("ecotrack_reminder_active") !== "false";
+  if (homeReminderToggle) homeReminderToggle.checked = isRemActive;
+  const savedTime = localStorage.getItem("ecotrack_reminder_time_choice");
+  if (homeReminderTimeSelect && savedTime) homeReminderTimeSelect.value = savedTime;
+} catch (e) {}
+
 if (homeReminderToggle) {
   homeReminderToggle.addEventListener("change", () => {
-    localStorage.setItem("ecotrack_reminder_active", homeReminderToggle.checked);
+    const active = homeReminderToggle.checked;
+    localStorage.setItem("ecotrack_reminder_active", active);
+    const chosenTime = homeReminderTimeSelect ? homeReminderTimeSelect.value : "7:00 pm";
+    if (active) {
+      showToast(`✓ Reminder active · Alert set for ${chosenTime}`);
+    } else {
+      showToast("Reminders paused for upcoming collections");
+    }
   });
 }
 
-// Quick search in home
+if (homeReminderTimeSelect) {
+  homeReminderTimeSelect.addEventListener("change", () => {
+    const val = homeReminderTimeSelect.value;
+    localStorage.setItem("ecotrack_reminder_time_choice", val);
+    if (homeReminderToggle && homeReminderToggle.checked) {
+      showToast(`✓ Reminder updated: ${val}`);
+    }
+  });
+}
+
+// Quick search in home (Section 04.D)
 const homeRecycleSearch = document.getElementById("homeRecycleSearch");
 const homeInstantResults = document.getElementById("homeInstantResults");
-if (homeRecycleSearch && homeInstantResults) {
-  homeRecycleSearch.addEventListener("focus", () => {
-    showScreen("recycle");
-    switchRecycleSubview("viewRecycleHub");
-    const rhSearch = document.getElementById("recycleHubSearchInput");
-    if (rhSearch) rhSearch.focus();
+
+function filterHomeRecycleSearch() {
+  if (!homeRecycleSearch || !homeInstantResults || typeof recycleItemsDB === "undefined") return;
+  const query = homeRecycleSearch.value.trim().toLowerCase();
+  if (!query) {
+    homeInstantResults.style.display = "none";
+    homeInstantResults.innerHTML = "";
+    return;
+  }
+
+  const matches = Object.entries(recycleItemsDB).filter(([k, item]) => {
+    return item.name.toLowerCase().includes(query) || (item.binDesc && item.binDesc.toLowerCase().includes(query));
+  }).slice(0, 5);
+
+  if (matches.length === 0) {
+    homeInstantResults.style.display = "block";
+    homeInstantResults.innerHTML = `
+      <div style="padding: 12px 14px; font-size: 13px; color: #6B7280; text-align: center;">
+        No direct match for "<strong>${query.replace(/</g, "&lt;")}</strong>".
+        <button type="button" class="link-action-green" id="btnSearchAllRecycle" style="display: block; margin: 6px auto 0; font-size: 13px;">Open complete Recycling Guide &rarr;</button>
+      </div>
+    `;
+    const btnAll = document.getElementById("btnSearchAllRecycle");
+    if (btnAll) {
+      btnAll.addEventListener("click", () => {
+        homeInstantResults.style.display = "none";
+        showScreen("recycle");
+        switchRecycleSubview("viewRecycleHub");
+      });
+    }
+    return;
+  }
+
+  homeInstantResults.style.display = "block";
+  homeInstantResults.innerHTML = matches.map(([k, item]) => {
+    const swatch = item.binType === "yellow" ? "#EAB308" : (item.binType === "green" ? "#16A34A" : "#DC2626");
+    return `
+      <div class="home-search-result-row" data-item-key="${k}">
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <span style="width: 10px; height: 10px; border-radius: 50%; background: ${swatch}; flex-shrink: 0;"></span>
+          <strong style="font-size: 13.5px; color: #111827;">${item.name}</strong>
+        </div>
+        <span style="font-size: 11.5px; font-weight: 700; color: ${item.canRecycle ? '#15803D' : '#DC2626'}; background: ${item.canRecycle ? '#F0FDF4' : '#FEF2F2'}; padding: 2px 8px; border-radius: 6px;">${item.binName.split(' ')[0]}</span>
+      </div>
+    `;
+  }).join("") + `
+    <div style="padding: 8px 12px; background: #F9FAFB; border-top: 1px solid #F3F4F6; text-align: right;">
+      <button type="button" class="link-action-green" id="btnSeeAllSearch" style="font-size: 12px;">See all in guide &rarr;</button>
+    </div>
+  `;
+
+  homeInstantResults.querySelectorAll(".home-search-result-row").forEach(row => {
+    row.addEventListener("click", () => {
+      const key = row.getAttribute("data-item-key");
+      homeInstantResults.style.display = "none";
+      homeRecycleSearch.value = "";
+      showScreen("recycle");
+      if (typeof openItemDetail === "function") {
+        openItemDetail(key);
+      } else {
+        switchRecycleSubview("viewItemDetail");
+        renderItemDetailView(key);
+      }
+    });
+  });
+
+  const btnSeeAll = document.getElementById("btnSeeAllSearch");
+  if (btnSeeAll) {
+    btnSeeAll.addEventListener("click", () => {
+      homeInstantResults.style.display = "none";
+      showScreen("recycle");
+      switchRecycleSubview("viewRecycleHub");
+    });
+  }
+}
+
+if (homeRecycleSearch) {
+  homeRecycleSearch.addEventListener("input", filterHomeRecycleSearch);
+  document.addEventListener("click", (e) => {
+    if (homeInstantResults && !homeRecycleSearch.contains(e.target) && !homeInstantResults.contains(e.target)) {
+      homeInstantResults.style.display = "none";
+    }
   });
 }
 
@@ -2680,3 +2882,252 @@ document.getElementById("accountSignOutBtn").addEventListener("click", () => {
 
 const accountBrandLink = document.getElementById("accountBrandLink");
 if (accountBrandLink) accountBrandLink.addEventListener("click", e => { e.preventDefault(); showScreen("welcome"); });
+
+// ==========================================================
+// REPORT ISSUE MODAL & LOCAL DISPATCH SYSTEM (Section 05)
+// ==========================================================
+const reportModal = document.getElementById("reportModal");
+const closeReportModalBtn = document.getElementById("closeReportModalBtn");
+const tabNewReport = document.getElementById("tabNewReport");
+const tabMyReports = document.getElementById("tabMyReports");
+const panelNewReport = document.getElementById("panelNewReport");
+const panelReportSuccess = document.getElementById("panelReportSuccess");
+const panelMyReports = document.getElementById("panelMyReports");
+const wasteReportForm = document.getElementById("wasteReportForm");
+const reportCategory = document.getElementById("reportCategory");
+const groupReportBin = document.getElementById("groupReportBin");
+const btnSelectPhoto = document.getElementById("btnSelectPhoto");
+const reportPhotoInput = document.getElementById("reportPhotoInput");
+const photoPreviewWrap = document.getElementById("photoPreviewWrap");
+const photoPreviewImg = document.getElementById("photoPreviewImg");
+const btnRemovePhoto = document.getElementById("btnRemovePhoto");
+const successRefCode = document.getElementById("successRefCode");
+const btnViewInMyReports = document.getElementById("btnViewInMyReports");
+const btnCloseSuccessModal = document.getElementById("btnCloseSuccessModal");
+const myReportsList = document.getElementById("myReportsList");
+const myReportsCount = document.getElementById("myReportsCount");
+
+let attachedPhotoData = "";
+
+function getSavedReports() {
+  try {
+    return JSON.parse(localStorage.getItem("ecotrack_demo_reports") || "[]");
+  } catch (e) {
+    return [];
+  }
+}
+
+function updateReportsCountBadge() {
+  const reports = getSavedReports();
+  if (myReportsCount) myReportsCount.textContent = reports.length;
+}
+
+function openReportModal() {
+  if (!reportModal) return;
+  reportModal.style.display = "flex";
+  switchReportTab("new");
+  updateReportsCountBadge();
+  document.body.style.overflow = "hidden";
+}
+
+function closeReportModal() {
+  if (!reportModal) return;
+  reportModal.style.display = "none";
+  document.body.style.overflow = "";
+}
+
+function switchReportTab(tab) {
+  if (tab === "new") {
+    tabNewReport.classList.add("active");
+    tabMyReports.classList.remove("active");
+    panelNewReport.style.display = "block";
+    panelReportSuccess.style.display = "none";
+    panelMyReports.style.display = "none";
+  } else {
+    tabNewReport.classList.remove("active");
+    tabMyReports.classList.add("active");
+    panelNewReport.style.display = "none";
+    panelReportSuccess.style.display = "none";
+    panelMyReports.style.display = "block";
+    renderMyReports();
+  }
+}
+
+function renderMyReports() {
+  if (!myReportsList) return;
+  const reports = getSavedReports();
+  updateReportsCountBadge();
+
+  if (reports.length === 0) {
+    myReportsList.innerHTML = `
+      <div class="empty-reports-state">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="44" height="44" style="color: #9CA3AF;"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+        <p><strong>No reports lodged yet</strong></p>
+        <span style="font-size: 12.5px; color: #6B7280;">Missed collection or damaged bin? Use the 'New Report' tab to dispatch an alert.</span>
+      </div>
+    `;
+    return;
+  }
+
+  myReportsList.innerHTML = reports.map(r => `
+    <div class="my-report-item">
+      <div class="my-report-top">
+        <span class="my-report-ref">${r.reference}</span>
+        <span class="my-report-status">${r.status}</span>
+      </div>
+      <div class="my-report-title">${r.categoryLabel}${r.bin ? ` · ${r.bin}` : ""}</div>
+      <div class="my-report-meta">
+        <span>📍 ${r.location}</span>
+        <span>🕒 ${r.date}</span>
+      </div>
+      ${r.details ? `<div style="font-size: 13px; color: #4B5563; background: #F9FAFB; padding: 6px 10px; border-radius: 6px; margin-top: 4px;">"${r.details}"</div>` : ""}
+    </div>
+  `).join("");
+}
+
+// Hook up all report flag triggers across headers & mismatch button
+document.querySelectorAll(".report-flag-btn, #reportMismatchBtn").forEach(btn => {
+  btn.addEventListener("click", openReportModal);
+});
+
+if (closeReportModalBtn) closeReportModalBtn.addEventListener("click", closeReportModal);
+if (btnCloseSuccessModal) btnCloseSuccessModal.addEventListener("click", closeReportModal);
+
+if (reportModal) {
+  reportModal.addEventListener("click", (e) => {
+    if (e.target === reportModal) closeReportModal();
+  });
+}
+
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape" && reportModal && reportModal.style.display === "flex") {
+    closeReportModal();
+  }
+});
+
+if (tabNewReport) tabNewReport.addEventListener("click", () => switchReportTab("new"));
+if (tabMyReports) tabMyReports.addEventListener("click", () => switchReportTab("my"));
+if (btnViewInMyReports) btnViewInMyReports.addEventListener("click", () => switchReportTab("my"));
+
+// Category change conditional fields
+if (reportCategory && groupReportBin) {
+  reportCategory.addEventListener("change", () => {
+    const val = reportCategory.value;
+    if (val === "missed_collection" || val === "damaged_bin") {
+      groupReportBin.style.display = "flex";
+    } else {
+      groupReportBin.style.display = "none";
+    }
+  });
+}
+
+// Photo upload handling
+if (btnSelectPhoto && reportPhotoInput) {
+  btnSelectPhoto.addEventListener("click", () => reportPhotoInput.click());
+  reportPhotoInput.addEventListener("change", (e) => {
+    const file = e.target.files && e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (evt) => {
+        attachedPhotoData = evt.target.result;
+        photoPreviewImg.src = attachedPhotoData;
+        photoPreviewWrap.style.display = "block";
+      };
+      reader.readAsDataURL(file);
+    }
+  });
+}
+
+if (btnRemovePhoto) {
+  btnRemovePhoto.addEventListener("click", () => {
+    attachedPhotoData = "";
+    if (reportPhotoInput) reportPhotoInput.value = "";
+    photoPreviewImg.src = "";
+    photoPreviewWrap.style.display = "none";
+  });
+}
+
+// Form Submission
+if (wasteReportForm) {
+  wasteReportForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const cat = reportCategory.value;
+    const catLabels = {
+      missed_collection: "Missed bin collection",
+      damaged_bin: "Damaged / missing bin",
+      overflowing_public: "Overflowing public bin",
+      illegal_dumping: "Illegal dumping",
+      other: "General waste inquiry"
+    };
+
+    let selectedBin = "";
+    if (cat === "missed_collection" || cat === "damaged_bin") {
+      const checkedBin = document.querySelector('input[name="reportBinType"]:checked');
+      if (checkedBin) selectedBin = checkedBin.value;
+    }
+
+    const locationVal = document.getElementById("reportLocation") ? document.getElementById("reportLocation").value : "12 Greenview Ave, Greenfield";
+    const detailsVal = document.getElementById("reportDetails") ? document.getElementById("reportDetails").value.trim() : "";
+    const randomCode = "DEMO-2026-" + Math.floor(1000 + Math.random() * 9000);
+
+    const newRecord = {
+      reference: randomCode,
+      category: cat,
+      categoryLabel: catLabels[cat] || "Waste Report",
+      bin: selectedBin,
+      location: locationVal,
+      details: detailsVal,
+      date: new Date().toLocaleDateString("en-AU", { day: "numeric", month: "short", year: "numeric" }),
+      status: "Received"
+    };
+
+    const existing = getSavedReports();
+    existing.unshift(newRecord);
+    try {
+      localStorage.setItem("ecotrack_demo_reports", JSON.stringify(existing));
+    } catch (err) {}
+
+    if (successRefCode) successRefCode.textContent = randomCode;
+
+    // Transition to success panel
+    panelNewReport.style.display = "none";
+    panelReportSuccess.style.display = "block";
+    updateReportsCountBadge();
+
+    // Reset inputs
+    wasteReportForm.reset();
+    if (btnRemovePhoto) btnRemovePhoto.click();
+  });
+}
+
+updateReportsCountBadge();
+
+// ==========================================================
+// DYNAMIC COLLECTION DATES ENGINE (Section 03, 04.B, 10 QA)
+// ==========================================================
+function computeCollectionSchedule() {
+  const address = getSelectedAddress();
+  const sched = getScheduleForAddress(address);
+  const cols = computeUpcomingCollections(sched, 4, 'all');
+  return cols.map(c => {
+    return {
+      date: c.date,
+      dateShort: fmtDateShort(c.date),
+      dateSide: c.date.toLocaleDateString("en-AU", { day: "2-digit", month: "short" }),
+      dateFull: fmtDateLong(c.date),
+      countdown: fmtCountdown(c.days),
+      diffDays: c.days,
+      isShifted: c.isHoliday || false,
+      exceptionNote: c.isHoliday ? sched.holidayShift : "",
+      binConfig: {
+        labels: binsStringToLabel(c.bins)
+      }
+    };
+  });
+}
+
+function renderDynamicSchedule() {
+  setSelectedAddress(getSelectedAddress());
+}
+
+renderDynamicSchedule();
