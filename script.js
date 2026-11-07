@@ -10,6 +10,8 @@ const landingSchedules = {
   "12 Greenview Ave, Riverton": {
     council: "Riverton City Council · Zone 4B",
     zone: "4B",
+    isDemo: true,
+    demoLabel: "Demo schedule",
     regularDay: "Thursday",
     collectionDay: "Friday",
     baseDate: new Date(2026, 8, 25), // Friday Sep 25, 2026
@@ -29,6 +31,8 @@ const landingSchedules = {
   "12 Greenway St, Riverton": {
     council: "Riverton City Council · Zone 2A",
     zone: "2A",
+    isDemo: true,
+    demoLabel: "Demo schedule",
     regularDay: "Wednesday",
     collectionDay: "Wednesday",
     baseDate: new Date(2026, 8, 23), // Wednesday Sep 23, 2026
@@ -43,6 +47,8 @@ const landingSchedules = {
   "120 Greenview Ave, Riverton": {
     council: "Riverton City Council · Zone 4B",
     zone: "4B",
+    isDemo: true,
+    demoLabel: "Demo schedule",
     regularDay: "Thursday",
     collectionDay: "Friday",
     baseDate: new Date(2026, 8, 25), // Friday Sep 25, 2026
@@ -70,14 +76,22 @@ function getSelectedAddress() {
 }
 
 /**
- * Lookup schedule by address name (case-insensitive fallback).
+ * Lookup schedule by address name.
+ * If data is unavailable, returns null instead of inventing dates.
  */
 function getScheduleForAddress(address) {
-  const addr = address || getSelectedAddress();
+  const addr = (address || getSelectedAddress() || "").trim();
+  if (!addr) return null;
   if (landingSchedules[addr]) return landingSchedules[addr];
   const keys = Object.keys(landingSchedules);
-  const found = keys.find(k => k.toLowerCase() === addr.toLowerCase() || k.toLowerCase().includes(addr.toLowerCase()) || addr.toLowerCase().includes(k.split(",")[0].toLowerCase()));
-  return found ? landingSchedules[found] : landingSchedules["12 Greenview Ave, Riverton"];
+  const found = keys.find(k => {
+    const kLower = k.toLowerCase();
+    const aLower = addr.toLowerCase();
+    const kStreet = kLower.split(",")[0].trim();
+    const aStreet = aLower.split(",")[0].trim();
+    return kLower === aLower || (aStreet.length >= 4 && (kStreet === aStreet || kLower.includes(aStreet) || aLower.includes(kStreet)));
+  });
+  return found ? landingSchedules[found] : null;
 }
 
 /**
@@ -326,6 +340,40 @@ function renderMonthCalendarView(address = getSelectedAddress()) {
 
   const monthName = now.toLocaleDateString('en-AU', { month: 'long', year: 'numeric' });
   const scheduleSubtitle = document.getElementById("scheduleSubtitle");
+
+  if (!sched) {
+    if (scheduleSubtitle && panelMonthView && panelMonthView.style.display !== "none") {
+      scheduleSubtitle.textContent = `${monthName} (Schedule unavailable)`;
+    }
+    const calCalloutText = document.getElementById("calCalloutText");
+    const calCalloutBins = document.getElementById("calCalloutBins");
+    if (calCalloutText) calCalloutText.textContent = "Schedule unavailable";
+    if (calCalloutBins) calCalloutBins.textContent = "No collection data available for this address";
+
+    const calGridDays = document.getElementById("calGridDays");
+    if (calGridDays) {
+      const firstDay = new Date(year, month, 1);
+      const lastDay = new Date(year, month + 1, 0);
+      const numDays = lastDay.getDate();
+      const startDayOfWeek = (firstDay.getDay() + 6) % 7;
+      let html = '';
+      for (let e = 0; e < startDayOfWeek; e++) html += '<div class="cal-cell-empty"></div>';
+      for (let d = 1; d <= numDays; d++) {
+        html += `<div class="cal-cell" data-day="${d}"><span class="cal-day-num">${d}</span></div>`;
+      }
+      calGridDays.innerHTML = html;
+      calGridDays.querySelectorAll(".cal-cell").forEach(cell => {
+        cell.addEventListener("click", () => {
+          calGridDays.querySelectorAll(".cal-cell").forEach(c => c.classList.remove("is-selected"));
+          cell.classList.add("is-selected");
+          if (calCalloutText) calCalloutText.textContent = "Schedule unavailable";
+          if (calCalloutBins) calCalloutBins.textContent = "No kerbside bins scheduled for this address";
+        });
+      });
+    }
+    return;
+  }
+
   if (scheduleSubtitle && panelMonthView && panelMonthView.style.display !== "none") {
     scheduleSubtitle.textContent = monthName;
   }
@@ -527,20 +575,54 @@ let currentSelectedBinKey = 'recycling';
 
 function updateLandingSchedule(address) {
   const sched = getScheduleForAddress(address);
-  const upcoming = computeUpcomingCollections(sched, 8, 'all');
-  if (!upcoming.length) return;
-  const next = upcoming[0];
-
   const previewAddr = document.getElementById("previewAddressText");
   if (previewAddr) previewAddr.textContent = address;
 
   const councilLabel = document.getElementById("previewCouncilName");
-  if (councilLabel) councilLabel.textContent = sched.council;
-
   const nextDate = document.getElementById("previewNextDate");
+  const holidayPill = document.querySelector("#heroPreviewCard .holiday-alert-pill");
+  const demoBadge = document.getElementById("previewDemoBadge");
+  const binsRow = document.querySelector("#heroPreviewCard .preview-bins-row");
+
+  if (!sched) {
+    if (councilLabel) councilLabel.textContent = "Riverton City Council · Zone unmapped";
+    if (nextDate) nextDate.textContent = "Schedule unavailable";
+    if (holidayPill) holidayPill.style.display = "none";
+    if (demoBadge) demoBadge.style.display = "none";
+    if (binsRow) {
+      binsRow.innerHTML = `
+        <div class="schedule-unavailable-box" style="width: 100%;">
+          <strong>Schedule unavailable</strong>
+          <p>No kerbside collection data is available for "${escapeRecycleText(address)}". Choose a demo address or contact Riverton City Council.</p>
+        </div>`;
+    }
+    return;
+  }
+
+  if (demoBadge) {
+    demoBadge.style.display = sched.isDemo ? "inline-flex" : "none";
+    demoBadge.textContent = sched.demoLabel || "Demo schedule";
+  }
+
+  const upcoming = computeUpcomingCollections(sched, 8, 'all');
+  if (!upcoming.length) {
+    if (councilLabel) councilLabel.textContent = sched.council;
+    if (nextDate) nextDate.textContent = "Schedule unavailable";
+    if (holidayPill) holidayPill.style.display = "none";
+    if (binsRow) {
+      binsRow.innerHTML = `
+        <div class="schedule-unavailable-box" style="width: 100%;">
+          <strong>Schedule unavailable</strong>
+          <p>No upcoming collection dates found for this zone.</p>
+        </div>`;
+    }
+    return;
+  }
+
+  const next = upcoming[0];
+  if (councilLabel) councilLabel.textContent = sched.council;
   if (nextDate) nextDate.textContent = next.labelLong;
 
-  const holidayPill = document.querySelector("#heroPreviewCard .holiday-alert-pill");
   if (holidayPill) {
     if (next.isHoliday && sched.holidayShift) {
       holidayPill.style.display = "inline-flex";
@@ -552,7 +634,6 @@ function updateLandingSchedule(address) {
   }
 
   const dueBins = getBinItemsFromBinsString(next.bins);
-  const binsRow = document.querySelector("#heroPreviewCard .preview-bins-row");
   if (binsRow) {
     binsRow.innerHTML = dueBins.map(b => `
       <div class="bin-tile-item" data-bin="${b.key}" style="cursor: pointer;" title="View ${b.name} guide">
@@ -586,20 +667,83 @@ function updateLandingSchedule(address) {
 
 function updateHomeScreen(address) {
   const sched = getScheduleForAddress(address);
-  const upcoming = computeUpcomingCollections(sched, 8, 'all');
-  if (!upcoming.length) return;
-  const next = upcoming[0];
-
   const homeAddressLabel = document.getElementById("homeAddressLabel");
   if (homeAddressLabel) homeAddressLabel.textContent = address.split(",")[0];
 
   const homeNextDate = document.getElementById("homeNextDate");
-  if (homeNextDate) homeNextDate.textContent = next.labelLong;
-
   const homeCountdownPill = document.getElementById("homeCountdownPill");
-  if (homeCountdownPill) homeCountdownPill.textContent = fmtCountdown(next.days);
-
   const homeUsuallyPill = document.getElementById("homeUsuallyPill") || document.getElementById("homeNextPattern");
+  const homeHolidayNotice = document.getElementById("homeHolidayNotice");
+  const homeDemoBadge = document.getElementById("homeDemoBadge");
+  const homeDueBinsFlex = document.getElementById("homeDueBinsFlex");
+  const homeAsideNextDate = document.getElementById("homeAsideNextDate");
+  const homeAsideNextBins = document.getElementById("homeAsideNextBins");
+  const homeAsideHolidayTag = document.getElementById("homeAsideHolidayTag");
+  const homeSideUpcomingRows = document.getElementById("homeSideUpcomingRows");
+
+  if (!sched) {
+    if (homeNextDate) homeNextDate.textContent = "Schedule unavailable";
+    if (homeCountdownPill) {
+      homeCountdownPill.textContent = "Unavailable";
+      homeCountdownPill.className = "pill-badge pill-unavailable";
+    }
+    if (homeUsuallyPill) homeUsuallyPill.style.display = "none";
+    if (homeHolidayNotice) homeHolidayNotice.style.display = "none";
+    if (homeDemoBadge) homeDemoBadge.style.display = "none";
+
+    if (homeDueBinsFlex) {
+      homeDueBinsFlex.innerHTML = `
+        <div class="schedule-unavailable-box" style="width: 100%;">
+          <strong>Schedule unavailable</strong>
+          <p>We could not find collection records for "${escapeRecycleText(address)}". Choose a demo address to preview live schedules.</p>
+        </div>`;
+    }
+
+    if (homeAsideNextDate) homeAsideNextDate.textContent = "Schedule unavailable";
+    if (homeAsideNextBins) homeAsideNextBins.textContent = "";
+    if (homeAsideHolidayTag) homeAsideHolidayTag.style.display = "none";
+
+    if (homeSideUpcomingRows) {
+      homeSideUpcomingRows.innerHTML = `
+        <div class="up-row">
+          <strong>—</strong>
+          <span>Schedule unavailable</span>
+        </div>`;
+    }
+    return;
+  }
+
+  if (homeDemoBadge) {
+    homeDemoBadge.style.display = sched.isDemo ? "inline-flex" : "none";
+    homeDemoBadge.textContent = sched.demoLabel || "Demo schedule";
+  }
+
+  const upcoming = computeUpcomingCollections(sched, 8, 'all');
+  if (!upcoming.length) {
+    if (homeNextDate) homeNextDate.textContent = "Schedule unavailable";
+    if (homeCountdownPill) {
+      homeCountdownPill.textContent = "Unavailable";
+      homeCountdownPill.className = "pill-badge pill-unavailable";
+    }
+    if (homeUsuallyPill) homeUsuallyPill.style.display = "none";
+    if (homeHolidayNotice) homeHolidayNotice.style.display = "none";
+    if (homeDueBinsFlex) {
+      homeDueBinsFlex.innerHTML = `
+        <div class="schedule-unavailable-box" style="width: 100%;">
+          <strong>Schedule unavailable</strong>
+          <p>No upcoming collections currently scheduled.</p>
+        </div>`;
+    }
+    return;
+  }
+
+  const next = upcoming[0];
+  if (homeNextDate) homeNextDate.textContent = next.labelLong;
+  if (homeCountdownPill) {
+    homeCountdownPill.textContent = fmtCountdown(next.days);
+    homeCountdownPill.className = "pill-badge pill-in-days";
+  }
+
   if (homeUsuallyPill) {
     if (next.isHoliday) {
       homeUsuallyPill.style.display = "inline-flex";
@@ -609,13 +753,11 @@ function updateHomeScreen(address) {
     }
   }
 
-  const homeHolidayNotice = document.getElementById("homeHolidayNotice");
   if (homeHolidayNotice) {
     homeHolidayNotice.style.display = next.isHoliday ? "block" : "none";
   }
 
   // Due Bins on Home
-  const homeDueBinsFlex = document.getElementById("homeDueBinsFlex");
   if (homeDueBinsFlex) {
     const dueBins = getBinItemsFromBinsString(next.bins);
     homeDueBinsFlex.innerHTML = dueBins.map(b => `
@@ -641,28 +783,31 @@ function updateHomeScreen(address) {
   }
 
   // Home aside showcase header
-  const homeAsideNextDate = document.getElementById("homeAsideNextDate");
   if (homeAsideNextDate) {
     homeAsideNextDate.textContent = `Next collection: ${next.label}`;
   }
-  const homeAsideNextBins = document.getElementById("homeAsideNextBins");
   if (homeAsideNextBins) {
     homeAsideNextBins.textContent = binsStringToLabel(next.bins);
   }
-  const homeAsideHolidayTag = document.getElementById("homeAsideHolidayTag");
   if (homeAsideHolidayTag) {
     homeAsideHolidayTag.style.display = next.isHoliday ? "inline-block" : "none";
   }
 
   // Upcoming rows in home sidebar
-  const idDates = ["homeUpRow0Date", "homeUpRow1Date", "homeUpRow2Date"];
-  const idBins = ["homeUpRow0Bins", "homeUpRow1Bins", "homeUpRow2Bins"];
-  for (let i = 1; i <= 3; i++) {
-    const dEl = document.getElementById(idDates[i - 1]);
-    const bEl = document.getElementById(idBins[i - 1]);
-    if (upcoming[i]) {
-      if (dEl) dEl.textContent = upcoming[i].label.replace(/^[A-Za-z]+\s+/, '');
-      if (bEl) bEl.textContent = `· ${binsStringToLabel(upcoming[i].bins)}`;
+  if (homeSideUpcomingRows) {
+    const rows = [];
+    for (let i = 1; i <= 3 && i < upcoming.length; i++) {
+      const u = upcoming[i];
+      const datePart = u.label.replace(/^[A-Za-z]+\s+/, '');
+      const binPart = u.shortBinsLabel || binsStringToLabel(u.bins);
+      rows.push(`
+        <div class="up-row">
+          <strong>${datePart}</strong>
+          <span>· ${binPart}</span>
+        </div>`);
+    }
+    if (rows.length) {
+      homeSideUpcomingRows.innerHTML = rows.join("");
     }
   }
 }
@@ -670,12 +815,50 @@ function updateHomeScreen(address) {
 function renderScheduleView(address = getSelectedAddress(), binFilter = currentScheduleBinFilter) {
   currentScheduleBinFilter = binFilter;
   const sched = getScheduleForAddress(address);
-  const upcoming = computeUpcomingCollections(sched, 8, binFilter);
-  if (!upcoming.length) return;
-
-  const next = upcoming[0];
-
   const scheduleSubtitle = document.getElementById("scheduleSubtitle");
+  const schedDemoBadge = document.getElementById("schedDemoBadge");
+  const listWrap = document.getElementById("scheduleUpcomingListWrap") || document.querySelector("#panelUpcoming .upcoming-list-wrap");
+
+  if (!sched) {
+    if (scheduleSubtitle && (!panelMonthView || panelMonthView.style.display === "none")) {
+      scheduleSubtitle.textContent = `Upcoming collections for ${address.split(',')[0]} (Schedule unavailable)`;
+    }
+    if (schedDemoBadge) schedDemoBadge.style.display = "none";
+    if (listWrap) {
+      listWrap.innerHTML = `
+        <div class="schedule-unavailable-card">
+          <div class="sub-card-header">
+            <h3>Schedule unavailable</h3>
+            <p>Collection dates are unavailable for <strong>${escapeRecycleText(address)}</strong>.</p>
+          </div>
+          <p class="sub-helper">This application currently has active demo schedules for Riverton City Council (Zone 4B & 2A). Select a supported demo address to view collection dates.</p>
+        </div>`;
+    }
+    renderMonthCalendarView(address);
+    return;
+  }
+
+  if (schedDemoBadge) {
+    schedDemoBadge.style.display = sched.isDemo ? "inline-flex" : "none";
+    schedDemoBadge.textContent = sched.demoLabel || "Demo schedule";
+  }
+
+  const upcoming = computeUpcomingCollections(sched, 8, binFilter);
+  if (!upcoming.length) {
+    if (scheduleSubtitle && (!panelMonthView || panelMonthView.style.display === "none")) {
+      scheduleSubtitle.textContent = `Upcoming collections for ${address.split(',')[0]}`;
+    }
+    if (listWrap) {
+      listWrap.innerHTML = `
+        <div class="schedule-unavailable-card">
+          <h3>Schedule unavailable</h3>
+          <p>No upcoming collections match this filter.</p>
+        </div>`;
+    }
+    renderMonthCalendarView(address);
+    return;
+  }
+
   if (scheduleSubtitle && (!panelMonthView || panelMonthView.style.display === "none")) {
     scheduleSubtitle.textContent = `Upcoming collections for ${address.split(',')[0]}`;
   }
@@ -685,7 +868,7 @@ function renderScheduleView(address = getSelectedAddress(), binFilter = currentS
     chip.classList.toggle("active", chip.getAttribute("data-sched-bin") === binFilter);
   });
 
-  const listWrap = document.getElementById("scheduleUpcomingListWrap") || document.querySelector("#panelUpcoming .upcoming-list-wrap");
+  const next = upcoming[0];
   if (listWrap) {
     listWrap.innerHTML = upcoming.slice(0, 4).map((col, idx) => {
       const isNext = idx === 0;
@@ -748,13 +931,13 @@ function setSelectedAddress(address) {
   });
 
   // Update setup screen 03 bins info
-  const weekday = sched.regularDay;
+  const weekday = sched ? (sched.collectionDay || sched.regularDay) : null;
   const sGen = document.getElementById("setupBinGeneralTiming");
-  if (sGen) sGen.textContent = `Every ${weekday} · Weekly`;
+  if (sGen) sGen.textContent = weekday ? `Every ${weekday} · Weekly` : `Schedule unavailable`;
   const sRec = document.getElementById("setupBinRecyclingTiming");
-  if (sRec) sRec.textContent = `Every second ${weekday} · Fortnightly`;
+  if (sRec) sRec.textContent = weekday ? `Every second ${weekday} · Fortnightly` : `Schedule unavailable`;
   const sOrg = document.getElementById("setupBinOrganicsTiming");
-  if (sOrg) sOrg.textContent = `Every second ${weekday} · Fortnightly`;
+  if (sOrg) sOrg.textContent = weekday ? `Every second ${weekday} · Fortnightly` : `Schedule unavailable`;
 
   // Update Account screen
   const acctAddr = document.getElementById("accountAddressText");
@@ -767,11 +950,16 @@ function setSelectedAddress(address) {
   if (currentSelectedBinKey) {
     const bdCountdown = document.getElementById("bdCollectionCountdown");
     const bdTiming = document.getElementById("bdCollectionTiming");
-    const binCol = getNextCollectionForBin(currentSelectedBinKey, fullAddress);
-    if (bdCountdown && binCol) bdCountdown.textContent = binCol.countdown;
-    if (bdTiming) {
-      if (currentSelectedBinKey === 'general') bdTiming.textContent = `Every ${weekday}`;
-      else bdTiming.textContent = `Every second ${weekday}`;
+    if (!sched) {
+      if (bdCountdown) bdCountdown.textContent = "Schedule unavailable";
+      if (bdTiming) bdTiming.textContent = "Schedule unavailable";
+    } else {
+      const binCol = getNextCollectionForBin(currentSelectedBinKey, fullAddress);
+      if (bdCountdown) bdCountdown.textContent = binCol ? `${binCol.countdown} · Demo` : "Schedule unavailable";
+      if (bdTiming) {
+        if (currentSelectedBinKey === 'general') bdTiming.textContent = `Every ${weekday} (Demo schedule)`;
+        else bdTiming.textContent = `Every second ${weekday} (Demo schedule)`;
+      }
     }
   }
 }
@@ -830,26 +1018,41 @@ document.querySelectorAll(".hero-chip").forEach(chip => {
   });
 });
 
-// Calendar ICS generator with dynamic next collection date and address
+// Calendar ICS generator with 8-week collection series and address
 function downloadCalendarIcs(eventName, desc) {
   const addr = getSelectedAddress();
   const sched = getScheduleForAddress(addr);
-  const upcoming = computeUpcomingCollections(sched, 1, 'all');
-  const next = upcoming.length ? upcoming[0] : null;
+  const upcoming = computeUpcomingCollections(sched, 8, 'all');
+  if (!upcoming.length) return;
 
-  let dtStart = "20261113";
-  let dtEnd = "20261114";
-  if (next) {
-    const y = next.date.getFullYear();
-    const m = String(next.date.getMonth() + 1).padStart(2, "0");
-    const d = String(next.date.getDate()).padStart(2, "0");
-    dtStart = `${y}${m}${d}`;
-    const nextDay = new Date(next.date.getFullYear(), next.date.getMonth(), next.date.getDate() + 1);
-    const ey = nextDay.getFullYear();
-    const em = String(nextDay.getMonth() + 1).padStart(2, "0");
-    const ed = String(nextDay.getDate()).padStart(2, "0");
-    dtEnd = `${ey}${em}${ed}`;
-  }
+  const pad = n => String(n).padStart(2, '0');
+  const fmtIcsDate = d => `${d.getFullYear()}${pad(d.getMonth() + 1)}${pad(d.getDate())}`;
+
+  const eventsList = upcoming.map((col, idx) => {
+    const dtStart = fmtIcsDate(col.date);
+    const nextD = new Date(col.date.getFullYear(), col.date.getMonth(), col.date.getDate() + 1);
+    const dtEnd = fmtIcsDate(nextD);
+    const summary = eventName || `EcoTrack Kerbside: General (Red) + ${col.fBinShort} (${col.isRecycling ? 'Yellow' : 'Green'})`;
+    const description = desc || `Kerbside collection for ${addr}. General waste (Weekly) + ${col.fBinShort} (Fortnightly). Put bins out before 6:00 AM on collection morning.`;
+    const uid = `ecotrack-${col.date.getTime()}-${idx}@ecotrack.local`;
+
+    return [
+      "BEGIN:VEVENT",
+      "UID:" + uid,
+      "SUMMARY:" + summary,
+      "DESCRIPTION:" + description,
+      "DTSTART;VALUE=DATE:" + dtStart,
+      "DTEND;VALUE=DATE:" + dtEnd,
+      "LOCATION:" + addr,
+      "STATUS:CONFIRMED",
+      "BEGIN:VALARM",
+      "TRIGGER:-PT12H",
+      "DESCRIPTION:EcoTrack Reminder: Put bins out tonight",
+      "ACTION:DISPLAY",
+      "END:VALARM",
+      "END:VEVENT"
+    ].join("\r\n");
+  });
 
   const icsContent = [
     "BEGIN:VCALENDAR",
@@ -857,19 +1060,7 @@ function downloadCalendarIcs(eventName, desc) {
     "PRODID:-//EcoTrack//Waste Management System//EN",
     "CALSCALE:GREGORIAN",
     "METHOD:PUBLISH",
-    "BEGIN:VEVENT",
-    "SUMMARY:" + (eventName || "EcoTrack Kerbside Collection"),
-    "DESCRIPTION:" + (desc || "EcoTrack collection day reminder"),
-    "DTSTART;VALUE=DATE:" + dtStart,
-    "DTEND;VALUE=DATE:" + dtEnd,
-    "LOCATION:" + addr,
-    "STATUS:CONFIRMED",
-    "BEGIN:VALARM",
-    "TRIGGER:-PT12H",
-    "DESCRIPTION:EcoTrack Reminder: Put bins out tonight",
-    "ACTION:DISPLAY",
-    "END:VALARM",
-    "END:VEVENT",
+    eventsList.join("\r\n"),
     "END:VCALENDAR"
   ].join("\r\n");
 
@@ -896,27 +1087,44 @@ function openMonthScheduleDrawer() {
   const backdrop = document.getElementById("monthScheduleBackdrop");
   const addr = getSelectedAddress();
   const sched = getScheduleForAddress(addr);
-  const upcoming = computeUpcomingCollections(sched, 6, 'all');
 
   const drawerAddr = document.getElementById("monthDrawerAddress");
   if (drawerAddr) drawerAddr.textContent = addr;
 
   const drawerZone = document.getElementById("monthDrawerZone");
-  if (drawerZone) drawerZone.textContent = sched.council;
-
+  const drawerDemoBadge = document.getElementById("monthDrawerDemoBadge");
   const list = document.getElementById("monthWeeksList");
-  if (list) {
-    list.innerHTML = upcoming.map(w => `
-      <div class="month-week-row">
-        <div class="mwr-date">
-          <strong>${w.label}</strong>
-          ${w.isHoliday ? '<span class="mwr-holiday-pill">Holiday shift</span>' : ''}
+
+  if (!sched) {
+    if (drawerZone) drawerZone.textContent = "Riverton City Council · Schedule unavailable";
+    if (drawerDemoBadge) drawerDemoBadge.style.display = "none";
+    if (list) {
+      list.innerHTML = `
+        <div class="schedule-unavailable-box" style="margin: 16px 0;">
+          <strong>Schedule unavailable</strong>
+          <p>No collection records found for "${escapeRecycleText(addr)}". Select a demo address to view collection dates.</p>
+        </div>`;
+    }
+  } else {
+    if (drawerZone) drawerZone.textContent = sched.council;
+    if (drawerDemoBadge) {
+      drawerDemoBadge.style.display = sched.isDemo ? "inline-flex" : "none";
+      drawerDemoBadge.textContent = sched.demoLabel || "Demo schedule";
+    }
+    const upcoming = computeUpcomingCollections(sched, 6, 'all');
+    if (list) {
+      list.innerHTML = upcoming.map(w => `
+        <div class="month-week-row">
+          <div class="mwr-date">
+            <strong>${w.label}</strong>
+            ${w.isHoliday ? '<span class="mwr-holiday-pill">Holiday shift</span>' : ''}
+          </div>
+          <div class="mwr-bins">
+            <span>General waste (Red · Weekly) + ${w.fBinShort} (${w.isRecycling ? 'Yellow' : 'Green'} · Fortnightly)</span>
+          </div>
         </div>
-        <div class="mwr-bins">
-          <span>${w.bins}</span>
-        </div>
-      </div>
-    `).join("");
+      `).join("");
+    }
   }
 
   if (backdrop) {
@@ -2476,13 +2684,15 @@ function renderBinDetailView(binKey) {
     heroGraphic.innerHTML = getHdWheelieBinSvg(binKey);
   }
 
-  const weekday = sched.collectionDay || sched.regularDay;
+  const weekday = sched ? (sched.collectionDay || sched.regularDay) : null;
   const timing = document.getElementById("bdCollectionTiming");
   if (timing) {
-    if (binKey === 'general') {
-      timing.textContent = `Every ${weekday}`;
+    if (!sched) {
+      timing.textContent = "Schedule unavailable";
+    } else if (binKey === 'general') {
+      timing.textContent = `Every ${weekday} (Demo schedule)`;
     } else if (binKey === 'recycling' || binKey === 'organics') {
-      timing.textContent = `Every second ${weekday}`;
+      timing.textContent = `Every second ${weekday} (Demo schedule)`;
     } else {
       timing.textContent = data.timing;
     }
@@ -2490,11 +2700,15 @@ function renderBinDetailView(binKey) {
 
   const countdown = document.getElementById("bdCollectionCountdown");
   if (countdown) {
-    const binCol = getNextCollectionForBin(binKey, address);
-    if (binCol) {
-      countdown.textContent = binCol.countdown;
+    if (!sched) {
+      countdown.textContent = "Schedule unavailable";
     } else {
-      countdown.textContent = data.countdown;
+      const binCol = getNextCollectionForBin(binKey, address);
+      if (binCol) {
+        countdown.textContent = `${binCol.countdown} · Demo`;
+      } else {
+        countdown.textContent = "Schedule unavailable";
+      }
     }
   }
 
@@ -3187,6 +3401,7 @@ updateReportsCountBadge();
 function computeCollectionSchedule() {
   const address = getSelectedAddress();
   const sched = getScheduleForAddress(address);
+  if (!sched) return [];
   const cols = computeUpcomingCollections(sched, 4, 'all');
   return cols.map(c => {
     return {

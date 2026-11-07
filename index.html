@@ -119,6 +119,7 @@
             
             <div class="preview-card-top">
               <span class="preview-council-label" id="previewCouncilName">Riverton City Council · Zone 4B</span>
+              <span class="pill-badge pill-demo" id="previewDemoBadge">Demo schedule</span>
               <span class="status-live-dot" title="Operational"></span>
             </div>
 
@@ -297,7 +298,10 @@
         </div>
         <div class="spd-content">
           <h2 class="spd-title" id="monthDrawerAddress" style="margin-bottom: 6px;">12 Greenview Ave, Riverton</h2>
-          <span class="label-tiny" id="monthDrawerZone" style="margin-bottom: 20px;">Riverton City Council · Zone 4B</span>
+          <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 20px;">
+            <span class="label-tiny" id="monthDrawerZone">Riverton City Council · Zone 4B</span>
+            <span class="pill-badge pill-demo" id="monthDrawerDemoBadge">Demo schedule</span>
+          </div>
 
           <div class="month-weeks-list" id="monthWeeksList">
             <!-- Populated via JavaScript dynamically -->
@@ -1074,6 +1078,7 @@
                   <div class="date-badges">
                     <span class="pill-badge pill-in-days" id="homeCountdownPill">In 3 days</span>
                     <span class="pill-badge pill-usually" id="homeNextPattern">Usually Thursday</span>
+                    <span class="pill-badge pill-demo" id="homeDemoBadge">Demo schedule</span>
                   </div>
                 </div>
 
@@ -1257,7 +1262,10 @@
       <main class="schedule-main">
         <div class="schedule-exact-container">
           <div class="schedule-title-block">
-            <h1 class="schedule-exact-title">Collection schedule</h1>
+            <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+              <h1 class="schedule-exact-title">Collection schedule</h1>
+              <span class="pill-badge pill-demo" id="schedDemoBadge">Demo schedule</span>
+            </div>
             <p class="schedule-exact-sub" id="scheduleSubtitle">Upcoming collections for your address</p>
           </div>
 
