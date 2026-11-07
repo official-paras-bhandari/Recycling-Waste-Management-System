@@ -2402,18 +2402,18 @@ body { background: var(--paper); color: var(--ink); }
 
   #screenRecycle #viewRecycleHub .rh-top-action-row {
     grid-area: actions;
-    grid-template-columns: minmax(0, 1.5fr) minmax(310px, 0.8fr);
-    padding: 12px;
+    grid-template-columns: minmax(0, 1.5fr) minmax(290px, 0.8fr);
+    padding: 8px 10px;
     border: 1px solid rgba(15, 23, 42, 0.08);
-    border-radius: 18px;
+    border-radius: 14px;
     background: #fff;
-    box-shadow: 0 10px 24px rgba(15, 23, 42, 0.04);
+    box-shadow: 0 4px 14px rgba(15, 23, 42, 0.03);
   }
 
   #screenRecycle #viewRecycleHub .rh-search-box,
   #screenRecycle #viewRecycleHub .rh-scan-banner {
-    height: 62px;
-    border-radius: 12px;
+    height: 44px;
+    border-radius: 10px;
   }
 
   #screenRecycle #viewRecycleHub .rh-search-box {
@@ -4068,10 +4068,10 @@ body { background: var(--paper); color: var(--ink); }
   align-items: center;
   background: #FFFFFF;
   border: 1.5px solid var(--border);
-  border-radius: 14px;
-  padding: 10px 18px;
-  gap: 12px;
-  height: 58px;
+  border-radius: 10px;
+  padding: 6px 14px;
+  gap: 10px;
+  height: 44px;
   box-sizing: border-box;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
   transition: all 0.2s ease;
@@ -4079,12 +4079,12 @@ body { background: var(--paper); color: var(--ink); }
 
 .rh-search-box:focus-within {
   border-color: var(--primary-green);
-  box-shadow: 0 0 0 4px rgba(21, 128, 61, 0.12);
+  box-shadow: 0 0 0 3px rgba(21, 128, 61, 0.12);
 }
 
 .rh-search-icon {
-  width: 20px;
-  height: 20px;
+  width: 17px;
+  height: 17px;
   color: #9CA3AF;
   flex-shrink: 0;
 }
@@ -4093,7 +4093,7 @@ body { background: var(--paper); color: var(--ink); }
   flex: 1;
   border: none;
   background: transparent;
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 500;
   color: var(--text-main);
   outline: none;
@@ -4113,9 +4113,9 @@ body { background: var(--paper); color: var(--ink); }
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 36px;
-  height: 36px;
-  border-radius: 9px;
+  width: 28px;
+  height: 28px;
+  border-radius: 7px;
   cursor: pointer;
   transition: all 0.15s ease;
   flex-shrink: 0;
@@ -4128,8 +4128,8 @@ body { background: var(--paper); color: var(--ink); }
 }
 
 .rh-camera-btn svg {
-  width: 18px;
-  height: 18px;
+  width: 15px;
+  height: 15px;
 }
 
 .rh-search-dropdown {
@@ -4187,12 +4187,12 @@ body { background: var(--paper); color: var(--ink); }
 .rh-scan-banner {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 10px;
   background: #F0FDF4;
   border: 1.5px solid #DCFCE7;
-  border-radius: 14px;
-  padding: 8px 18px;
-  height: 58px;
+  border-radius: 10px;
+  padding: 6px 14px;
+  height: 44px;
   box-sizing: border-box;
   cursor: pointer;
   text-align: left;
@@ -4205,12 +4205,12 @@ body { background: var(--paper); color: var(--ink); }
   border-color: var(--primary-green);
   background: #DCFCE7;
   transform: translateY(-1px);
-  box-shadow: 0 6px 16px rgba(21, 128, 61, 0.1);
+  box-shadow: 0 4px 12px rgba(21, 128, 61, 0.1);
 }
 
 .scan-banner-icon {
-  width: 38px;
-  height: 38px;
+  width: 28px;
+  height: 28px;
   border-radius: 50%;
   background: #16A34A;
   border: none;
@@ -4222,8 +4222,8 @@ body { background: var(--paper); color: var(--ink); }
 }
 
 .scan-banner-icon svg {
-  width: 20px;
-  height: 20px;
+  width: 15px;
+  height: 15px;
 }
 
 .scan-banner-text {
@@ -4233,17 +4233,17 @@ body { background: var(--paper); color: var(--ink); }
 
 .scan-banner-text strong {
   display: block;
-  font-size: 14.5px;
+  font-size: 13px;
   font-weight: 700;
   color: var(--text-main);
-  margin-bottom: 1px;
+  margin-bottom: 0px;
   line-height: 1.2;
 }
 
 .scan-banner-text span {
-  font-size: 12px;
+  font-size: 11px;
   color: var(--text-muted);
-  line-height: 1.25;
+  line-height: 1.2;
   display: block;
   white-space: nowrap;
   overflow: hidden;
