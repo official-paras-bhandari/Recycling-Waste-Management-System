@@ -6355,3 +6355,50 @@ body { background: var(--paper); color: var(--ink); }
   font-size: 12.5px;
   color: #475569;
 }
+
+/* ===== Uber-style modals: big, square, high-contrast, thumb-friendly ===== */
+.modal-content-card { border-radius: 20px; }
+.modal-close-icon-btn { width: 44px; height: 44px; font-size: 24px; }
+.btn-minimal-primary, .btn-minimal-secondary {
+  min-height: 60px; border-radius: 12px; font-size: 17px; font-weight: 700; letter-spacing: .01em;
+}
+.btn-minimal-primary { background: #15803D; color: #fff; box-shadow: none; }
+.btn-minimal-primary:hover { background: #166534; }
+.btn-minimal-primary:active, .btn-minimal-secondary:active { transform: scale(.98); }
+.btn-minimal-secondary { background: #EEE; color: #111; border: none; }
+.btn-minimal-secondary:hover { background: #E2E2E2; }
+.minimal-stat-pill { border-radius: 12px; padding: 16px; font-size: 16px; }
+.minimal-meta-row { font-size: 16px; padding: 4px 0; }
+.mdl-val { font-size: 18px; font-weight: 700; }
+.mig-desc { font-size: 15px; }
+/* report form */
+.report-nav-tab { min-height: 48px; font-size: 15px; font-weight: 700; }
+.report-input-field, .report-textarea-field { min-height: 56px; font-size: 16px; border-radius: 12px; padding: 14px 16px; background: #F3F3F3; border: 2px solid transparent; }
+.report-input-field:focus, .report-textarea-field:focus { border-color: #15803D; background: #fff; }
+.report-bin-options { gap: 10px; }
+.bin-radio-card {
+  flex-direction: column; aspect-ratio: 1 / 1; gap: 10px; border-radius: 14px;
+  font-size: 15px; font-weight: 700; background: #F3F3F3; border: 2px solid transparent;
+}
+.bin-swatch { width: 28px; height: 28px; }
+.bin-radio-card:has(input:checked) { background: #15803D; color: #fff; border-color: #15803D; box-shadow: none; }
+.btn-photo-select { min-height: 56px; width: 100%; justify-content: center; font-size: 16px; font-weight: 600; border-radius: 12px; background: #F3F3F3; border: none; }
+.report-photo-upload-box { display: block; }
+
+/* ===== Report form: compact, fits the screen, sticky CTA ===== */
+.report-modal-card { max-width: 460px; max-height: 92vh; scrollbar-width: none; }
+.report-modal-card::-webkit-scrollbar { display: none; }
+.report-modal-card .modal-header-bar { padding: 16px 20px; }
+.report-tab-panel { padding: 12px 20px 0; }
+.report-form-layout { gap: 12px; }
+.report-nav-tab { min-height: 40px; font-size: 14px; }
+.report-input-field, .report-textarea-field { min-height: 48px; padding: 10px 14px; font-size: 15px; }
+.report-textarea-field { min-height: 64px; }
+.report-bin-options { gap: 8px; }
+.bin-radio-card { aspect-ratio: auto; height: 72px; gap: 6px; font-size: 14px; }
+.bin-swatch { width: 20px; height: 20px; }
+.btn-photo-select { min-height: 48px; }
+#btnSubmitReport {
+  position: sticky; bottom: 0; margin: 4px -20px 0; width: calc(100% + 40px);
+  border-radius: 0 0 20px 20px; min-height: 60px; background: #15803D; color: #fff;
+}
