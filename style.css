@@ -4996,6 +4996,55 @@ body { background: var(--paper); color: var(--ink); }
 }
 
 /* ---------------- WHAT GOES IN LIST (Responsive 3-Column Grid) ---------------- */
+.wgi-filter-pills {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  padding: 4px 0 8px 0;
+}
+
+.wgi-pill-btn {
+  appearance: none;
+  -webkit-appearance: none;
+  background: #F1F5F9;
+  color: #475569;
+  border: 1px solid #E2E8F0;
+  border-radius: 9999px;
+  padding: 8px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.18s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1.25;
+  outline: none;
+  user-select: none;
+}
+
+.wgi-pill-btn:hover {
+  background: #E2E8F0;
+  color: #0F172A;
+  border-color: #CBD5E1;
+  transform: translateY(-1px);
+}
+
+.wgi-pill-btn:active {
+  transform: scale(0.97);
+}
+
+.wgi-pill-btn.active {
+  background: var(--primary-green, #15803D);
+  color: #FFFFFF;
+  border-color: var(--primary-green, #15803D);
+  box-shadow: 0 2px 8px rgba(21, 128, 61, 0.25);
+  font-weight: 600;
+}
+
 .wgi-items-grid-web {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
