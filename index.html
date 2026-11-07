@@ -1092,8 +1092,16 @@
               </div>
 
               <!-- Reminder Row Card -->
-              <div class="card-remind-row">
-                <span class="remind-row-text">Remind me · Thursday 7:00 pm</span>
+              <div class="card-remind-row" id="homeReminderRowCard">
+                <div class="remind-row-left">
+                  <span class="remind-row-text" id="homeReminderLabel">Remind me</span>
+                  <select id="homeReminderTimeSelect" class="remind-time-select" aria-label="Select reminder time">
+                    <option value="Night before · 7:00 pm" selected>Night before · 7:00 pm</option>
+                    <option value="Night before · 6:00 pm">Night before · 6:00 pm</option>
+                    <option value="Night before · 8:00 pm">Night before · 8:00 pm</option>
+                    <option value="Morning of · 6:00 am">Morning of · 6:00 am</option>
+                  </select>
+                </div>
                 <label class="switch-ui" aria-label="Toggle collection reminders">
                   <input type="checkbox" id="homeReminderToggle" checked />
                   <span class="slider-ui"></span>
@@ -2525,6 +2533,8 @@
       </div>
     </div>
   </div>
+
+  <div id="ecotrackToast" class="ecotrack-toast" style="display: none;" role="status" aria-live="polite"></div>
 
   <script src="script.js?v=premium-upgrade-1"></script>
 </body>

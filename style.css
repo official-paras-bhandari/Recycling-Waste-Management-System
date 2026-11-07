@@ -3140,6 +3140,56 @@ body { background: var(--paper); color: var(--ink); }
   font-weight: 600;
 }
 
+.remind-row-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.remind-time-select {
+  font-family: inherit;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #15803D;
+  background: #F0FDF4;
+  border: 1px solid #BBF7D0;
+  border-radius: 8px;
+  padding: 5px 10px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.remind-time-select:hover {
+  background: #DCFCE7;
+}
+.remind-time-select:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(21, 128, 61, 0.25);
+}
+
+.ecotrack-toast {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 999;
+  background: #111827;
+  color: #FFFFFF;
+  padding: 12px 18px;
+  border-radius: 12px;
+  font-size: 13.5px;
+  font-weight: 600;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  animation: toastSlideIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes toastSlideIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
 /* Recycle Search */
 .recycle-input-card {
   background: white;

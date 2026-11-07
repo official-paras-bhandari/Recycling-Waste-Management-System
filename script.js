@@ -909,10 +909,49 @@ if (sideCentresBtn) {
   });
 }
 
+// Toast feedback system
+let toastTimeout = null;
+function showToast(msg) {
+  const toast = document.getElementById("ecotrackToast");
+  if (!toast) return;
+  toast.textContent = msg;
+  toast.style.display = "flex";
+  clearTimeout(toastTimeout);
+  toastTimeout = setTimeout(() => {
+    toast.style.display = "none";
+  }, 3500);
+}
+
 const homeReminderToggle = document.getElementById("homeReminderToggle");
+const homeReminderTimeSelect = document.getElementById("homeReminderTimeSelect");
+
+try {
+  const isRemActive = localStorage.getItem("ecotrack_reminder_active") !== "false";
+  if (homeReminderToggle) homeReminderToggle.checked = isRemActive;
+  const savedTime = localStorage.getItem("ecotrack_reminder_time_choice");
+  if (homeReminderTimeSelect && savedTime) homeReminderTimeSelect.value = savedTime;
+} catch (e) {}
+
 if (homeReminderToggle) {
   homeReminderToggle.addEventListener("change", () => {
-    localStorage.setItem("ecotrack_reminder_active", homeReminderToggle.checked);
+    const active = homeReminderToggle.checked;
+    localStorage.setItem("ecotrack_reminder_active", active);
+    const chosenTime = homeReminderTimeSelect ? homeReminderTimeSelect.value : "7:00 pm";
+    if (active) {
+      showToast(`✓ Reminder active · Alert set for ${chosenTime}`);
+    } else {
+      showToast("Reminders paused for upcoming collections");
+    }
+  });
+}
+
+if (homeReminderTimeSelect) {
+  homeReminderTimeSelect.addEventListener("change", () => {
+    const val = homeReminderTimeSelect.value;
+    localStorage.setItem("ecotrack_reminder_time_choice", val);
+    if (homeReminderToggle && homeReminderToggle.checked) {
+      showToast(`✓ Reminder updated: ${val}`);
+    }
   });
 }
 
