@@ -6035,3 +6035,17 @@ body { background: var(--paper); color: var(--ink); }
 .bin-setup-card.off { opacity: .45; }
 .bin-setup-card.off .check-circle-green { visibility: hidden; }
 .option-time-card:focus-visible{outline:2px solid #2d6a35;outline-offset:2px}.option-time-card:focus{outline:none}
+
+.save-actions{display:flex;flex-direction:column;align-items:center;gap:16px;margin-top:8px}
+.save-actions #googleBtnWrap{width:100%;display:flex;justify-content:center}
+.google-btn{display:flex;align-items:center;justify-content:center;gap:12px;width:100%;padding:14px 20px;font:inherit;font-weight:600;font-size:16px;color:#111827;background:#fff;border:1px solid #d1d5db;border-radius:999px;cursor:pointer}
+.google-btn:hover{background:#f3f4f6}
+.google-btn:focus-visible,.guest-link:focus-visible{outline:2px solid #2d6a35;outline-offset:2px}
+.guest-link{background:none;border:0;font:inherit;font-size:15px;color:#4b5563;text-decoration:underline;cursor:pointer;padding:6px}
+
+/* Mobile landing fixes: keep icon + address on one row, button full width below */
+@media (max-width: 600px) {
+  .hero-input-bar { flex-direction: row; flex-wrap: wrap; align-items: center; height: auto; gap: 10px; padding: 10px 12px; }
+  .hero-input-bar input { width: auto; flex: 1 1 0; height: 40px; }
+  .hero-input-bar .btn-hero-cta { flex: 1 1 100%; }
+}

@@ -54,13 +54,13 @@ if (optNightBefore && optMorningOf) {
 // Whole onboarding result lives in one JSON profile (localStorage; no real auth yet)
 const loadProfile = () => { try { return JSON.parse(localStorage.getItem("ecotrack_profile")) || {}; } catch (e) { return {}; } };
 
-function completeOnboarding(email) {
+function completeOnboarding(provider) {
   const remindersOn = document.getElementById("setupRemindersToggle").checked;
   const profile = {
     address: addressSearchInput ? addressSearchInput.value.trim() : "",
     bins: [...document.querySelectorAll("#screenBins .bin-setup-card:not(.off)")].map(c => c.innerText.trim().replace(/\s+/g, " ")),
     reminder: { on: remindersOn, when: optMorningOf.classList.contains("selected") ? "morning" : "night" },
-    account: email ? { email } : null // null = guest
+    account: provider ? { provider } : null // null = guest
   };
   localStorage.setItem("ecotrack_profile", JSON.stringify(profile));
   localStorage.setItem("ecotrack_reminder_active", remindersOn);
@@ -73,11 +73,6 @@ const finishSetupBtn = document.getElementById("finishSetupBtn");
 if (finishSetupBtn) finishSetupBtn.addEventListener("click", () => showScreen("save"));
 document.getElementById("backToRemindersBtn").addEventListener("click", () => showScreen("reminders"));
 document.getElementById("continueGuestBtn").addEventListener("click", () => completeOnboarding(null));
-document.getElementById("createAccountBtn").addEventListener("click", () => {
-  const input = document.getElementById("saveEmailInput");
-  if (!input.checkValidity() || !input.value) { input.reportValidity(); return; }
-  completeOnboarding(input.value.trim());
-});
 
 // Australian address search via OpenStreetMap Nominatim (free, no key; keep requests debounced)
 const NOM = "https://nominatim.openstreetmap.org";
@@ -157,23 +152,5 @@ const hint = () => {
 [optNightBefore, optMorningOf, setupToggle].forEach(el => el.addEventListener(el === setupToggle ? "change" : "click", hint));
 hint();
 
-// Google sign-in (Google Identity Services). Set a real OAuth client ID to enable it.
-// shortcut: ID token is decoded, not verified; verify server-side once a backend exists.
-const GOOGLE_CLIENT_ID = "";
-const googleBtn = document.getElementById("googleBtn");
-function onGoogle({ credential }) {
-  const p = JSON.parse(decodeURIComponent(escape(atob(credential.split(".")[1].replace(/-/g, "+").replace(/_/g, "/")))));
-  completeOnboarding(p.email);
-}
-if (GOOGLE_CLIENT_ID) {
-  const sc = document.createElement("script");
-  sc.src = "https://accounts.google.com/gsi/client";
-  sc.onload = () => {
-    google.accounts.id.initialize({ client_id: GOOGLE_CLIENT_ID, callback: onGoogle });
-    google.accounts.id.renderButton(document.getElementById("googleBtnWrap"), { theme: "outline", size: "large", text: "continue_with", width: 320 });
-    googleBtn.remove();
-  };
-  document.head.appendChild(sc);
-} else {
-  googleBtn.addEventListener("click", () => showToast("Google sign-in needs a client ID. Use email or continue as guest."));
-}
+// Google sign-in is UI-only for now (no OAuth). shortcut: swap for Google Identity Services once there is a backend.
+document.getElementById("googleBtn").addEventListener("click", () => completeOnboarding("google"));
