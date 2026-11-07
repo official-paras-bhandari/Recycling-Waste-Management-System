@@ -157,48 +157,140 @@ function getBinItemsFromBinsString(binsStr) {
 /**
  * Compute upcoming collection dates for a schedule/address and optional bin filter.
  * Guarantees all returned dates are >= todayMidnight (today or in the future).
+ * Correctly alternates:
+ * - General waste (Red lid): Weekly (every 7 days)
+ * - Fortnightly bin (Yellow lid Recycling or Green lid Organics FOGO): Alternates every 14 days
  */
 function computeUpcomingCollections(schedOrAddress, count = 10, binType = 'all') {
   const sched = typeof schedOrAddress === 'string'
     ? getScheduleForAddress(schedOrAddress)
     : (schedOrAddress || getScheduleForAddress());
-  if (!sched || !sched.weeks || !sched.weeks.length) return [];
+  if (!sched) return [];
 
-  const base = sched.baseDate || new Date(2026, 8, 25);
-  const N = sched.weeks.length;
-
+  const anchor = sched.standardAnchor || sched.baseDate || new Date(2026, 8, 24);
   const now = new Date();
   const todayMidnight = new Date(now.getFullYear(), now.getMonth(), now.getDate());
 
-  // Count 7-day increments from base
-  const msDiff = todayMidnight.getTime() - base.getTime();
+  // Determine starting week index k
+  const msDiff = todayMidnight.getTime() - anchor.getTime();
   let k = Math.max(0, Math.floor(msDiff / (7 * 86400000)));
-  while (new Date(base.getFullYear(), base.getMonth(), base.getDate() + k * 7) < todayMidnight) {
+
+  // Ensure anchor + k * 7 is on or after today
+  while (true) {
+    const regD = new Date(anchor.getFullYear(), anchor.getMonth(), anchor.getDate() + k * 7);
+    const dateKey = `${regD.getFullYear()}-${String(regD.getMonth() + 1).padStart(2, '0')}-${String(regD.getDate()).padStart(2, '0')}`;
+    const holidayInfo = sched.holidayExceptions && sched.holidayExceptions[dateKey];
+    const actualD = holidayInfo ? holidayInfo.movedTo : regD;
+    if (actualD >= todayMidnight) {
+      break;
+    }
     k++;
   }
 
   const results = [];
-  const maxK = k + 500;
+  const maxK = k + 400;
+
   while (results.length < count && k < maxK) {
-    const d = new Date(base.getFullYear(), base.getMonth(), base.getDate() + k * 7);
-    const weekDef = sched.weeks[k % N];
-    const binsStr = weekDef.bins;
+    const regD = new Date(anchor.getFullYear(), anchor.getMonth(), anchor.getDate() + k * 7);
+    const dateKey = `${regD.getFullYear()}-${String(regD.getMonth() + 1).padStart(2, '0')}-${String(regD.getDate()).padStart(2, '0')}`;
+    const holidayInfo = sched.holidayExceptions && sched.holidayExceptions[dateKey];
+    const actualD = holidayInfo ? holidayInfo.movedTo : regD;
+
+    // Fortnightly bin determination
+    // If firstFortnightBin is 'recycling': even k = recycling, odd k = organics
+    // If firstFortnightBin is 'organics': even k = organics, odd k = recycling
+    const isRecycling = (sched.firstFortnightBin === 'recycling') ? (k % 2 === 0) : (k % 2 !== 0);
+    const fBinKey = isRecycling ? 'recycling' : 'organics';
+    const fBinName = isRecycling ? 'Recycling (Yellow)' : 'Organics FOGO (Green)';
+    const fBinShort = isRecycling ? 'Recycling' : 'Garden & food';
+    const binsStr = `General waste (Red) + ${fBinName}`;
+    const shortBinsLabel = `General + ${fBinShort}`;
 
     let matches = true;
     if (binType && binType !== 'all') {
-      if (binType === 'recycling') matches = /yellow|recycling/i.test(binsStr);
-      else if (binType === 'organics') matches = /green|organic|garden|fogo/i.test(binsStr);
-      else if (binType === 'general') matches = /red|general/i.test(binsStr);
+      if (binType === 'recycling') {
+        matches = isRecycling;
+      } else if (binType === 'organics') {
+        matches = !isRecycling;
+      } else if (binType === 'general') {
+        // General waste is collected every week
+        matches = true;
+      }
     }
 
-    if (matches) {
+    if (matches && actualD >= todayMidnight) {
       results.push({
-        date: d,
-        label: fmtDateShort(d),
-        labelLong: fmtDateLong(d),
+        date: actualD,
+        regularDate: regD,
+        label: fmtDateShort(actualD),
+        labelLong: fmtDateLong(actualD),
         bins: binsStr,
-        isHoliday: weekDef.isHoliday || false,
-        days: daysFromToday(d)
+        shortBinsLabel: shortBinsLabel,
+        fBinKey: fBinKey,
+        fBinShort: fBinShort,
+        isRecycling: isRecycling,
+        isHoliday: Boolean(holidayInfo),
+        holidayShift: holidayInfo ? (holidayInfo.reason || sched.holidayShift) : null,
+        days: daysFromToday(actualD),
+        weekIndex: k
+      });
+    }
+    k++;
+  }
+
+  return results;
+}
+
+/**
+ * Compute all collections falling within a calendar month (year, month: 0-indexed).
+ */
+function computeCollectionsForMonth(schedOrAddress, year, month) {
+  const sched = typeof schedOrAddress === 'string'
+    ? getScheduleForAddress(schedOrAddress)
+    : (schedOrAddress || getScheduleForAddress());
+  if (!sched) return [];
+
+  const anchor = sched.standardAnchor || sched.baseDate || new Date(2026, 8, 24);
+  const startOfMonth = new Date(year, month, 1);
+  const endOfMonth = new Date(year, month + 1, 0, 23, 59, 59);
+
+  // Find starting k
+  const msDiff = startOfMonth.getTime() - anchor.getTime();
+  let k = Math.floor(msDiff / (7 * 86400000)) - 1;
+  if (k < 0) k = 0;
+
+  const results = [];
+  while (true) {
+    const regD = new Date(anchor.getFullYear(), anchor.getMonth(), anchor.getDate() + k * 7);
+    const dateKey = `${regD.getFullYear()}-${String(regD.getMonth() + 1).padStart(2, '0')}-${String(regD.getDate()).padStart(2, '0')}`;
+    const holidayInfo = sched.holidayExceptions && sched.holidayExceptions[dateKey];
+    const actualD = holidayInfo ? holidayInfo.movedTo : regD;
+
+    if (actualD > endOfMonth) break;
+
+    if (actualD >= startOfMonth && actualD <= endOfMonth) {
+      const isRecycling = (sched.firstFortnightBin === 'recycling') ? (k % 2 === 0) : (k % 2 !== 0);
+      const fBinKey = isRecycling ? 'recycling' : 'organics';
+      const fBinName = isRecycling ? 'Recycling (Yellow)' : 'Organics FOGO (Green)';
+      const fBinShort = isRecycling ? 'Recycling' : 'Garden & food';
+      const binsStr = `General waste (Red) + ${fBinName}`;
+      const shortBinsLabel = `General + ${fBinShort}`;
+
+      results.push({
+        date: actualD,
+        regularDate: regD,
+        day: actualD.getDate(),
+        label: fmtDateShort(actualD),
+        labelLong: fmtDateLong(actualD),
+        bins: binsStr,
+        shortBinsLabel: shortBinsLabel,
+        fBinKey: fBinKey,
+        fBinShort: fBinShort,
+        isRecycling: isRecycling,
+        isHoliday: Boolean(holidayInfo),
+        holidayShift: holidayInfo ? (holidayInfo.reason || sched.holidayShift) : null,
+        days: daysFromToday(actualD),
+        weekIndex: k
       });
     }
     k++;
@@ -221,6 +313,103 @@ function getNextCollectionForBin(binType, address = getSelectedAddress()) {
     days: col.days,
     countdown: col.days === 0 ? `Next: Today` : `Next: ${col.label} (${cd.toLowerCase()})`
   };
+}
+
+/**
+ * Dynamically render the Month Calendar View for the Schedule screen.
+ */
+function renderMonthCalendarView(address = getSelectedAddress()) {
+  const sched = getScheduleForAddress(address);
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = now.getMonth();
+
+  const monthName = now.toLocaleDateString('en-AU', { month: 'long', year: 'numeric' });
+  const scheduleSubtitle = document.getElementById("scheduleSubtitle");
+  if (scheduleSubtitle && panelMonthView && panelMonthView.style.display !== "none") {
+    scheduleSubtitle.textContent = monthName;
+  }
+
+  const colsInMonth = computeCollectionsForMonth(sched, year, month);
+  const upcomingCols = computeUpcomingCollections(sched, 1, 'all');
+  const nextCol = upcomingCols.length ? upcomingCols[0] : null;
+
+  const calGridDays = document.getElementById("calGridDays");
+  if (!calGridDays) return;
+
+  const firstDay = new Date(year, month, 1);
+  const lastDay = new Date(year, month + 1, 0);
+  const numDays = lastDay.getDate();
+
+  // Day of week for 1st of month: 0=Sun, 1=Mon, ..., 6=Sat
+  // In Monday-start header (M T W T F S S), Mon=0, Sun=6
+  const startDayOfWeek = (firstDay.getDay() + 6) % 7;
+
+  let html = '';
+  for (let e = 0; e < startDayOfWeek; e++) {
+    html += '<div class="cal-cell-empty"></div>';
+  }
+
+  let selectedDay = null;
+  if (nextCol && nextCol.date.getFullYear() === year && nextCol.date.getMonth() === month) {
+    selectedDay = nextCol.date.getDate();
+  } else if (colsInMonth.length > 0) {
+    selectedDay = colsInMonth[0].day;
+  }
+
+  for (let d = 1; d <= numDays; d++) {
+    const colForDay = colsInMonth.find(c => c.day === d);
+    const hasCol = Boolean(colForDay);
+    const isSelected = (d === selectedDay);
+
+    let dotHtml = '';
+    if (hasCol) {
+      const dotColorClass = colForDay.isRecycling ? 'dot-yellow' : 'dot-green';
+      dotHtml = `<span class="cal-cell-dot ${dotColorClass}"></span>`;
+    }
+
+    const cellClass = `cal-cell${hasCol ? ' has-dot' : ''}${isSelected ? ' is-selected' : ''}`;
+    html += `<div class="${cellClass}" data-day="${d}"><span class="cal-day-num">${d}</span>${dotHtml}</div>`;
+  }
+
+  calGridDays.innerHTML = html;
+
+  function updateCalloutForDay(d) {
+    const calCalloutText = document.getElementById("calCalloutText");
+    const calCalloutBins = document.getElementById("calCalloutBins");
+    const colForDay = colsInMonth.find(c => c.day === d);
+    const targetDate = new Date(year, month, d);
+    const dateLabel = fmtDateShort(targetDate);
+
+    if (colForDay) {
+      if (calCalloutText) {
+        calCalloutText.textContent = `${colForDay.label} · ${colForDay.isHoliday ? 'Collection moved' : (nextCol && colForDay.day === nextCol.date.getDate() ? 'Next collection' : 'Kerbside collection')}`;
+      }
+      if (calCalloutBins) {
+        calCalloutBins.textContent = `${colForDay.bins} (Weekly + Fortnightly)`;
+      }
+    } else {
+      if (calCalloutText) {
+        calCalloutText.textContent = `${dateLabel} · No collection`;
+      }
+      if (calCalloutBins) {
+        calCalloutBins.textContent = "No kerbside bins scheduled for this day";
+      }
+    }
+  }
+
+  if (selectedDay) {
+    updateCalloutForDay(selectedDay);
+  }
+
+  calGridDays.querySelectorAll(".cal-cell").forEach(cell => {
+    cell.addEventListener("click", () => {
+      calGridDays.querySelectorAll(".cal-cell").forEach(c => c.classList.remove("is-selected"));
+      cell.classList.add("is-selected");
+      const d = parseInt(cell.getAttribute("data-day"), 10);
+      updateCalloutForDay(d);
+    });
+  });
 }
 
 // ==========================================================
@@ -486,7 +675,7 @@ function renderScheduleView(address = getSelectedAddress(), binFilter = currentS
   const next = upcoming[0];
 
   const scheduleSubtitle = document.getElementById("scheduleSubtitle");
-  if (scheduleSubtitle) {
+  if (scheduleSubtitle && (!panelMonthView || panelMonthView.style.display === "none")) {
     scheduleSubtitle.textContent = `Upcoming collections for ${address.split(',')[0]}`;
   }
 
@@ -501,13 +690,14 @@ function renderScheduleView(address = getSelectedAddress(), binFilter = currentS
       const isNext = idx === 0;
       const binColours = binsStringToColours(col.bins);
       const countdownStr = fmtCountdown(col.days);
-      const shortBinsLabel = binsStringToLabel(col.bins);
+      const shortBinsLabel = col.shortBinsLabel || binsStringToLabel(col.bins);
+      const freqLabel = binFilter === 'general' ? 'Weekly' : (binFilter === 'recycling' || binFilter === 'organics' ? 'Fortnightly' : 'Weekly + Fortnightly');
 
       return `
         <div class="upcoming-item-card ${isNext ? 'is-next-card' : ''}">
           <div class="uic-left">
             <h3 class="uic-date">${col.label}</h3>
-            <p class="uic-bins">${shortBinsLabel}</p>
+            <p class="uic-bins">${shortBinsLabel} <span class="uic-freq-pill">${freqLabel}</span></p>
             ${isNext ? (col.isHoliday ? '<span class="uic-exception">Moved for public holiday</span>' : `<span class="uic-countdown">${countdownStr} · Next collection</span>`) : `<span class="uic-countdown">${countdownStr}</span>`}
           </div>
           <div class="uic-bins-visual" aria-label="${shortBinsLabel} bins due">
@@ -523,35 +713,8 @@ function renderScheduleView(address = getSelectedAddress(), binFilter = currentS
     }).join("");
   }
 
-  // Calendar month callout
-  const calCalloutText = document.getElementById("calCalloutText");
-  if (calCalloutText) {
-    calCalloutText.textContent = `${next.label} · ${next.isHoliday ? 'Collection moved' : 'Next collection'}`;
-  }
-  const calCalloutBins = document.getElementById("calCalloutBins");
-  if (calCalloutBins) {
-    calCalloutBins.textContent = binsStringToLabel(next.bins);
-  }
-
-  // Update calendar grid dots for the current month
-  const now = new Date();
-  const curMonth = now.getMonth();
-  const calMonthCols = computeUpcomingCollections(sched, 12, 'all');
-  document.querySelectorAll("#calGridDays .cal-cell").forEach(cell => {
-    const day = parseInt(cell.getAttribute("data-day"), 10);
-    const hasCol = calMonthCols.some(c => c.date.getMonth() === curMonth && c.date.getDate() === day);
-    const isNextDay = next.date.getMonth() === curMonth && next.date.getDate() === day;
-    cell.classList.toggle("has-dot", hasCol);
-    cell.classList.toggle("is-selected", isNextDay);
-    let dot = cell.querySelector(".cal-cell-dot");
-    if (hasCol && !dot) {
-      dot = document.createElement("span");
-      dot.className = "cal-cell-dot";
-      cell.appendChild(dot);
-    } else if (!hasCol && dot) {
-      dot.remove();
-    }
-  });
+  // Sync the month calendar view as well
+  renderMonthCalendarView(address);
 }
 
 /**
@@ -1214,8 +1377,10 @@ function switchScheduleTab(view) {
   if (tabMonthView) tabMonthView.setAttribute("aria-selected", String(!isUpcoming));
   if (panelUpcoming) panelUpcoming.style.display = isUpcoming ? "block" : "none";
   if (panelMonthView) panelMonthView.style.display = isUpcoming ? "none" : "block";
-  if (scheduleSubtitle) {
-    scheduleSubtitle.textContent = isUpcoming ? "Upcoming collections for your address" : "September 2026";
+  if (isUpcoming) {
+    renderScheduleView(getSelectedAddress(), currentScheduleBinFilter);
+  } else {
+    renderMonthCalendarView(getSelectedAddress());
   }
 }
 
