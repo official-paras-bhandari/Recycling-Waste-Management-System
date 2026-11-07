@@ -4846,6 +4846,83 @@ body { background: var(--paper); color: var(--ink); }
   line-height: 1.5;
 }
 
+/* ---------------- SIMILAR ITEMS SECTION ---------------- */
+.similar-items-row {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  margin-top: 14px;
+}
+
+.similar-item-card {
+  background: #FFFFFF;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 16px 12px 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 10px;
+  cursor: pointer;
+  transition: all 0.18s ease;
+  font-family: inherit;
+  min-height: 110px;
+  box-sizing: border-box;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+  outline: none;
+  width: 100%;
+}
+
+.similar-item-card:hover {
+  border-color: var(--primary-green);
+  background: #F9FAFB;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
+}
+
+.similar-item-card:focus-visible {
+  border-color: var(--primary-green);
+  box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.15);
+}
+
+.sic-thumb {
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  background: #F3F4F6;
+  transition: all 0.18s ease;
+  flex-shrink: 0;
+}
+
+.similar-item-card:hover .sic-thumb {
+  background: #DCFCE7;
+}
+
+.sic-thumb svg {
+  width: 28px;
+  height: 28px;
+  display: block;
+}
+
+.similar-item-card span {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-main);
+  line-height: 1.3;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 0;
+  padding: 0;
+}
+
 /* ---------------- ALL BINS (Responsive 2x2 Grid) ---------------- */
 .all-bins-grid-web {
   display: grid;
@@ -5505,6 +5582,25 @@ body { background: var(--paper); color: var(--ink); }
   .learn-topics-grid-web {
     grid-template-columns: repeat(2, 1fr) !important;
     gap: 12px !important;
+  }
+
+  .similar-items-row {
+    gap: 10px !important;
+  }
+  .similar-item-card {
+    padding: 12px 8px !important;
+    min-height: 98px !important;
+  }
+  .sic-thumb {
+    width: 38px !important;
+    height: 38px !important;
+  }
+  .sic-thumb svg {
+    width: 22px !important;
+    height: 22px !important;
+  }
+  .similar-item-card span {
+    font-size: 11.5px !important;
   }
 }
 
