@@ -6,6 +6,8 @@ if (backToWelcomeBtn) {
   backToWelcomeBtn.addEventListener("click", () => showScreen("welcome"));
 }
 
+document.getElementById("backToAddressBtn")?.addEventListener("click", () => showScreen("address"));
+
 const homeAddressLabel = document.getElementById("homeAddressLabel");
 const addressSearchInput = document.getElementById("addressSearchInput");
 
@@ -108,9 +110,12 @@ addressSearchInput.addEventListener("input", () => {
   if (q.length < 3) return renderSuggestions([]);
   searchTimer = setTimeout(async () => {
     try {
-      const r = await fetch(`${NOM}/search?format=jsonv2&addressdetails=1&countrycodes=au&limit=5&q=${encodeURIComponent(q)}`);
-      if (q === addressSearchInput.value.trim()) renderSuggestions((await r.json()).map(fmtAddr).filter(Boolean));
-    } catch (e) { renderSuggestions([]); } // offline: Enter still accepts typed text
+      const find = async t => (await (await fetch(`${NOM}/search?format=jsonv2&addressdetails=1&countrycodes=au&limit=5&q=${encodeURIComponent(t)}`)).json()).map(fmtAddr).filter(Boolean);
+      let list = await find(q);
+      // OSM often lacks exact house numbers: retry without the leading number
+      if (!list.length && /^\d+\w*\s/.test(q)) list = await find(q.replace(/^\d+\w*\s+/, ""));
+      if (q === addressSearchInput.value.trim()) renderSuggestions([...list, q]); // typed text always selectable
+    } catch (e) { renderSuggestions([q]); } // offline/rate-limited: still let the user continue
   }, 400);
 });
 addressSearchInput.addEventListener("keydown", e => {
