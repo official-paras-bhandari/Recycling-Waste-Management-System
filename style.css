@@ -4888,24 +4888,37 @@ body { background: var(--paper); color: var(--ink); }
 }
 
 .sic-thumb {
-  width: 44px;
-  height: 44px;
+  width: 52px;
+  height: 52px;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 10px;
-  background: #F3F4F6;
+  border-radius: 12px;
+  background: #F8FAFC;
+  border: 1px solid rgba(0, 0, 0, 0.05);
   transition: all 0.18s ease;
   flex-shrink: 0;
+  overflow: hidden;
+  padding: 4px;
+  box-sizing: border-box;
 }
 
 .similar-item-card:hover .sic-thumb {
-  background: #DCFCE7;
+  background: #F0FDF4;
+  border-color: #BBF7D0;
 }
 
 .sic-thumb svg {
   width: 28px;
   height: 28px;
+  display: block;
+}
+
+.sic-thumb .sic-img,
+.sic-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
   display: block;
 }
 
