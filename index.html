@@ -1014,6 +1014,9 @@
           </nav>
 
           <div class="rsn-user-group">
+            <button type="button" class="report-flag-btn" aria-label="Report a waste problem" title="Report a problem">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"></path><line x1="4" y1="22" x2="4" y2="15"></line></svg>
+            </button>
             <button type="button" class="user-avatar-badge" title="John Smith · Resident Profile" aria-label="Resident profile"><span>JS</span></button>
           </div>
         </div>
@@ -1216,6 +1219,9 @@
           </nav>
 
           <div class="rsn-user-group">
+            <button type="button" class="report-flag-btn" aria-label="Report a waste problem" title="Report a problem">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"></path><line x1="4" y1="22" x2="4" y2="15"></line></svg>
+            </button>
             <button type="button" class="user-avatar-badge" title="John Smith · Resident Profile" aria-label="Resident profile"><span>JS</span></button>
           </div>
         </div>
@@ -1387,6 +1393,9 @@
             <button type="button" class="d-link" data-nav="recycle">Recycle</button>
           </nav>
           <div class="rsn-user-group">
+            <button type="button" class="report-flag-btn" aria-label="Report a waste problem" title="Report a problem">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"></path><line x1="4" y1="22" x2="4" y2="15"></line></svg>
+            </button>
             <button type="button" class="user-avatar-badge" title="John Smith · Resident Profile" aria-label="Resident profile"><span>JS</span></button>
           </div>
         </div>
@@ -1483,6 +1492,9 @@
 
           <!-- Resident User Avatar (John Smith) -->
           <div class="rsn-user-group">
+            <button type="button" class="report-flag-btn" aria-label="Report a waste problem" title="Report a problem">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"></path><line x1="4" y1="22" x2="4" y2="15"></line></svg>
+            </button>
             <button type="button" class="user-avatar-badge" id="recycleUserAvatarBtn" title="John Smith · Resident Profile" aria-label="Resident profile">
               <span>JS</span>
             </button>
@@ -2375,6 +2387,142 @@
       </div>
     </div>
   </section>
+
+  <!-- ======================================================= -->
+  <!-- RESIDENT REPORT ISSUE & DISPATCH MODAL                  -->
+  <!-- ======================================================= -->
+  <div class="app-modal-overlay" id="reportModal" style="display: none;" role="dialog" aria-modal="true" aria-labelledby="reportModalHeading">
+    <div class="modal-content-card report-modal-card">
+      <div class="modal-header-bar">
+        <div>
+          <h3 id="reportModalHeading">Report a Waste Problem</h3>
+          <p class="report-modal-sub">City of Greenfield · Resident Operations Dispatch</p>
+        </div>
+        <button type="button" class="modal-close-icon-btn" id="closeReportModalBtn" aria-label="Close report dialog">&times;</button>
+      </div>
+
+      <div class="report-modal-nav" role="tablist">
+        <button type="button" class="report-nav-tab active" id="tabNewReport" role="tab" aria-selected="true">New Report</button>
+        <button type="button" class="report-nav-tab" id="tabMyReports" role="tab" aria-selected="false">My Reports (<span id="myReportsCount">0</span>)</button>
+      </div>
+
+      <!-- NEW REPORT TAB CONTENT -->
+      <div class="report-tab-panel" id="panelNewReport">
+        <form id="wasteReportForm" class="report-form-layout">
+          <div class="report-form-group">
+            <label class="report-label" for="reportCategory">What is the issue? <span class="required-star">*</span></label>
+            <select id="reportCategory" class="report-input-field" required>
+              <option value="missed_collection">Missed bin collection</option>
+              <option value="damaged_bin">Damaged or missing bin</option>
+              <option value="overflowing_public">Overflowing public litter bin</option>
+              <option value="illegal_dumping">Illegal dumping / dumped rubbish</option>
+              <option value="other">Something else</option>
+            </select>
+          </div>
+
+          <!-- Conditional: Bin selector -->
+          <div class="report-form-group" id="groupReportBin">
+            <label class="report-label">Which bin is affected? <span class="required-star">*</span></label>
+            <div class="report-bin-options">
+              <label class="bin-radio-card">
+                <input type="radio" name="reportBinType" value="General Waste (Red Lid)" checked>
+                <span class="bin-swatch bin-swatch-red"></span>
+                <span>General (Red)</span>
+              </label>
+              <label class="bin-radio-card">
+                <input type="radio" name="reportBinType" value="Recycling (Yellow Lid)">
+                <span class="bin-swatch bin-swatch-yellow"></span>
+                <span>Recycle (Yellow)</span>
+              </label>
+              <label class="bin-radio-card">
+                <input type="radio" name="reportBinType" value="Garden Organics (Green Lid)">
+                <span class="bin-swatch bin-swatch-green"></span>
+                <span>Garden (Green)</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Location -->
+          <div class="report-form-group">
+            <label class="report-label" for="reportLocation">Location <span class="required-star">*</span></label>
+            <input type="text" id="reportLocation" class="report-input-field" value="12 Greenview Ave, Greenfield" required placeholder="Street address or nearest landmark" />
+            <small class="report-help-text">Defaults to your registered household address.</small>
+          </div>
+
+          <!-- Details -->
+          <div class="report-form-group">
+            <label class="report-label" for="reportDetails">Details / Description</label>
+            <textarea id="reportDetails" class="report-textarea-field" rows="3" placeholder="Provide extra details (e.g. lid snapped off, bin was placed out by 6am, etc.)"></textarea>
+          </div>
+
+          <!-- Photo attachment -->
+          <div class="report-form-group">
+            <label class="report-label">Attach photo (optional)</label>
+            <div class="report-photo-upload-box" id="reportPhotoDropzone">
+              <input type="file" id="reportPhotoInput" accept="image/*" style="display: none;" />
+              <button type="button" class="btn-photo-select" id="btnSelectPhoto">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+                <span>Upload photo</span>
+              </button>
+              <div id="photoPreviewWrap" style="display: none;" class="photo-preview-wrap">
+                <img id="photoPreviewImg" src="" alt="Photo preview" />
+                <button type="button" id="btnRemovePhoto" class="btn-remove-photo" aria-label="Remove photo">&times;</button>
+              </div>
+            </div>
+          </div>
+
+          <button type="submit" class="btn-green btn-block" id="btnSubmitReport">Submit Demo Report</button>
+        </form>
+      </div>
+
+      <!-- SUCCESS CONFIRMATION PANEL -->
+      <div class="report-tab-panel" id="panelReportSuccess" style="display: none;">
+        <div class="report-success-body">
+          <div class="success-icon-badge">✓</div>
+          <h4 class="success-title">Report Lodged with Council</h4>
+          <p class="success-desc">Thank you for helping keep our community clean. Your report has been logged locally in the dispatch queue.</p>
+          <div class="report-ref-card">
+            <span class="ref-label">DEMO REFERENCE NUMBER</span>
+            <strong class="ref-code" id="successRefCode">DEMO-2026-4891</strong>
+          </div>
+          <div class="report-timeline-steps">
+            <div class="timeline-step step-done">
+              <span class="step-dot"></span>
+              <div class="step-info">
+                <strong>Received</strong>
+                <span>Logged in local dispatch</span>
+              </div>
+            </div>
+            <div class="timeline-step">
+              <span class="step-dot"></span>
+              <div class="step-info">
+                <strong>Under Review</strong>
+                <span>Assigned to depot supervisor</span>
+              </div>
+            </div>
+            <div class="timeline-step">
+              <span class="step-dot"></span>
+              <div class="step-info">
+                <strong>Crew Dispatched</strong>
+                <span>Resolution expected within 48h</span>
+              </div>
+            </div>
+          </div>
+          <div class="success-actions">
+            <button type="button" class="btn-green" id="btnViewInMyReports">View in My Reports</button>
+            <button type="button" class="btn-outline-neutral" id="btnCloseSuccessModal">Done</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- MY REPORTS TAB CONTENT -->
+      <div class="report-tab-panel" id="panelMyReports" style="display: none;">
+        <div class="my-reports-list" id="myReportsList">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+    </div>
+  </div>
 
   <script src="script.js?v=premium-upgrade-1"></script>
 </body>

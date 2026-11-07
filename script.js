@@ -2204,3 +2204,222 @@ document.getElementById("accountSignOutBtn").addEventListener("click", () => {
 
 const accountBrandLink = document.getElementById("accountBrandLink");
 if (accountBrandLink) accountBrandLink.addEventListener("click", e => { e.preventDefault(); showScreen("welcome"); });
+
+// ==========================================================
+// REPORT ISSUE MODAL & LOCAL DISPATCH SYSTEM (Section 05)
+// ==========================================================
+const reportModal = document.getElementById("reportModal");
+const closeReportModalBtn = document.getElementById("closeReportModalBtn");
+const tabNewReport = document.getElementById("tabNewReport");
+const tabMyReports = document.getElementById("tabMyReports");
+const panelNewReport = document.getElementById("panelNewReport");
+const panelReportSuccess = document.getElementById("panelReportSuccess");
+const panelMyReports = document.getElementById("panelMyReports");
+const wasteReportForm = document.getElementById("wasteReportForm");
+const reportCategory = document.getElementById("reportCategory");
+const groupReportBin = document.getElementById("groupReportBin");
+const btnSelectPhoto = document.getElementById("btnSelectPhoto");
+const reportPhotoInput = document.getElementById("reportPhotoInput");
+const photoPreviewWrap = document.getElementById("photoPreviewWrap");
+const photoPreviewImg = document.getElementById("photoPreviewImg");
+const btnRemovePhoto = document.getElementById("btnRemovePhoto");
+const successRefCode = document.getElementById("successRefCode");
+const btnViewInMyReports = document.getElementById("btnViewInMyReports");
+const btnCloseSuccessModal = document.getElementById("btnCloseSuccessModal");
+const myReportsList = document.getElementById("myReportsList");
+const myReportsCount = document.getElementById("myReportsCount");
+
+let attachedPhotoData = "";
+
+function getSavedReports() {
+  try {
+    return JSON.parse(localStorage.getItem("ecotrack_demo_reports") || "[]");
+  } catch (e) {
+    return [];
+  }
+}
+
+function updateReportsCountBadge() {
+  const reports = getSavedReports();
+  if (myReportsCount) myReportsCount.textContent = reports.length;
+}
+
+function openReportModal() {
+  if (!reportModal) return;
+  reportModal.style.display = "flex";
+  switchReportTab("new");
+  updateReportsCountBadge();
+  document.body.style.overflow = "hidden";
+}
+
+function closeReportModal() {
+  if (!reportModal) return;
+  reportModal.style.display = "none";
+  document.body.style.overflow = "";
+}
+
+function switchReportTab(tab) {
+  if (tab === "new") {
+    tabNewReport.classList.add("active");
+    tabMyReports.classList.remove("active");
+    panelNewReport.style.display = "block";
+    panelReportSuccess.style.display = "none";
+    panelMyReports.style.display = "none";
+  } else {
+    tabNewReport.classList.remove("active");
+    tabMyReports.classList.add("active");
+    panelNewReport.style.display = "none";
+    panelReportSuccess.style.display = "none";
+    panelMyReports.style.display = "block";
+    renderMyReports();
+  }
+}
+
+function renderMyReports() {
+  if (!myReportsList) return;
+  const reports = getSavedReports();
+  updateReportsCountBadge();
+
+  if (reports.length === 0) {
+    myReportsList.innerHTML = `
+      <div class="empty-reports-state">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="44" height="44" style="color: #9CA3AF;"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+        <p><strong>No reports lodged yet</strong></p>
+        <span style="font-size: 12.5px; color: #6B7280;">Missed collection or damaged bin? Use the 'New Report' tab to dispatch an alert.</span>
+      </div>
+    `;
+    return;
+  }
+
+  myReportsList.innerHTML = reports.map(r => `
+    <div class="my-report-item">
+      <div class="my-report-top">
+        <span class="my-report-ref">${r.reference}</span>
+        <span class="my-report-status">${r.status}</span>
+      </div>
+      <div class="my-report-title">${r.categoryLabel}${r.bin ? ` · ${r.bin}` : ""}</div>
+      <div class="my-report-meta">
+        <span>📍 ${r.location}</span>
+        <span>🕒 ${r.date}</span>
+      </div>
+      ${r.details ? `<div style="font-size: 13px; color: #4B5563; background: #F9FAFB; padding: 6px 10px; border-radius: 6px; margin-top: 4px;">"${r.details}"</div>` : ""}
+    </div>
+  `).join("");
+}
+
+// Hook up all report flag triggers across headers & mismatch button
+document.querySelectorAll(".report-flag-btn, #reportMismatchBtn").forEach(btn => {
+  btn.addEventListener("click", openReportModal);
+});
+
+if (closeReportModalBtn) closeReportModalBtn.addEventListener("click", closeReportModal);
+if (btnCloseSuccessModal) btnCloseSuccessModal.addEventListener("click", closeReportModal);
+
+if (reportModal) {
+  reportModal.addEventListener("click", (e) => {
+    if (e.target === reportModal) closeReportModal();
+  });
+}
+
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape" && reportModal && reportModal.style.display === "flex") {
+    closeReportModal();
+  }
+});
+
+if (tabNewReport) tabNewReport.addEventListener("click", () => switchReportTab("new"));
+if (tabMyReports) tabMyReports.addEventListener("click", () => switchReportTab("my"));
+if (btnViewInMyReports) btnViewInMyReports.addEventListener("click", () => switchReportTab("my"));
+
+// Category change conditional fields
+if (reportCategory && groupReportBin) {
+  reportCategory.addEventListener("change", () => {
+    const val = reportCategory.value;
+    if (val === "missed_collection" || val === "damaged_bin") {
+      groupReportBin.style.display = "flex";
+    } else {
+      groupReportBin.style.display = "none";
+    }
+  });
+}
+
+// Photo upload handling
+if (btnSelectPhoto && reportPhotoInput) {
+  btnSelectPhoto.addEventListener("click", () => reportPhotoInput.click());
+  reportPhotoInput.addEventListener("change", (e) => {
+    const file = e.target.files && e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (evt) => {
+        attachedPhotoData = evt.target.result;
+        photoPreviewImg.src = attachedPhotoData;
+        photoPreviewWrap.style.display = "block";
+      };
+      reader.readAsDataURL(file);
+    }
+  });
+}
+
+if (btnRemovePhoto) {
+  btnRemovePhoto.addEventListener("click", () => {
+    attachedPhotoData = "";
+    if (reportPhotoInput) reportPhotoInput.value = "";
+    photoPreviewImg.src = "";
+    photoPreviewWrap.style.display = "none";
+  });
+}
+
+// Form Submission
+if (wasteReportForm) {
+  wasteReportForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const cat = reportCategory.value;
+    const catLabels = {
+      missed_collection: "Missed bin collection",
+      damaged_bin: "Damaged / missing bin",
+      overflowing_public: "Overflowing public bin",
+      illegal_dumping: "Illegal dumping",
+      other: "General waste inquiry"
+    };
+
+    let selectedBin = "";
+    if (cat === "missed_collection" || cat === "damaged_bin") {
+      const checkedBin = document.querySelector('input[name="reportBinType"]:checked');
+      if (checkedBin) selectedBin = checkedBin.value;
+    }
+
+    const locationVal = document.getElementById("reportLocation") ? document.getElementById("reportLocation").value : "12 Greenview Ave, Greenfield";
+    const detailsVal = document.getElementById("reportDetails") ? document.getElementById("reportDetails").value.trim() : "";
+    const randomCode = "DEMO-2026-" + Math.floor(1000 + Math.random() * 9000);
+
+    const newRecord = {
+      reference: randomCode,
+      category: cat,
+      categoryLabel: catLabels[cat] || "Waste Report",
+      bin: selectedBin,
+      location: locationVal,
+      details: detailsVal,
+      date: new Date().toLocaleDateString("en-AU", { day: "numeric", month: "short", year: "numeric" }),
+      status: "Received"
+    };
+
+    const existing = getSavedReports();
+    existing.unshift(newRecord);
+    try {
+      localStorage.setItem("ecotrack_demo_reports", JSON.stringify(existing));
+    } catch (err) {}
+
+    if (successRefCode) successRefCode.textContent = randomCode;
+
+    // Transition to success panel
+    panelNewReport.style.display = "none";
+    panelReportSuccess.style.display = "block";
+    updateReportsCountBadge();
+
+    // Reset inputs
+    wasteReportForm.reset();
+    if (btnRemovePhoto) btnRemovePhoto.click();
+  });
+}
+
+updateReportsCountBadge();
