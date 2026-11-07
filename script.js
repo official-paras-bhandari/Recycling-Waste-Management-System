@@ -904,52 +904,66 @@ const serviceModalBody = document.getElementById("serviceModalBody");
 function openServiceModal(type) {
   if (!serviceModal) return;
   if (type === "bulky") {
-    serviceModalTitle.textContent = "Book a Bulky Waste Pickup";
-    serviceModalSub.textContent = "City of Greenfield · Annual Household Entitlement";
+    serviceModalTitle.textContent = "Book Bulky Pickup";
+    serviceModalSub.textContent = "City of Greenfield · Household Entitlement";
     serviceModalBody.innerHTML = `
-      <div style="display: flex; flex-direction: column; gap: 14px; font-size: 13.5px; color: #374151;">
-        <div style="background: #F0FDF4; border: 1px solid #BBF7D0; border-radius: 10px; padding: 12px 14px;">
-          <strong style="color: #15803D; display: block; font-size: 14px; margin-bottom: 2px;">Your Household Entitlement</strong>
-          <span>12 Greenview Ave has <strong>2 free bookings remaining</strong> for this calendar year (up to 2 cubic metres each).</span>
+      <div class="minimal-modal-body">
+        <div class="minimal-stat-pill">
+          <span class="msp-num">2</span>
+          <span class="msp-label">Free collections available for 2026</span>
         </div>
-        <div>
-          <strong style="display: block; font-size: 13.5px; color: #111827; margin-bottom: 4px;">Accepted Materials:</strong>
-          <span style="line-height: 1.5; color: #4B5563;">Mattresses, broken furniture, whitegoods (doors removed), scrap timber, bundled branches.</span>
+
+        <div class="minimal-info-grid">
+          <div class="mig-section">
+            <span class="mig-title">Accepted items</span>
+            <p class="mig-desc">Mattresses, furniture, whitegoods (doors removed), bundled timber.</p>
+          </div>
+          <div class="mig-section">
+            <span class="mig-title mig-title-alert">Prohibited</span>
+            <p class="mig-desc">Batteries, chemicals, asbestos, liquids, building rubble.</p>
+          </div>
         </div>
-        <div>
-          <strong style="display: block; font-size: 13.5px; color: #DC2626; margin-bottom: 4px;">Not Accepted:</strong>
-          <span style="line-height: 1.5; color: #6B7280;">Car batteries, chemical containers, asbestos, commercial building waste.</span>
+
+        <div class="minimal-meta-row">
+          <span>Next collection date:</span>
+          <strong>Thursday, 26 Nov</strong>
         </div>
-        <div style="padding-top: 6px;">
-          <button type="button" class="btn-green btn-block" id="btnConfirmBulkyBooking">Request Collection Slot for Next Thursday</button>
-        </div>
+
+        <button type="button" class="btn-minimal-primary" id="btnConfirmBulkyBooking">Request Collection Slot</button>
       </div>
     `;
     const btnBook = document.getElementById("btnConfirmBulkyBooking");
     if (btnBook) {
       btnBook.addEventListener("click", () => {
         closeServiceModal();
-        showToast("✓ Demo bulky pickup booked for Thu 26 Nov · Ref: BLK-2026-921");
+        showToast("✓ Bulky pickup requested for Thu 26 Nov · Ref: BLK-2026-921");
       });
     }
   } else if (type === "centres") {
-    serviceModalTitle.textContent = "Greenfield Resource Recovery Centre";
-    serviceModalSub.textContent = "Community Drop-off & Recycling Facility";
+    serviceModalTitle.textContent = "Resource Recovery Centre";
+    serviceModalSub.textContent = "Community Drop-off Facility";
     serviceModalBody.innerHTML = `
-      <div style="display: flex; flex-direction: column; gap: 14px; font-size: 13.5px; color: #374151;">
-        <div>
-          <strong style="display: block; font-size: 14px; color: #111827;">📍 Location & Access</strong>
-          <span style="color: #4B5563;">45 Quarry Road, Greenfield VIC 3084 (8 mins drive from 12 Greenview Ave)</span>
+      <div class="minimal-modal-body">
+        <div class="minimal-detail-list">
+          <div class="mdl-item">
+            <span class="mdl-label">Location</span>
+            <span class="mdl-val">45 Quarry Road, Greenfield</span>
+            <small class="mdl-sub">8 mins drive from your address</small>
+          </div>
+
+          <div class="mdl-item">
+            <span class="mdl-label">Hours</span>
+            <span class="mdl-val">Sat – Wed · 8:00 AM – 4:00 PM</span>
+            <small class="mdl-sub">Closed Thursdays, Fridays & Public Holidays</small>
+          </div>
+
+          <div class="mdl-item">
+            <span class="mdl-label">Free Drop-Off</span>
+            <span class="mdl-val">E-waste, paint (≤100L), motor oil, fluorescent tubes, batteries</span>
+          </div>
         </div>
-        <div>
-          <strong style="display: block; font-size: 14px; color: #111827;">🕒 Verified Operating Hours</strong>
-          <span style="color: #4B5563;">Saturday – Wednesday: 8:00 AM – 4:00 PM<br><small style="color: #6B7280;">Closed Thursdays, Fridays & Public Holidays.</small></span>
-        </div>
-        <div>
-          <strong style="display: block; font-size: 14px; color: #15803D;">♻️ Free Drop-off Accepted:</strong>
-          <span style="color: #4B5563; line-height: 1.5;">Paint cans (up to 100L), fluorescent tubes, TV/Computers, car batteries, scrap metal, clean motor oil.</span>
-        </div>
-        <button type="button" class="btn-outline-neutral" id="btnDismissCentres" style="width: 100%;">Close</button>
+
+        <button type="button" class="btn-minimal-secondary" id="btnDismissCentres">Done</button>
       </div>
     `;
     const btnDismiss = document.getElementById("btnDismissCentres");
