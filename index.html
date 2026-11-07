@@ -483,7 +483,7 @@
 
               <div class="asv-item notice-amber">
                 <div class="asv-item-left">
-                  <strong>Next collection: Fri 25 Sep</strong>
+                  <strong id="homeAsideNextDate">Next collection: Fri 25 Sep</strong>
                   <span>General waste + Recycling</span>
                 </div>
                 <span class="asv-amber-tag">Moved 1 day</span>
@@ -1072,7 +1072,7 @@
                 <div class="date-header-group">
                   <h2 class="date-big" id="homeNextDate">Friday, 25 Sept</h2>
                   <div class="date-badges">
-                    <span class="pill-badge pill-in-days" id="homeNextCountdown">In 3 days</span>
+                    <span class="pill-badge pill-in-days" id="homeCountdownPill">In 3 days</span>
                     <span class="pill-badge pill-usually" id="homeNextPattern">Usually Thursday</span>
                   </div>
                 </div>
@@ -1167,15 +1167,15 @@
                 <h3 class="side-card-title">Upcoming</h3>
                 <div id="homeSideUpcomingRows">
                   <div class="up-row">
-                    <strong>01 Oct</strong>
+                    <strong id="homeUpRow0Date">01 Oct</strong>
                     <span>· General waste + Garden & food</span>
                   </div>
                   <div class="up-row">
-                    <strong>08 Oct</strong>
+                    <strong id="homeUpRow1Date">08 Oct</strong>
                     <span>· General waste + Recycling</span>
                   </div>
                   <div class="up-row">
-                    <strong>15 Oct</strong>
+                    <strong id="homeUpRow2Date">15 Oct</strong>
                     <span>· General waste + Garden & food</span>
                   </div>
                 </div>
@@ -1270,7 +1270,7 @@
             <div class="upcoming-list-wrap">
               <div class="upcoming-item-card is-next-card">
                 <div class="uic-left">
-                  <h3 class="uic-date">Fri 25 Sept</h3>
+                  <h3 class="uic-date" id="uicDate0">Fri 25 Sept</h3>
                   <p class="uic-bins">General + Recycling</p>
                   <span class="uic-exception">Moved from Thu 24 Sept</span>
                 </div>
@@ -1282,9 +1282,9 @@
 
               <div class="upcoming-item-card">
                 <div class="uic-left">
-                  <h3 class="uic-date">Thu 1 Oct</h3>
+                  <h3 class="uic-date" id="uicDate1">Thu 1 Oct</h3>
                   <p class="uic-bins">General + Garden</p>
-                  <span class="uic-countdown">In 9 days</span>
+                  <span class="uic-countdown" id="uicCd1">In 9 days</span>
                 </div>
                 <div class="uic-bins-visual" aria-label="General and Garden bins due">
                   <div class="mini-bin bin-red"><div class="mb-lid"></div><div class="mb-body"></div></div>
@@ -1294,9 +1294,9 @@
 
               <div class="upcoming-item-card">
                 <div class="uic-left">
-                  <h3 class="uic-date">Thu 8 Oct</h3>
+                  <h3 class="uic-date" id="uicDate2">Thu 8 Oct</h3>
                   <p class="uic-bins">General + Recycling</p>
-                  <span class="uic-countdown">In 16 days</span>
+                  <span class="uic-countdown" id="uicCd2">In 16 days</span>
                 </div>
                 <div class="uic-bins-visual" aria-label="General and Recycling bins due">
                   <div class="mini-bin bin-red"><div class="mb-lid"></div><div class="mb-body"></div></div>
@@ -1306,9 +1306,9 @@
 
               <div class="upcoming-item-card">
                 <div class="uic-left">
-                  <h3 class="uic-date">Thu 15 Oct</h3>
+                  <h3 class="uic-date" id="uicDate3">Thu 15 Oct</h3>
                   <p class="uic-bins">General + Garden</p>
-                  <span class="uic-countdown">In 23 days</span>
+                  <span class="uic-countdown" id="uicCd3">In 23 days</span>
                 </div>
                 <div class="uic-bins-visual" aria-label="General and Garden bins due">
                   <div class="mini-bin bin-red"><div class="mb-lid"></div><div class="mb-body"></div></div>
@@ -1366,8 +1366,8 @@
             </div>
 
             <div class="cal-moved-callout" id="calCalloutBox">
-              <strong>Fri 25 Sept · Collection moved</strong>
-              <span>General waste + Recycling</span>
+              <strong id="calCalloutText">Fri 25 Sept · Collection moved</strong>
+              <span id="calCalloutBins">General waste + Recycling</span>
             </div>
           </div>
         </div>
@@ -2422,10 +2422,10 @@
     <div class="modal-content-card report-modal-card">
       <div class="modal-header-bar">
         <div>
-          <h3 id="reportModalHeading">Report a Waste Problem</h3>
-          <p class="report-modal-sub">City of Greenfield · Resident Operations Dispatch</p>
+          <h3 id="reportModalHeading">Report a Problem</h3>
+          <p class="report-modal-sub">Greenfield Council Dispatch</p>
         </div>
-        <button type="button" class="modal-close-icon-btn" id="closeReportModalBtn" aria-label="Close report dialog">&times;</button>
+        <button type="button" class="modal-close-icon-btn" id="closeReportModalBtn" aria-label="Close dialog">&times;</button>
       </div>
 
       <div class="report-modal-nav" role="tablist">
@@ -2437,59 +2437,58 @@
       <div class="report-tab-panel" id="panelNewReport">
         <form id="wasteReportForm" class="report-form-layout">
           <div class="report-form-group">
-            <label class="report-label" for="reportCategory">What is the issue? <span class="required-star">*</span></label>
+            <label class="report-label" for="reportCategory">Issue category</label>
             <select id="reportCategory" class="report-input-field" required>
               <option value="missed_collection">Missed bin collection</option>
               <option value="damaged_bin">Damaged or missing bin</option>
               <option value="overflowing_public">Overflowing public litter bin</option>
-              <option value="illegal_dumping">Illegal dumping / dumped rubbish</option>
-              <option value="other">Something else</option>
+              <option value="illegal_dumping">Dumped rubbish / illegal waste</option>
+              <option value="other">General inquiry</option>
             </select>
           </div>
 
           <!-- Conditional: Bin selector -->
           <div class="report-form-group" id="groupReportBin">
-            <label class="report-label">Which bin is affected? <span class="required-star">*</span></label>
+            <label class="report-label">Affected bin</label>
             <div class="report-bin-options">
               <label class="bin-radio-card">
                 <input type="radio" name="reportBinType" value="General Waste (Red Lid)" checked>
                 <span class="bin-swatch bin-swatch-red"></span>
-                <span>General (Red)</span>
+                <span>General</span>
               </label>
               <label class="bin-radio-card">
                 <input type="radio" name="reportBinType" value="Recycling (Yellow Lid)">
                 <span class="bin-swatch bin-swatch-yellow"></span>
-                <span>Recycle (Yellow)</span>
+                <span>Recycle</span>
               </label>
               <label class="bin-radio-card">
                 <input type="radio" name="reportBinType" value="Garden Organics (Green Lid)">
                 <span class="bin-swatch bin-swatch-green"></span>
-                <span>Garden (Green)</span>
+                <span>Garden</span>
               </label>
             </div>
           </div>
 
           <!-- Location -->
           <div class="report-form-group">
-            <label class="report-label" for="reportLocation">Location <span class="required-star">*</span></label>
-            <input type="text" id="reportLocation" class="report-input-field" value="12 Greenview Ave, Greenfield" required placeholder="Street address or nearest landmark" />
-            <small class="report-help-text">Defaults to your registered household address.</small>
+            <label class="report-label" for="reportLocation">Location</label>
+            <input type="text" id="reportLocation" class="report-input-field" value="12 Greenview Ave, Greenfield" required placeholder="Street address" />
           </div>
 
           <!-- Details -->
           <div class="report-form-group">
-            <label class="report-label" for="reportDetails">Details / Description</label>
-            <textarea id="reportDetails" class="report-textarea-field" rows="3" placeholder="Provide extra details (e.g. lid snapped off, bin was placed out by 6am, etc.)"></textarea>
+            <label class="report-label" for="reportDetails">Notes (optional)</label>
+            <textarea id="reportDetails" class="report-textarea-field" rows="2" placeholder="Briefly describe the issue..."></textarea>
           </div>
 
           <!-- Photo attachment -->
           <div class="report-form-group">
-            <label class="report-label">Attach photo (optional)</label>
+            <label class="report-label">Photo (optional)</label>
             <div class="report-photo-upload-box" id="reportPhotoDropzone">
               <input type="file" id="reportPhotoInput" accept="image/*" style="display: none;" />
               <button type="button" class="btn-photo-select" id="btnSelectPhoto">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
-                <span>Upload photo</span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+                <span>Choose file</span>
               </button>
               <div id="photoPreviewWrap" style="display: none;" class="photo-preview-wrap">
                 <img id="photoPreviewImg" src="" alt="Photo preview" />
@@ -2498,7 +2497,7 @@
             </div>
           </div>
 
-          <button type="submit" class="btn-green btn-block" id="btnSubmitReport">Submit Demo Report</button>
+          <button type="submit" class="btn-minimal-primary" id="btnSubmitReport">Submit Report</button>
         </form>
       </div>
 
