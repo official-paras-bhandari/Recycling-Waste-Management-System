@@ -2642,3 +2642,18 @@ function renderDynamicSchedule() {
 }
 
 renderDynamicSchedule();
+
+// Mobile menu toggle; closes after picking a link
+(() => {
+  const header = document.getElementById("topNav"), btn = document.getElementById("navToggle");
+  if (!header || !btn) return;
+  const set = (open) => { header.classList.toggle("nav-open", open); btn.setAttribute("aria-expanded", open); };
+  btn.addEventListener("click", () => set(!header.classList.contains("nav-open")));
+  document.querySelectorAll("#siteNav a").forEach((a) => a.addEventListener("click", () => set(false)));
+})();
+
+// Menu CTA reuses the header button's existing handler
+document.getElementById("navCtaBtn")?.addEventListener("click", () => {
+  document.getElementById("topNav")?.classList.remove("nav-open");
+  document.getElementById("navResidentPortalBtn")?.click();
+});
