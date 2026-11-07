@@ -2713,31 +2713,6 @@ function renderDynamicSchedule() {
       </div>
     `;
   }
-
-  // 3. Update Schedule Screen Upcoming List
-  const scheduleUpcomingWrap = document.getElementById("scheduleUpcomingWrap");
-  if (scheduleUpcomingWrap) {
-    scheduleUpcomingWrap.innerHTML = schedule.map((item, idx) => {
-      const isFirst = idx === 0;
-      const binVisuals = item.binConfig.bins.map(b => {
-        const lidName = b === "red" ? "General waste (Red lid)" : (b === "yellow" ? "Recycling (Yellow lid)" : "Garden organics (Green lid)");
-        return `<div class="mini-bin bin-${b}" title="${lidName}"><div class="mb-lid"></div><div class="mb-body"></div></div>`;
-      }).join("");
-
-      return `
-        <div class="upcoming-item-card ${isFirst ? "is-next-card" : ""}">
-          <div class="uic-left">
-            <h3 class="uic-date">${item.dateShort}</h3>
-            <p class="uic-bins">${item.binConfig.title}</p>
-            ${item.isShifted ? `<span class="uic-exception">${item.exceptionNote}</span>` : `<span class="uic-countdown">${item.countdown}</span>`}
-          </div>
-          <div class="uic-bins-visual" aria-label="${item.binConfig.title} bins due">
-            ${binVisuals}
-          </div>
-        </div>
-      `;
-    }).join("");
-  }
 }
 
 renderDynamicSchedule();
