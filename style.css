@@ -3213,8 +3213,28 @@ body { background: var(--paper); color: var(--ink); }
 
 .instant-results {
   margin-top: 12px;
-  padding-top: 12px;
+  padding-top: 4px;
   border-top: 1px solid var(--border);
+  max-height: 280px;
+  overflow-y: auto;
+}
+
+.home-search-result-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 12px;
+  cursor: pointer;
+  border-radius: 8px;
+  border-bottom: 1px solid #F3F4F6;
+  transition: all 0.15s ease;
+}
+.home-search-result-row:hover {
+  background: #F0FDF4;
+  transform: translateX(2px);
+}
+.home-search-result-row:last-child {
+  border-bottom: none;
 }
 
 .instant-res-card {

@@ -894,19 +894,92 @@ if (scheduleBrandLink) {
   });
 }
 
-// Side buttons in home
+// Secondary Services Modal (Section 04.E, 04.F)
+const serviceModal = document.getElementById("serviceModal");
+const closeServiceModalBtn = document.getElementById("closeServiceModalBtn");
+const serviceModalTitle = document.getElementById("serviceModalTitle");
+const serviceModalSub = document.getElementById("serviceModalSub");
+const serviceModalBody = document.getElementById("serviceModalBody");
+
+function openServiceModal(type) {
+  if (!serviceModal) return;
+  if (type === "bulky") {
+    serviceModalTitle.textContent = "Book a Bulky Waste Pickup";
+    serviceModalSub.textContent = "City of Greenfield · Annual Household Entitlement";
+    serviceModalBody.innerHTML = `
+      <div style="display: flex; flex-direction: column; gap: 14px; font-size: 13.5px; color: #374151;">
+        <div style="background: #F0FDF4; border: 1px solid #BBF7D0; border-radius: 10px; padding: 12px 14px;">
+          <strong style="color: #15803D; display: block; font-size: 14px; margin-bottom: 2px;">Your Household Entitlement</strong>
+          <span>12 Greenview Ave has <strong>2 free bookings remaining</strong> for this calendar year (up to 2 cubic metres each).</span>
+        </div>
+        <div>
+          <strong style="display: block; font-size: 13.5px; color: #111827; margin-bottom: 4px;">Accepted Materials:</strong>
+          <span style="line-height: 1.5; color: #4B5563;">Mattresses, broken furniture, whitegoods (doors removed), scrap timber, bundled branches.</span>
+        </div>
+        <div>
+          <strong style="display: block; font-size: 13.5px; color: #DC2626; margin-bottom: 4px;">Not Accepted:</strong>
+          <span style="line-height: 1.5; color: #6B7280;">Car batteries, chemical containers, asbestos, commercial building waste.</span>
+        </div>
+        <div style="padding-top: 6px;">
+          <button type="button" class="btn-green btn-block" id="btnConfirmBulkyBooking">Request Collection Slot for Next Thursday</button>
+        </div>
+      </div>
+    `;
+    const btnBook = document.getElementById("btnConfirmBulkyBooking");
+    if (btnBook) {
+      btnBook.addEventListener("click", () => {
+        closeServiceModal();
+        showToast("✓ Demo bulky pickup booked for Thu 26 Nov · Ref: BLK-2026-921");
+      });
+    }
+  } else if (type === "centres") {
+    serviceModalTitle.textContent = "Greenfield Resource Recovery Centre";
+    serviceModalSub.textContent = "Community Drop-off & Recycling Facility";
+    serviceModalBody.innerHTML = `
+      <div style="display: flex; flex-direction: column; gap: 14px; font-size: 13.5px; color: #374151;">
+        <div>
+          <strong style="display: block; font-size: 14px; color: #111827;">📍 Location & Access</strong>
+          <span style="color: #4B5563;">45 Quarry Road, Greenfield VIC 3084 (8 mins drive from 12 Greenview Ave)</span>
+        </div>
+        <div>
+          <strong style="display: block; font-size: 14px; color: #111827;">🕒 Verified Operating Hours</strong>
+          <span style="color: #4B5563;">Saturday – Wednesday: 8:00 AM – 4:00 PM<br><small style="color: #6B7280;">Closed Thursdays, Fridays & Public Holidays.</small></span>
+        </div>
+        <div>
+          <strong style="display: block; font-size: 14px; color: #15803D;">♻️ Free Drop-off Accepted:</strong>
+          <span style="color: #4B5563; line-height: 1.5;">Paint cans (up to 100L), fluorescent tubes, TV/Computers, car batteries, scrap metal, clean motor oil.</span>
+        </div>
+        <button type="button" class="btn-outline-neutral" id="btnDismissCentres" style="width: 100%;">Close</button>
+      </div>
+    `;
+    const btnDismiss = document.getElementById("btnDismissCentres");
+    if (btnDismiss) btnDismiss.addEventListener("click", closeServiceModal);
+  }
+  serviceModal.style.display = "flex";
+  document.body.style.overflow = "hidden";
+}
+
+function closeServiceModal() {
+  if (!serviceModal) return;
+  serviceModal.style.display = "none";
+  document.body.style.overflow = "";
+}
+
+if (closeServiceModalBtn) closeServiceModalBtn.addEventListener("click", closeServiceModal);
+if (serviceModal) {
+  serviceModal.addEventListener("click", (e) => {
+    if (e.target === serviceModal) closeServiceModal();
+  });
+}
+
 const sideBulkyBtn = document.getElementById("sideBulkyBtn");
 if (sideBulkyBtn) {
-  sideBulkyBtn.addEventListener("click", () => {
-    alert("Bulky pickup booking: Subject to council availability (Riverton Area).");
-  });
+  sideBulkyBtn.addEventListener("click", () => openServiceModal("bulky"));
 }
 
 const sideCentresBtn = document.getElementById("sideCentresBtn");
 if (sideCentresBtn) {
-  sideCentresBtn.addEventListener("click", () => {
-    alert("Riverton Resource Recovery Centre: 45 Quarry Rd (Open Sat–Wed 8am–4pm).");
-  });
+  sideCentresBtn.addEventListener("click", () => openServiceModal("centres"));
 }
 
 // Toast feedback system
@@ -955,15 +1028,91 @@ if (homeReminderTimeSelect) {
   });
 }
 
-// Quick search in home
+// Quick search in home (Section 04.D)
 const homeRecycleSearch = document.getElementById("homeRecycleSearch");
 const homeInstantResults = document.getElementById("homeInstantResults");
-if (homeRecycleSearch && homeInstantResults) {
-  homeRecycleSearch.addEventListener("focus", () => {
-    showScreen("recycle");
-    switchRecycleSubview("viewRecycleHub");
-    const rhSearch = document.getElementById("recycleHubSearchInput");
-    if (rhSearch) rhSearch.focus();
+
+function filterHomeRecycleSearch() {
+  if (!homeRecycleSearch || !homeInstantResults || typeof recycleItemsDB === "undefined") return;
+  const query = homeRecycleSearch.value.trim().toLowerCase();
+  if (!query) {
+    homeInstantResults.style.display = "none";
+    homeInstantResults.innerHTML = "";
+    return;
+  }
+
+  const matches = Object.entries(recycleItemsDB).filter(([k, item]) => {
+    return item.name.toLowerCase().includes(query) || (item.binDesc && item.binDesc.toLowerCase().includes(query));
+  }).slice(0, 5);
+
+  if (matches.length === 0) {
+    homeInstantResults.style.display = "block";
+    homeInstantResults.innerHTML = `
+      <div style="padding: 12px 14px; font-size: 13px; color: #6B7280; text-align: center;">
+        No direct match for "<strong>${query.replace(/</g, "&lt;")}</strong>".
+        <button type="button" class="link-action-green" id="btnSearchAllRecycle" style="display: block; margin: 6px auto 0; font-size: 13px;">Open complete Recycling Guide &rarr;</button>
+      </div>
+    `;
+    const btnAll = document.getElementById("btnSearchAllRecycle");
+    if (btnAll) {
+      btnAll.addEventListener("click", () => {
+        homeInstantResults.style.display = "none";
+        showScreen("recycle");
+        switchRecycleSubview("viewRecycleHub");
+      });
+    }
+    return;
+  }
+
+  homeInstantResults.style.display = "block";
+  homeInstantResults.innerHTML = matches.map(([k, item]) => {
+    const swatch = item.binType === "yellow" ? "#EAB308" : (item.binType === "green" ? "#16A34A" : "#DC2626");
+    return `
+      <div class="home-search-result-row" data-item-key="${k}">
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <span style="width: 10px; height: 10px; border-radius: 50%; background: ${swatch}; flex-shrink: 0;"></span>
+          <strong style="font-size: 13.5px; color: #111827;">${item.name}</strong>
+        </div>
+        <span style="font-size: 11.5px; font-weight: 700; color: ${item.canRecycle ? '#15803D' : '#DC2626'}; background: ${item.canRecycle ? '#F0FDF4' : '#FEF2F2'}; padding: 2px 8px; border-radius: 6px;">${item.binName.split(' ')[0]}</span>
+      </div>
+    `;
+  }).join("") + `
+    <div style="padding: 8px 12px; background: #F9FAFB; border-top: 1px solid #F3F4F6; text-align: right;">
+      <button type="button" class="link-action-green" id="btnSeeAllSearch" style="font-size: 12px;">See all in guide &rarr;</button>
+    </div>
+  `;
+
+  homeInstantResults.querySelectorAll(".home-search-result-row").forEach(row => {
+    row.addEventListener("click", () => {
+      const key = row.getAttribute("data-item-key");
+      homeInstantResults.style.display = "none";
+      homeRecycleSearch.value = "";
+      showScreen("recycle");
+      if (typeof openItemDetail === "function") {
+        openItemDetail(key);
+      } else {
+        switchRecycleSubview("viewItemDetail");
+        renderItemDetailView(key);
+      }
+    });
+  });
+
+  const btnSeeAll = document.getElementById("btnSeeAllSearch");
+  if (btnSeeAll) {
+    btnSeeAll.addEventListener("click", () => {
+      homeInstantResults.style.display = "none";
+      showScreen("recycle");
+      switchRecycleSubview("viewRecycleHub");
+    });
+  }
+}
+
+if (homeRecycleSearch) {
+  homeRecycleSearch.addEventListener("input", filterHomeRecycleSearch);
+  document.addEventListener("click", (e) => {
+    if (homeInstantResults && !homeRecycleSearch.contains(e.target) && !homeInstantResults.contains(e.target)) {
+      homeInstantResults.style.display = "none";
+    }
   });
 }
 
