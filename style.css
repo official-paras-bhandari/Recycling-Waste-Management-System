@@ -3106,6 +3106,7 @@ body { background: var(--paper); color: var(--ink); }
 
 .bin-red-lid .w-lid { background-color: var(--bin-red); }
 .bin-yellow-lid .w-lid { background-color: var(--bin-yellow); }
+.bin-green-lid .w-lid { background-color: var(--bin-green); }
 
 .due-bin-text strong {
   display: block;
@@ -3701,6 +3702,24 @@ body { background: var(--paper); color: var(--ink); }
   background-color: #EAB308;
   border-radius: 50%;
   margin-top: 3px;
+}
+.cal-cell-dot.dot-yellow {
+  background-color: #EAB308;
+}
+.cal-cell-dot.dot-green {
+  background-color: #16A34A;
+}
+
+.uic-freq-pill {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 9999px;
+  background: #F1F5F9;
+  color: #475569;
+  margin-left: 6px;
+  vertical-align: middle;
 }
 
 .cal-moved-callout {
