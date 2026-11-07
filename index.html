@@ -1036,10 +1036,10 @@
             </div>
           </section>
 
-          <!-- Holiday Notice Card (Image 3: Amber border and soft yellow bg) -->
-          <div class="holiday-notice-card">
-            <strong class="notice-title">Collection moved to Friday</strong>
-            <span class="notice-sub">Public holiday notice · demo</span>
+          <!-- Holiday Notice Card (Amber border and soft yellow bg) -->
+          <div class="holiday-notice-card" id="homeHolidayNotice">
+            <strong class="notice-title" id="homeNoticeTitle">Collection moved to Friday</strong>
+            <span class="notice-sub" id="homeNoticeSub">Public holiday service adjustment · Greenfield Council</span>
           </div>
 
           <!-- Two-column responsive desktop layout (Stacked on mobile) -->
@@ -1053,15 +1053,15 @@
                 <span class="tag-next">NEXT COLLECTION</span>
                 
                 <div class="date-header-group">
-                  <h2 class="date-big">Friday, 25 Sept</h2>
+                  <h2 class="date-big" id="homeNextDate">Friday, 25 Sept</h2>
                   <div class="date-badges">
-                    <span class="pill-badge pill-in-days">In 3 days</span>
-                    <span class="pill-badge pill-usually">Usually Thursday</span>
+                    <span class="pill-badge pill-in-days" id="homeNextCountdown">In 3 days</span>
+                    <span class="pill-badge pill-usually" id="homeNextPattern">Usually Thursday</span>
                   </div>
                 </div>
 
                 <!-- Two White Bin Cards inside Next Collection -->
-                <div class="due-bins-flex">
+                <div class="due-bins-flex" id="homeDueBinsFlex">
                   <div class="due-bin-card">
                     <div class="bin-icon-wheelie bin-red-lid">
                       <div class="w-lid"></div>
@@ -1140,17 +1140,19 @@
               <!-- Upcoming Card -->
               <div class="side-card">
                 <h3 class="side-card-title">Upcoming</h3>
-                <div class="up-row">
-                  <strong>01 Oct</strong>
-                  <span>· General waste + Garden & food</span>
-                </div>
-                <div class="up-row">
-                  <strong>08 Oct</strong>
-                  <span>· General waste + Recycling</span>
-                </div>
-                <div class="up-row">
-                  <strong>15 Oct</strong>
-                  <span>· General waste + Garden & food</span>
+                <div id="homeSideUpcomingRows">
+                  <div class="up-row">
+                    <strong>01 Oct</strong>
+                    <span>· General waste + Garden & food</span>
+                  </div>
+                  <div class="up-row">
+                    <strong>08 Oct</strong>
+                    <span>· General waste + Recycling</span>
+                  </div>
+                  <div class="up-row">
+                    <strong>15 Oct</strong>
+                    <span>· General waste + Garden & food</span>
+                  </div>
                 </div>
               </div>
 
@@ -1240,7 +1242,7 @@
           </div>
 
           <div class="schedule-view-panel" id="panelUpcoming">
-            <div class="upcoming-list-wrap">
+            <div class="upcoming-list-wrap" id="scheduleUpcomingWrap">
               <div class="upcoming-item-card is-next-card">
                 <div class="uic-left">
                   <h3 class="uic-date">Fri 25 Sept</h3>

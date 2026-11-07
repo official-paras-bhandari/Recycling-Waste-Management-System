@@ -2423,3 +2423,133 @@ if (wasteReportForm) {
 }
 
 updateReportsCountBadge();
+
+// ==========================================================
+// DYNAMIC COLLECTION DATES ENGINE (Section 03, 04.B, 10 QA)
+// ==========================================================
+function computeCollectionSchedule() {
+  const now = new Date();
+  const schedule = [];
+  
+  // Standard collection day is Thursday (4)
+  const current = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  let daysUntilThursday = (4 - current.getDay() + 7) % 7;
+  if (daysUntilThursday === 0 && now.getHours() >= 7) {
+    daysUntilThursday = 7;
+  }
+  
+  const targetDate = new Date(current);
+  targetDate.setDate(current.getDate() + daysUntilThursday);
+
+  const binConfigs = [
+    { title: "General + Recycling", bins: ["red", "yellow"], labels: "General waste + Recycling" },
+    { title: "General + Garden", bins: ["red", "green"], labels: "General waste + Garden & food" }
+  ];
+
+  for (let i = 0; i < 4; i++) {
+    const colDate = new Date(targetDate);
+    colDate.setDate(targetDate.getDate() + (i * 7));
+
+    let isShifted = false;
+    let exceptionNote = "";
+    if (i === 0) {
+      // Per spec: demonstrate a holiday shift moved to Friday
+      colDate.setDate(colDate.getDate() + 1);
+      isShifted = true;
+      exceptionNote = "Moved from Thu " + targetDate.toLocaleDateString("en-AU", { day: "numeric", month: "short" });
+    }
+
+    const diffTime = colDate.getTime() - now.getTime();
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    let countdownText = "";
+    if (diffDays <= 0) countdownText = "Today";
+    else if (diffDays === 1) countdownText = "Tomorrow";
+    else countdownText = `In ${diffDays} days`;
+
+    schedule.push({
+      date: colDate,
+      dateShort: colDate.toLocaleDateString("en-AU", { weekday: "short", day: "numeric", month: "short" }),
+      dateSide: colDate.toLocaleDateString("en-AU", { day: "2-digit", month: "short" }),
+      dateFull: colDate.toLocaleDateString("en-AU", { weekday: "long", day: "numeric", month: "short" }),
+      countdown: countdownText,
+      diffDays: diffDays,
+      isShifted: isShifted,
+      exceptionNote: exceptionNote,
+      binConfig: binConfigs[i % 2]
+    });
+  }
+
+  return schedule;
+}
+
+function renderDynamicSchedule() {
+  const schedule = computeCollectionSchedule();
+  if (!schedule || schedule.length === 0) return;
+
+  const next = schedule[0];
+
+  // 1. Update Home Next Collection Card
+  const homeNextDate = document.getElementById("homeNextDate");
+  const homeNextCountdown = document.getElementById("homeNextCountdown");
+  const homeNextPattern = document.getElementById("homeNextPattern");
+  const homeNoticeTitle = document.getElementById("homeNoticeTitle");
+  const homeNoticeSub = document.getElementById("homeNoticeSub");
+
+  if (homeNextDate) homeNextDate.textContent = next.dateFull;
+  if (homeNextCountdown) homeNextCountdown.textContent = next.countdown;
+  if (homeNextPattern) {
+    homeNextPattern.textContent = next.isShifted ? "Usually Thursday" : "Fortnightly cycle";
+  }
+  if (homeNoticeTitle && next.isShifted) {
+    homeNoticeTitle.textContent = `Collection moved to ${next.date.toLocaleDateString("en-AU", { weekday: "long" })}`;
+  }
+  if (homeNoticeSub && next.isShifted) {
+    homeNoticeSub.textContent = `Public holiday notice · ${next.exceptionNote} · Greenfield Council`;
+  }
+
+  // 2. Update Home Side Upcoming Rows
+  const homeSideUpcomingRows = document.getElementById("homeSideUpcomingRows");
+  if (homeSideUpcomingRows && schedule.length >= 4) {
+    homeSideUpcomingRows.innerHTML = `
+      <div class="up-row">
+        <strong>${schedule[1].dateSide}</strong>
+        <span>· ${schedule[1].binConfig.labels}</span>
+      </div>
+      <div class="up-row">
+        <strong>${schedule[2].dateSide}</strong>
+        <span>· ${schedule[2].binConfig.labels}</span>
+      </div>
+      <div class="up-row">
+        <strong>${schedule[3].dateSide}</strong>
+        <span>· ${schedule[3].binConfig.labels}</span>
+      </div>
+    `;
+  }
+
+  // 3. Update Schedule Screen Upcoming List
+  const scheduleUpcomingWrap = document.getElementById("scheduleUpcomingWrap");
+  if (scheduleUpcomingWrap) {
+    scheduleUpcomingWrap.innerHTML = schedule.map((item, idx) => {
+      const isFirst = idx === 0;
+      const binVisuals = item.binConfig.bins.map(b => {
+        const lidName = b === "red" ? "General waste (Red lid)" : (b === "yellow" ? "Recycling (Yellow lid)" : "Garden organics (Green lid)");
+        return `<div class="mini-bin bin-${b}" title="${lidName}"><div class="mb-lid"></div><div class="mb-body"></div></div>`;
+      }).join("");
+
+      return `
+        <div class="upcoming-item-card ${isFirst ? "is-next-card" : ""}">
+          <div class="uic-left">
+            <h3 class="uic-date">${item.dateShort}</h3>
+            <p class="uic-bins">${item.binConfig.title}</p>
+            ${item.isShifted ? `<span class="uic-exception">${item.exceptionNote}</span>` : `<span class="uic-countdown">${item.countdown}</span>`}
+          </div>
+          <div class="uic-bins-visual" aria-label="${item.binConfig.title} bins due">
+            ${binVisuals}
+          </div>
+        </div>
+      `;
+    }).join("");
+  }
+}
+
+renderDynamicSchedule();
