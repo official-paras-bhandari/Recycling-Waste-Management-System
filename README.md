@@ -74,6 +74,8 @@ python3 -m http.server 8000   # then visit http://localhost:8000
 ├── index.html   # Markup for the landing page, onboarding and resident portal
 ├── style.css    # Styling and design system
 ├── script.js    # Screen routing, schedules, search, reminders, calendar export
+├── onboarding.js # Address search and first-run onboarding flow
+├── assets/ images/  # Item photos used by the recycling search
 └── vercel.json  # Vercel config: clean URLs and security headers
 ```
 
